@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BridgeCare · Coordinator prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="brand"><span class="brand-mark">BC</span><span>BridgeCare<small>Care coordination</small></span></div>
+      <div class="side-section">WORKSPACE</div>
+      <button class="nav active" data-view="dashboard"><span>▦</span> Dashboard <b id="nav-alert-count"></b></button>
+      <button class="nav" data-view="case"><span>◇</span> <span id="case-nav-label">Sarah's case</span></button>
+      <button class="nav" data-view="patient"><span>▣</span> Patient preview</button>
+      <div class="sidebar-bottom">
+        <div class="demo-note"><strong>Prototype walkthrough</strong><br>One case follows the coordinator from referral to clinical handoff. Hospital calls and messages are simulated.</div>
+        <button class="reset" data-action="reset">↺ Reset demo</button>
+        <div class="user"><span class="avatar">YD</span><span>Yuzhu Dai<small>Care coordinator</small></span></div>
+      </div>
+    </aside>
+    <div class="main-wrap">
+      <header class="topbar"><div class="crumb">Coordinator workspace <span>/</span> <strong id="current-view-label">Dashboard</strong></div><div class="top-right"><span class="mock-tag">INTERACTIVE MOCK</span><span class="header-avatar">YD</span></div></header>
+      <main id="app" class="main" tabindex="-1"></main>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="model.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

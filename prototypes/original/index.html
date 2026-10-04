@@ -1,0 +1,5081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BridgeCare — Cross-Hospital Care Navigation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   BridgeCare Design System
+   ============================================ */
+
+:root {
+  /* Surfaces */
+  --bg-app:       #F5F3FF;
+  --bg-surface:   #FFFFFF;
+  --bg-sidebar:   #1A1333;
+  --bg-hover:     #F0ECFF;
+  --bg-selected:  #EDE9FE;
+  --bg-stripe:    #FAF8FF;
+
+  /* Gradients */
+  --gradient-accent: linear-gradient(135deg, #7C3AED 0%, #6366F1 50%, #3B82F6 100%);
+  --gradient-warm:   linear-gradient(135deg, #F97316 0%, #EF4444 100%);
+  --gradient-cool:   linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+  --gradient-soft:   linear-gradient(135deg, #A78BFA 0%, #818CF8 100%);
+
+  /* Text */
+  --text-primary:    #17123A;
+  --text-secondary:  #5B5675;
+  --text-tertiary:   #9691AB;
+  --text-sidebar:    #8A85A8;
+  --text-sidebar-active: #FFFFFF;
+  --text-inverse:    #FFFFFF;
+
+  /* Accent */
+  --accent:        #7C3AED;
+  --accent-light:  #F0EBFF;
+  --accent-hover:  #6D28D9;
+  --accent-muted:  #F5F3FF;
+  --accent-glow:   rgba(124, 58, 237, 0.18);
+
+  /* Semantic */
+  --success:       #059669;
+  --success-bg:    #ECFDF5;
+  --warning:       #F59E0B;
+  --warning-bg:    #FFFBEB;
+  --danger:        #EF4444;
+  --danger-bg:     #FEF2F2;
+  --info:          #3B82F6;
+  --info-bg:       #EFF6FF;
+
+  /* Borders */
+  --border:        #E5E0F0;
+  --border-light:  #F0ECF8;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 3px rgba(124,58,237,0.04);
+  --shadow-sm: 0 2px 8px rgba(124,58,237,0.06), 0 1px 3px rgba(0,0,0,0.03);
+  --shadow-md: 0 8px 24px rgba(124,58,237,0.08), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-lg: 0 16px 40px rgba(124,58,237,0.12), 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-glow: 0 0 0 4px rgba(124,58,237,0.12);
+
+  /* Radius */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+
+  /* Sizing */
+  --sidebar-w: 240px;
+  --header-h: 64px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--text-primary);
+  background: linear-gradient(180deg, #F5F3FF 0%, #FDFBFF 40%, #F8F6FF 100%);
+  display: flex;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -40%;
+  right: -20%;
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(ellipse, rgba(124,58,237,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -30%;
+  left: -15%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(ellipse, rgba(99,102,241,0.03) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================
+   Sidebar
+   ============================================ */
+
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: linear-gradient(180deg, #1A1333 0%, #241B4A 50%, #1A1333 100%);
+  color: var(--text-sidebar);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 16px; left: 16px; bottom: 16px;
+  z-index: 100;
+  padding: 0;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 60px rgba(26,19,51,0.15);
+}
+
+.sidebar-brand {
+  padding: 24px 20px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-brand .logo {
+  display: flex; align-items: center; gap: 12px;
+}
+
+.sidebar-brand .logo-icon {
+  width: 38px; height: 38px;
+  background: var(--gradient-accent);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.875rem;
+  box-shadow: 0 4px 12px rgba(124,58,237,0.35);
+}
+
+.sidebar-brand .logo-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  color: var(--text-sidebar-active);
+  letter-spacing: -0.01em;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-section-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.18);
+  padding: 16px 12px 6px;
+  font-family: var(--font-display);
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-sidebar);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-spring);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
+}
+
+.sidebar-nav-item:hover {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.9);
+  transform: translateX(2px);
+}
+
+.sidebar-nav-item.active {
+  background: linear-gradient(135deg, rgba(124,58,237,0.3) 0%, rgba(99,102,241,0.2) 100%);
+  color: var(--text-sidebar-active);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.15);
+}
+
+.sidebar-nav-item .nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+}
+
+.sidebar-nav-item.active .nav-dot { opacity: 1; }
+
+.sidebar-nav-item .nav-icon {
+  width: 20px; text-align: center;
+  font-size: 1rem;
+}
+
+.sidebar-nav-item .badge {
+  margin-left: auto;
+  background: var(--gradient-warm);
+  color: white;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  min-width: 18px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(239,68,68,0.3);
+}
+
+.sidebar-footer {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-user {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.sidebar-user:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.sidebar-user .avatar {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--gradient-accent);
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  font-family: var(--font-display);
+  box-shadow: 0 2px 8px rgba(124,58,237,0.3);
+}
+
+.sidebar-user .user-info {
+  line-height: 1.3;
+}
+
+.sidebar-user .user-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-sidebar-active);
+}
+
+.sidebar-user .user-role {
+  font-size: 0.6875rem;
+  color: var(--text-sidebar);
+}
+
+/* ============================================
+   Main Content
+   ============================================ */
+
+.main {
+  margin-left: calc(var(--sidebar-w) + 32px);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.header {
+  height: var(--header-h);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 20px;
+  position: sticky;
+  top: 16px;
+  z-index: 50;
+  border-radius: var(--radius-lg);
+  margin-top: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-search {
+  flex: 1;
+  max-width: 360px;
+  position: relative;
+}
+
+.header-search input {
+  width: 100%;
+  padding: 10px 16px 10px 38px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  background: var(--bg-stripe);
+  color: var(--text-primary);
+  transition: all var(--duration-fast);
+}
+
+.header-search input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-glow);
+}
+
+.header-search .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+}
+
+.header-actions {
+  display: flex; align-items: center; gap: 8px;
+  margin-left: auto;
+}
+
+.header-btn {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all var(--duration-fast);
+  font-size: 1rem;
+  box-shadow: var(--shadow-xs);
+}
+
+.header-btn:hover {
+  background: var(--bg-hover);
+  color: var(--accent);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.header-btn.notif { position: relative; }
+.header-btn.notif::after {
+  content: '';
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--danger);
+}
+
+/* Content Area */
+.content {
+  flex: 1;
+  padding: 24px 32px 40px;
+  padding-right: 32px;
+}
+
+/* ============================================
+   View Switching
+   ============================================ */
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* ============================================
+   Dashboard View
+   ============================================ */
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  transition: all var(--duration-fast) var(--ease-spring);
+  border: none;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: -30%; right: -20%;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  pointer-events: none;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card.card-purple { background: var(--gradient-accent); color: white; }
+.stat-card.card-amber  { background: linear-gradient(135deg, #F59E0B, #D97706); color: white; }
+.stat-card.card-red    { background: var(--gradient-warm); color: white; }
+.stat-card.card-green  { background: linear-gradient(135deg, #059669, #10B981); color: white; }
+
+.stat-card.card-purple .stat-label,
+.stat-card.card-amber .stat-label,
+.stat-card.card-red .stat-label,
+.stat-card.card-green .stat-label { color: rgba(255,255,255,0.75); }
+
+.stat-card.card-purple .stat-change,
+.stat-card.card-amber .stat-change,
+.stat-card.card-red .stat-change,
+.stat-card.card-green .stat-change { color: rgba(255,255,255,0.85); }
+
+.stat-card.card-purple .stat-value,
+.stat-card.card-amber .stat-value,
+.stat-card.card-red .stat-value,
+.stat-card.card-green .stat-value { color: white; }
+
+.stat-card .stat-info {}
+.stat-card .stat-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+.stat-card .stat-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.stat-card .stat-change {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.stat-card .stat-icon {
+  width: 46px; height: 46px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Kanban Board */
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.kanban-col {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 280px);
+  box-shadow: var(--shadow-xs);
+}
+
+.kanban-col-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; align-items: center; justify-content: space-between;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.kanban-col:nth-child(1) .kanban-col-header { background: linear-gradient(135deg, #F0EBFF, #FDFBFF); }
+.kanban-col:nth-child(2) .kanban-col-header { background: linear-gradient(135deg, #EFF6FF, #FDFBFF); }
+.kanban-col:nth-child(3) .kanban-col-header { background: linear-gradient(135deg, #FFFBEB, #FFFDF5); }
+.kanban-col:nth-child(4) .kanban-col-header { background: linear-gradient(135deg, #ECFDF5, #F9FDFB); }
+
+.kanban-col-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.kanban-col-count {
+  background: rgba(124,58,237,0.08);
+  color: var(--accent);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+}
+
+.kanban-col:nth-child(2) .kanban-col-count { background: rgba(59,130,246,0.08); color: var(--info); }
+.kanban-col:nth-child(3) .kanban-col-count { background: rgba(245,158,11,0.08); color: var(--warning); }
+.kanban-col:nth-child(4) .kanban-col-count { background: rgba(5,150,105,0.08); color: var(--success); }
+
+.kanban-col-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Patient Card */
+.patient-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-spring);
+  position: relative;
+  box-shadow: var(--shadow-xs);
+}
+
+.patient-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-light);
+  transform: translateY(-2px) scale(1.01);
+}
+
+.patient-card .card-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.patient-card .patient-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.patient-card .patient-priority {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.priority-high { background: var(--danger); }
+.priority-medium { background: var(--warning); }
+.priority-normal { background: var(--accent); }
+
+.patient-card .card-detail {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.patient-card .card-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+.tag-lang { background: var(--accent-light); color: var(--accent); }
+.tag-dept { background: var(--bg-hover); color: var(--text-secondary); }
+.tag-urgent { background: var(--danger-bg); color: var(--danger); }
+.tag-progress { background: var(--warning-bg); color: var(--warning); }
+
+.patient-card .card-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  padding-top: 10px;
+  border-top: 1px solid var(--border-light);
+}
+
+.patient-card .card-meta .due-date.overdue { color: var(--danger); font-weight: 500; }
+
+/* Anomaly Alerts Panel */
+.anomaly-panel {
+  margin-top: 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+
+.anomaly-panel-header {
+  padding: 16px 22px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid var(--border-light);
+  background: linear-gradient(135deg, #FEF2F2, #FFFDFD);
+}
+
+.anomaly-panel-header .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--danger);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.anomaly-panel-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+.anomaly-panel-count {
+  font-size: 0.75rem;
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.anomaly-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.anomaly-item {
+  padding: 14px 22px;
+  display: flex; align-items: center; gap: 14px;
+  border-bottom: 1px solid var(--border-light);
+  transition: all var(--duration-fast);
+  cursor: pointer;
+}
+
+.anomaly-item:last-child { border-bottom: none; }
+
+.anomaly-item:hover { background: var(--bg-hover); }
+
+.anomaly-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.anomaly-icon.red { background: var(--danger-bg); color: var(--danger); box-shadow: 0 2px 8px rgba(239,68,68,0.15); }
+.anomaly-icon.amber { background: var(--warning-bg); color: var(--warning); box-shadow: 0 2px 8px rgba(245,158,11,0.15); }
+
+.anomaly-info { flex: 1; }
+.anomaly-info .anomaly-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.anomaly-info .anomaly-detail {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.anomaly-action-btn {
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  font-family: var(--font-body);
+  transition: all var(--duration-fast) var(--ease-spring);
+  box-shadow: var(--shadow-xs);
+}
+
+.anomaly-action-btn:hover {
+  background: var(--gradient-accent);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(124,58,237,0.3);
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   Patient Detail View
+   ============================================ */
+
+.detail-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-bottom: 16px;
+  background: none; border: none;
+  font-family: var(--font-body);
+  padding: 6px 0;
+  transition: color var(--duration-fast);
+}
+
+.detail-back:hover { color: var(--accent); }
+
+.detail-header {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  display: flex; align-items: flex-start;
+  gap: 28px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.patient-avatar-large {
+  width: 64px; height: 64px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-accent);
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.375rem;
+  flex-shrink: 0;
+  box-shadow: 0 6px 20px rgba(124,58,237,0.3);
+}
+
+.patient-meta {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.patient-meta .meta-name {
+  grid-column: 1 / -1;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.patient-meta .meta-item {}
+.patient-meta .meta-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--font-display);
+  margin-bottom: 3px;
+}
+.patient-meta .meta-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.detail-body {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+/* Task Chain */
+.task-chain-section {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-xs);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.section-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+}
+
+.task-chain {}
+.task-node {
+  display: flex; gap: 14px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.task-node:last-child { padding-bottom: 0; }
+
+.task-node .node-connector {
+  width: 2px;
+  background: var(--border);
+  position: absolute;
+  left: 14px; top: 28px; bottom: 0;
+}
+
+.task-node:last-child .node-connector { display: none; }
+
+.task-node .node-dot {
+  width: 34px; height: 34px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: white;
+  font-family: var(--font-display);
+}
+
+.node-dot.done { background: var(--success); box-shadow: 0 2px 8px rgba(5,150,105,0.25); }
+.node-dot.active { background: var(--accent); box-shadow: 0 2px 8px rgba(124,58,237,0.25); }
+.node-dot.waiting { background: var(--bg-hover); color: var(--text-tertiary); border: 2px solid var(--border); }
+.node-dot.blocked { background: var(--danger-bg); color: var(--danger); border: 2px solid var(--danger); }
+
+.task-node .node-content {
+  flex: 1;
+  padding-top: 2px;
+  padding-bottom: 16px;
+}
+
+.task-node .node-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.task-node .node-desc {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.task-node .node-desc .owner {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.task-node .node-status-badge {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+.node-status-badge.completed { background: var(--success-bg); color: var(--success); }
+.node-status-badge.in-progress { background: var(--accent-light); color: var(--accent); }
+.node-status-badge.pending { background: var(--bg-hover); color: var(--text-tertiary); }
+.node-status-badge.blocked { background: var(--danger-bg); color: var(--danger); }
+
+/* Activity Timeline */
+.timeline-section {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-xs);
+}
+
+.timeline {}
+.timeline-item {
+  display: flex; gap: 12px;
+  position: relative;
+}
+
+.timeline-item .tl-line {
+  width: 2px;
+  background: var(--border-light);
+  position: absolute;
+  left: 12px; top: 22px; bottom: 0;
+}
+
+.timeline-item:last-child .tl-line { display: none; }
+
+.timeline-item .tl-dot {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.625rem;
+}
+
+.tl-dot.action { background: var(--accent-light); color: var(--accent); }
+.tl-dot.call { background: var(--warning-bg); color: var(--warning); }
+.tl-dot.system { background: var(--bg-hover); color: var(--text-tertiary); }
+
+.timeline-item .tl-content {
+  padding-bottom: 16px;
+}
+
+.timeline-item .tl-time {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  margin-bottom: 2px;
+}
+
+.timeline-item .tl-desc {
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.timeline-item .tl-by {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* ============================================
+   Guided Booking View
+   ============================================ */
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.booking-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+
+.booking-panel-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; align-items: center; gap: 12px;
+}
+
+.booking-panel-header .call-icon {
+  width: 42px; height: 42px;
+  border-radius: var(--radius-sm);
+  background: var(--warning-bg);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--warning);
+  font-size: 1.125rem;
+  box-shadow: 0 2px 8px rgba(245,158,11,0.15);
+}
+
+.booking-panel-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.booking-panel-body { padding: 20px 22px; }
+
+.call-script {
+  background: linear-gradient(135deg, #F5F3FF, #FDFBFF);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.call-script .script-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--font-display);
+  margin-bottom: 8px;
+}
+
+.call-script .script-text {
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.call-script .script-text .placeholder {
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--accent-light);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+}
+
+.call-actions {
+  display: flex; gap: 8px;
+  margin-bottom: 18px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-spring);
+  border: none;
+  font-family: var(--font-body);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+
+.btn-primary {
+  background: var(--gradient-accent);
+  color: white;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(124,58,237,0.4);
+}
+
+.btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+.btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent-light);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: none;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+.btn-ghost:hover {
+  background: var(--bg-hover);
+  color: var(--accent);
+}
+
+.btn-full { width: 100%; justify-content: center; }
+
+.call-result-form {}
+.call-result-form .form-row {
+  margin-bottom: 14px;
+}
+
+.call-result-form label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+.call-result-form input,
+.call-result-form select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: var(--bg-stripe);
+  transition: all var(--duration-fast);
+}
+
+.call-result-form input:focus,
+.call-result-form select:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Status Panel */
+.status-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+
+.status-panel-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-light);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.status-panel-body { padding: 20px 22px; }
+
+.status-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.status-item:last-child { border-bottom: none; }
+
+.status-item .st-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.st-icon.green { background: var(--success-bg); color: var(--success); }
+.st-icon.blue { background: var(--accent-light); color: var(--accent); }
+.st-icon.gray { background: var(--bg-hover); color: var(--text-tertiary); }
+
+.status-item .st-info {}
+.status-item .st-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.status-item .st-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+/* ============================================
+   Template Editor View
+   ============================================ */
+
+.template-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  height: calc(100vh - 160px);
+}
+
+.template-list-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+
+.template-list-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.template-list-header .tl-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.template-list-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.template-item {
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  margin-bottom: 4px;
+}
+
+.template-item:hover { background: var(--bg-hover); }
+.template-item.selected { background: var(--accent-light); border: 1px solid var(--accent); }
+
+.template-item .tm-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.template-item .tm-dept {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+}
+
+.template-item .tm-meta {
+  display: flex; gap: 8px;
+  margin-top: 6px;
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+}
+
+.template-editor {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+
+.editor-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.editor-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+
+.editor-body {
+  flex: 1;
+  padding: 22px;
+  overflow-y: auto;
+}
+
+.chain-builder {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.chain-step {
+  display: flex; gap: 14px;
+  position: relative;
+}
+
+.chain-step .step-connector {
+  width: 2px;
+  background: var(--accent-light);
+  position: absolute;
+  left: 18px; top: 36px; bottom: 0;
+}
+
+.chain-step:last-child .step-connector { display: none; }
+
+.chain-step .step-number {
+  width: 42px; height: 42px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-light);
+  color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  flex-shrink: 0;
+  border: 2px solid var(--accent);
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.15);
+}
+
+.chain-step .step-card {
+  flex: 1;
+  background: linear-gradient(135deg, #FAF8FF, #FDFBFF);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 8px;
+}
+
+.chain-step .step-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.chain-step .step-meta {
+  display: flex; gap: 12px;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.chain-step .step-meta span {
+  display: inline-flex; align-items: center; gap: 4px;
+}
+
+.chain-add {
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all var(--duration-fast);
+}
+
+.chain-add:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+  transform: scale(1.02);
+}
+
+/* ============================================
+   Patient App View (Mobile)
+   ============================================ */
+
+.app-view-wrapper {
+  display: flex; justify-content: center;
+  padding-top: 16px;
+}
+
+.app-phone {
+  width: 375px;
+  height: 720px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,0,0,0.02);
+  display: flex;
+  flex-direction: column;
+}
+
+.app-status-bar {
+  height: 40px;
+  background: var(--bg-surface);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+}
+
+.app-nav {
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.app-nav .app-greeting {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  color: var(--text-primary);
+}
+
+.app-nav .app-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5B8CBF, #4A6FA5);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  font-family: var(--font-display);
+}
+
+/* Today Card */
+.app-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px 16px;
+}
+
+.today-card {
+  background: var(--gradient-accent);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  color: white;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px rgba(124,58,237,0.25);
+}
+
+.today-card .today-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  font-family: var(--font-display);
+  margin-bottom: 8px;
+}
+
+.today-card .today-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.375rem;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.today-card .today-subtitle {
+  font-size: 0.8125rem;
+  opacity: 0.85;
+  margin-bottom: 14px;
+}
+
+.today-card .today-action {
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all var(--duration-fast);
+  backdrop-filter: blur(8px);
+}
+
+.today-card .today-action:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-1px);
+}
+
+/* Upcoming */
+.app-section-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.upcoming-item {
+  background: linear-gradient(135deg, #FAF8FF, #FDFBFF);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 14px;
+}
+
+.upcoming-item .up-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.up-icon.blue { background: var(--accent-light); color: var(--accent); }
+.up-icon.green { background: var(--success-bg); color: var(--success); }
+
+.upcoming-item .up-info { flex: 1; }
+.upcoming-item .up-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.upcoming-item .up-detail {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.upcoming-item .up-arrow {
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+}
+
+/* Bottom Tabs */
+.app-tabs {
+  display: flex;
+  border-top: 1px solid var(--border-light);
+  padding: 6px 0 0;
+  background: var(--bg-surface);
+}
+
+.app-tab {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 8px 0;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  font-size: 0.625rem;
+  font-weight: 500;
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  border: none;
+  background: none;
+  transition: color var(--duration-fast);
+}
+
+.app-tab.active { color: var(--accent); }
+
+.app-tab .tab-icon { font-size: 1.125rem; }
+
+/* ============================================
+   Scrollbar
+   ============================================ */
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+/* ============================================
+   Responsive hint
+   ============================================ */
+
+@media (max-width: 1200px) {
+  .kanban-board { grid-template-columns: repeat(2, 1fr); }
+  .booking-layout { grid-template-columns: 1fr; }
+  .template-layout { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   New Patient CTA Button (Sidebar)
+   ============================================ */
+
+.sidebar-cta {
+  padding: 0 16px 16px;
+}
+
+.new-patient-btn {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-accent);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--duration-fast) var(--ease-out);
+  box-shadow: 0 4px 16px rgba(124,58,237,0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.new-patient-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(124,58,237,0.35);
+}
+
+.new-patient-btn:active {
+  transform: translateY(0);
+}
+
+.new-patient-btn .plus-icon {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Dashboard page header */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.page-header .page-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.page-header .page-subtitle {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.btn-new-patient-header {
+  padding: 11px 22px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-accent);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--duration-fast) var(--ease-out);
+  box-shadow: 0 4px 16px rgba(124,58,237,0.20);
+}
+
+.btn-new-patient-header:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(124,58,237,0.30);
+}
+
+.btn-new-patient-header .plus-icon {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ============================================
+   New Patient Wizard
+   ============================================ */
+
+.wizard-container {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* Step Indicator */
+.wizard-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 36px;
+  padding: 0 20px;
+}
+
+.wizard-step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: opacity var(--duration-fast);
+}
+
+.wizard-step-indicator .step-circle {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  transition: all var(--duration-normal) var(--ease-out);
+  flex-shrink: 0;
+  border: 2px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-tertiary);
+}
+
+.wizard-step-indicator .step-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  white-space: nowrap;
+  transition: color var(--duration-fast);
+}
+
+.wizard-step-indicator.active .step-circle {
+  background: var(--gradient-accent);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.30);
+  transform: scale(1.05);
+}
+
+.wizard-step-indicator.active .step-label {
+  color: var(--text-primary);
+}
+
+.wizard-step-indicator.done .step-circle {
+  background: var(--success);
+  color: white;
+  border-color: transparent;
+}
+
+.wizard-step-indicator.done .step-label {
+  color: var(--text-secondary);
+}
+
+.wizard-step-connector {
+  flex: 1;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 0 12px;
+  transition: background var(--duration-normal);
+  max-width: 60px;
+}
+
+.wizard-step-connector.done {
+  background: var(--success);
+}
+
+/* Wizard Card */
+.wizard-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.wizard-card-header {
+  padding: 28px 32px 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.wizard-card-header .step-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.wizard-card-header .step-title {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.wizard-card-header .step-desc {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+.wizard-card-body {
+  padding: 28px 32px;
+}
+
+.wizard-card-footer {
+  padding: 20px 32px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-stripe);
+}
+
+/* Form Elements */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-grid.full {
+  grid-template-columns: 1fr;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.span-2 {
+  grid-column: span 2;
+}
+
+.form-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+.form-label .required {
+  color: var(--danger);
+  margin-left: 2px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  transition: all var(--duration-fast);
+  outline: none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%239691AB' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.form-hint {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+}
+
+/* Language chips */
+.lang-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lang-chip {
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border);
+  background: var(--bg-surface);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  font-family: var(--font-body);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.lang-chip.selected {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.lang-chip .check-icon {
+  display: none;
+  font-size: 0.75rem;
+}
+
+.lang-chip.selected .check-icon {
+  display: inline;
+}
+
+/* Template selection cards */
+.template-select-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.template-select-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  background: var(--bg-surface);
+  position: relative;
+}
+
+.template-select-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.template-select-card.selected {
+  border-color: var(--accent);
+  background: var(--accent-muted);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.template-select-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.template-select-card .tpl-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+
+.template-select-card .tpl-name {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.template-select-card .tpl-desc {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  line-height: 1.45;
+  margin-bottom: 10px;
+}
+
+.template-select-card .tpl-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+.template-select-card .tpl-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Task chain preview (step 4) */
+.chain-preview {
+  background: var(--bg-stripe);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+}
+
+.chain-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.chain-preview-header .chain-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+
+.chain-preview-header .chain-badge {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: var(--accent-light);
+  color: var(--accent);
+  font-family: var(--font-display);
+}
+
+.chain-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.chain-preview-step {
+  display: flex;
+  gap: 14px;
+  padding-bottom: 16px;
+  position: relative;
+}
+
+.chain-preview-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 36px;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.chain-preview-step .cp-dot {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.chain-preview-step .cp-dot.customizable {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+.chain-preview-step .cp-content {
+  flex: 1;
+  padding-top: 4px;
+}
+
+.chain-preview-step .cp-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chain-preview-step .cp-title .cp-edit-tag {
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  background: var(--warning-bg);
+  color: var(--warning);
+  font-family: var(--font-display);
+}
+
+.chain-preview-step .cp-detail {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.chain-preview-step .cp-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.chain-preview-step .cp-toggle label {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+/* Toggle switch */
+.toggle-switch {
+  position: relative;
+  width: 32px; height: 18px;
+  display: inline-block;
+}
+
+.toggle-switch input { display: none; }
+
+.toggle-switch .toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+
+.toggle-switch .toggle-slider::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: white;
+  top: 2px; left: 2px;
+  transition: transform var(--duration-fast) var(--ease-out);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--accent);
+}
+
+.toggle-switch input:checked + .toggle-slider::after {
+  transform: translateX(14px);
+}
+
+/* Review summary (step 5) */
+.review-section {
+  margin-bottom: 20px;
+}
+
+.review-section-title {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--bg-stripe);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.review-item {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.review-item:nth-child(odd) {
+  border-right: 1px solid var(--border-light);
+}
+
+.review-item .review-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 3px;
+}
+
+.review-item .review-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Success state */
+.wizard-success {
+  text-align: center;
+  padding: 48px 32px;
+}
+
+.wizard-success .success-icon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--success);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  animation: successPop 0.5s var(--ease-out);
+}
+
+@keyframes successPop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.wizard-success .success-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.wizard-success .success-desc {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.wizard-success .success-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Wizard nav buttons */
+.wizard-btn {
+  padding: 11px 24px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wizard-btn-primary {
+  background: var(--gradient-accent);
+  color: white;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.25);
+}
+
+.wizard-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(124,58,237,0.35);
+}
+
+.wizard-btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border);
+}
+
+.wizard-btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.wizard-btn-success {
+  background: var(--success);
+  color: white;
+  box-shadow: 0 4px 14px rgba(5,150,105,0.25);
+}
+
+.wizard-btn-success:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(5,150,105,0.35);
+}
+
+.wizard-step-content {
+  display: none;
+}
+
+.wizard-step-content.active {
+  display: block;
+  animation: fadeSlide 0.3s var(--ease-out);
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================
+   Modal Overlay System
+   ============================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 18, 58, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  width: 480px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  transform: scale(0.95) translateY(8px);
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+.modal-overlay.active .modal-card {
+  transform: scale(1) translateY(0);
+}
+.modal-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.modal-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+.modal-icon.amber { background: var(--warning-bg); color: var(--warning); }
+.modal-icon.blue { background: var(--info-bg); color: var(--info); }
+.modal-icon.purple { background: var(--accent-light); color: var(--accent); }
+.modal-title { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 600; color: var(--text-primary); }
+.modal-subtitle { font-size: 0.8125rem; color: var(--text-tertiary); margin-top: 2px; }
+.modal-body { padding: 20px 24px; }
+.modal-footer { padding: 16px 24px 20px; display: flex; gap: 10px; justify-content: flex-end; }
+
+/* Follow Up panel content */
+.followup-record {
+  background: var(--bg-stripe);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.followup-record .fr-label { font-size: 0.75rem; color: var(--text-tertiary); font-weight: 500; margin-bottom: 4px; }
+.followup-record .fr-value { font-size: 0.875rem; color: var(--text-primary); }
+.followup-actions { display: flex; flex-direction: column; gap: 10px; }
+.followup-action {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  background: var(--bg-surface);
+}
+.followup-action:hover { border-color: var(--accent); background: var(--accent-muted); }
+.followup-action .fa-icon { width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.followup-action .fa-text { flex: 1; }
+.followup-action .fa-title { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); }
+.followup-action .fa-desc { font-size: 0.75rem; color: var(--text-tertiary); }
+
+/* Assign interpreter list */
+.assign-list { display: flex; flex-direction: column; gap: 8px; }
+.assign-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.assign-item:hover { border-color: var(--accent); background: var(--accent-muted); }
+.assign-item .ai-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--gradient-soft);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 600; font-size: 0.8125rem; font-family: var(--font-display);
+  flex-shrink: 0;
+}
+.assign-item .ai-info { flex: 1; }
+.assign-item .ai-name { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); }
+.assign-item .ai-meta { font-size: 0.75rem; color: var(--text-tertiary); }
+.assign-item .ai-status { font-size: 0.6875rem; font-weight: 600; padding: 3px 8px; border-radius: var(--radius-full); }
+.assign-item .ai-status.available { background: var(--success-bg); color: var(--success); }
+.assign-item .ai-status.busy { background: var(--warning-bg); color: var(--warning); }
+
+/* Task Action Panel */
+.task-action-panel .ta-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+}
+.task-action-panel .ta-dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: white; font-family: var(--font-display); font-size: 0.875rem;
+  flex-shrink: 0;
+}
+.task-action-panel .ta-dot.active { background: var(--accent); }
+.task-action-panel .ta-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.task-action-panel .ta-owner { font-size: 0.75rem; color: var(--text-tertiary); }
+.task-action-panel .ta-desc {
+  font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;
+  padding: 14px 16px; background: var(--bg-stripe); border-radius: var(--radius-sm); margin-bottom: 16px;
+}
+.task-action-panel .ta-actions { display: flex; flex-direction: column; gap: 8px; }
+.ta-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  background: var(--bg-surface);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: left;
+  width: 100%;
+}
+.ta-btn:hover { border-color: var(--accent); background: var(--accent-muted); }
+.ta-btn.primary { background: var(--gradient-accent); color: white; border: none; justify-content: center; }
+.ta-btn.primary:hover { opacity: 0.9; }
+
+/* Call Simulation States */
+.call-actions .btn-call-start { transition: all var(--duration-normal); }
+.call-actions .btn-call-start.calling {
+  background: var(--warning);
+  color: white;
+  pointer-events: none;
+}
+.call-actions .btn-call-start.connected {
+  background: var(--success);
+  color: white;
+}
+.call-timer {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* Booking Success Overlay */
+.booking-success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 18, 58, 0.5);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+.booking-success-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.booking-success-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  width: 520px;
+  max-width: 90vw;
+  padding: 36px 40px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  transform: scale(0.9) translateY(12px);
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+.booking-success-overlay.active .booking-success-card {
+  transform: scale(1) translateY(0);
+}
+.bs-icon {
+  width: 72px; height: 72px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: var(--success-bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  color: var(--success);
+  animation: pop 0.4s var(--ease-spring);
+}
+@keyframes pop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+.bs-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+.bs-desc { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+.bs-checklist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; text-align: left; }
+.bs-check-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-stripe);
+  border-radius: var(--radius-sm);
+}
+.bs-check-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--success);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 0.75rem; font-weight: 700;
+  flex-shrink: 0;
+}
+.bs-check-text { font-size: 0.8125rem; color: var(--text-primary); }
+.bs-check-text strong { font-weight: 600; }
+.bs-actions { display: flex; gap: 10px; justify-content: center; }
+
+/* Back button for booking view */
+.booking-back-bar {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.booking-back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  font-family: var(--font-body);
+}
+.booking-back-btn:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border); }
+
+/* Resolved anomaly state */
+.anomaly-item.resolved {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.anomaly-item.resolved .anomaly-title {
+  text-decoration: line-through;
+}
+.anomaly-item.resolved .anomaly-action-btn {
+  background: var(--success-bg);
+  color: var(--success);
+  border-color: var(--success);
+}
+
+/* Task node clickable */
+.task-node.clickable {
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.task-node.clickable:hover .node-content {
+  background: var(--accent-muted);
+  border-radius: var(--radius-sm);
+}
+
+/* Updated patient app - appointment confirmed card */
+.app-notification-banner {
+  background: linear-gradient(135deg, #059669, #10b981);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  color: white;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+  animation: slideDown 0.4s var(--ease-out);
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.app-notification-banner .anb-icon { font-size: 1.25rem; }
+.app-notification-banner .anb-text { flex: 1; }
+.app-notification-banner .anb-title { font-size: 0.8125rem; font-weight: 600; }
+.app-notification-banner .anb-desc { font-size: 0.6875rem; opacity: 0.9; }
+
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     Sidebar
+     ============================================ -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo">
+      <div class="logo-icon">BC</div>
+      <div class="logo-text">BridgeCare</div>
+    </div>
+  </div>
+
+  <div class="sidebar-cta">
+    <button class="new-patient-btn" onclick="switchView('new-patient')">
+      <span class="plus-icon">+</span> New Patient
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-label">Workspace</div>
+    <button class="sidebar-nav-item active" data-view="dashboard">
+      <span class="nav-icon">⊞</span> Dashboard
+      <span class="badge">3</span>
+    </button>
+    <button class="sidebar-nav-item" data-view="patients">
+      <span class="nav-icon">👥</span> Patients
+      <span class="nav-dot"></span>
+    </button>
+    <button class="sidebar-nav-item" data-view="booking">
+      <span class="nav-icon">📞</span> Guided Booking
+      <span class="nav-dot"></span>
+    </button>
+
+    <div class="sidebar-section-label">Knowledge</div>
+    <button class="sidebar-nav-item" data-view="templates">
+      <span class="nav-icon">📋</span> Templates
+      <span class="nav-dot"></span>
+    </button>
+    <button class="sidebar-nav-item">
+      <span class="nav-icon">📚</span> Hospital Library
+      <span class="nav-dot"></span>
+    </button>
+
+    <div class="sidebar-section-label">Preview</div>
+    <button class="sidebar-nav-item" data-view="patient-app">
+      <span class="nav-icon">📱</span> Patient App
+      <span class="nav-dot"></span>
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="avatar">YC</div>
+      <div class="user-info">
+        <div class="user-name">Yuzhu Dai</div>
+        <div class="user-role">Care Coordinator</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ============================================
+     Main Content
+     ============================================ -->
+<main class="main">
+  <header class="header">
+    <div class="header-search">
+      <span class="search-icon">⌕</span>
+      <input type="text" placeholder="Search patients, tasks, templates...">
+    </div>
+    <div class="header-actions">
+      <button class="header-btn notif" title="Notifications">🔔</button>
+      <button class="header-btn" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ============================================
+         VIEW 1: Dashboard
+         ============================================ -->
+    <div class="view active" id="view-dashboard">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <div class="page-title">Care Dashboard</div>
+          <div class="page-subtitle">Monday, July 5 · 3 anomalies need your attention</div>
+        </div>
+        <button class="btn-new-patient-header" onclick="switchView('new-patient')">
+          <span class="plus-icon">+</span> New Patient
+        </button>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card card-purple">
+          <div class="stat-info">
+            <div class="stat-label">Active Patients</div>
+            <div class="stat-value">24</div>
+            <div class="stat-change">+3 this week</div>
+          </div>
+          <div class="stat-icon">👥</div>
+        </div>
+        <div class="stat-card card-amber">
+          <div class="stat-info">
+            <div class="stat-label">Pending Tasks</div>
+            <div class="stat-value">47</div>
+            <div class="stat-change">12 overdue</div>
+          </div>
+          <div class="stat-icon">⏳</div>
+        </div>
+        <div class="stat-card card-red">
+          <div class="stat-info">
+            <div class="stat-label">Anomalies</div>
+            <div class="stat-value">3</div>
+            <div class="stat-change">Needs attention</div>
+          </div>
+          <div class="stat-icon">⚠</div>
+        </div>
+        <div class="stat-card card-green">
+          <div class="stat-info">
+            <div class="stat-label">Completed Today</div>
+            <div class="stat-value">12</div>
+            <div class="stat-change">+2 vs yesterday</div>
+          </div>
+          <div class="stat-icon">✓</div>
+        </div>
+      </div>
+
+      <!-- Kanban Board -->
+      <div class="kanban-board">
+
+        <!-- Column: To Do -->
+        <div class="kanban-col">
+          <div class="kanban-col-header">
+            <span class="kanban-col-title">To Do <span class="kanban-col-count">9</span></span>
+          </div>
+          <div class="kanban-col-body">
+
+            <div class="patient-card" onclick="switchView('new-patient-detail')" style="border: 2px solid var(--accent); box-shadow: 0 0 0 4px var(--accent-glow);">
+              <div class="card-header">
+                <span class="patient-name">Emma Schmidt <span style="font-size:0.625rem;background:var(--accent);color:white;padding:2px 7px;border-radius:var(--radius-full);font-weight:600;margin-left:4px;">NEW</span></span>
+                <span class="patient-priority priority-high"></span>
+              </div>
+              <div class="card-detail">
+                High-risk pregnancy · Suspected fetal cardiac anomaly · United Family → Anzhen Hospital
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-lang">DE + EN</span>
+                <span class="tag tag-dept">Fetal Cardiology</span>
+                <span class="tag tag-urgent">Urgent</span>
+              </div>
+              <div class="card-meta">
+                <span>Just created</span>
+                <span style="color:var(--accent);font-weight:600;">Step 1/10 · SLA 2h</span>
+              </div>
+            </div>
+
+            <div class="patient-card" onclick="switchView('patients')">
+              <div class="card-header">
+                <span class="patient-name">Sarah Johnson</span>
+                <span class="patient-priority priority-high"></span>
+              </div>
+              <div class="card-detail">
+                High-risk pregnancy · Fetal cardiac echo needed · Transfer from United Family → Anzhen Hospital
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-lang">EN only</span>
+                <span class="tag tag-dept">Cardiology</span>
+                <span class="tag tag-urgent">Urgent</span>
+              </div>
+              <div class="card-meta">
+                <span>Opened 2d ago</span>
+                <span class="due-date overdue">Due: Jul 3</span>
+              </div>
+            </div>
+
+            <div class="patient-card">
+              <div class="card-header">
+                <span class="patient-name">Kenji Nakamura</span>
+                <span class="patient-priority priority-medium"></span>
+              </div>
+              <div class="card-detail">
+                Orthopedic surgery transfer · OASIS → Jishuitan Hospital · Needs interpreter
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-lang">JA + EN</span>
+                <span class="tag tag-dept">Orthopedics</span>
+              </div>
+              <div class="card-meta">
+                <span>Opened 1d ago</span>
+                <span>Due: Jul 6</span>
+              </div>
+            </div>
+
+            <div class="patient-card">
+              <div class="card-header">
+                <span class="patient-name">Maria Silva</span>
+                <span class="patient-priority priority-normal"></span>
+              </div>
+              <div class="card-detail">
+                Prenatal checkup follow-up · Routine ultrasound · Raffles → Peking Union
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-lang">PT + EN</span>
+                <span class="tag tag-dept">OB/GYN</span>
+              </div>
+              <div class="card-meta">
+                <span>Opened 6h ago</span>
+                <span>Due: Jul 8</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Column: In Progress -->
+        <div class="kanban-col">
+          <div class="kanban-col-header">
+            <span class="kanban-col-title">In Progress <span class="kanban-col-count">6</span></span>
+          </div>
+          <div class="kanban-col-body">
+
+            <div class="patient-card">
+              <div class="card-header">
+                <span class="patient-name">Ahmed Al-Rashid</span>
+                <span class="patient-priority priority-high"></span>
+              </div>
+              <div class="card-detail">
+                Emergency GI referral · BJU → Chaoyang Hospital · Waiting for endoscopy slot
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-lang">AR + EN</span>
+                <span class="tag tag-dept">Gastroenterology</span>
+                <span class="tag tag-progress">Waiting</span>
+              </div>
+              <div class="card-meta">
+                <span>Step 4/10</span>
+                <span class="due-date overdue">Due: Jul 2</span>
+              </div>
+            </div>
+
+            <div class="patient-card">
+              <div class="card-header">
+                <span class="patient-name">Lisa Anderson</span>
+                <span class="patient-priority priority-medium"></span>
+              </div>
+              <div class="card-detail">
+                Neurology consultation · MS follow-up · United Family → Xuanwu Hospital
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-lang">EN only</span>
+                <span class="tag tag-dept">Neurology</span>
+              </div>
+              <div class="card-meta">
+                <span>Step 3/8</span>
+                <span>Due: Jul 7</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Column: Review / Waiting -->
+        <div class="kanban-col">
+          <div class="kanban-col-header">
+            <span class="kanban-col-title">Waiting <span class="kanban-col-count">4</span></span>
+          </div>
+          <div class="kanban-col-body">
+
+            <div class="patient-card" onclick="switchView('booking')">
+              <div class="card-header">
+                <span class="patient-name">Sarah Johnson</span>
+                <span class="patient-priority priority-high"></span>
+              </div>
+              <div class="card-detail">
+                Awaiting appointment confirmation from Anzhen Hospital · Need to call
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-urgent">Action needed</span>
+                <span class="tag tag-dept">Cardiology</span>
+              </div>
+              <div class="card-meta">
+                <span>Waiting 1d</span>
+                <span>→ Call Anzhen</span>
+              </div>
+            </div>
+
+            <div class="patient-card">
+              <div class="card-header">
+                <span class="patient-name">Thomas Wright</span>
+                <span class="patient-priority priority-normal"></span>
+              </div>
+              <div class="card-detail">
+                Lab results pending · Peking Union · Blood work + imaging review
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-lang">EN only</span>
+                <span class="tag tag-dept">Internal Med</span>
+              </div>
+              <div class="card-meta">
+                <span>Waiting 3d</span>
+                <span>Awaiting results</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Column: Completed -->
+        <div class="kanban-col">
+          <div class="kanban-col-header">
+            <span class="kanban-col-title">Done <span class="kanban-col-count">12</span></span>
+          </div>
+          <div class="kanban-col-body">
+
+            <div class="patient-card">
+              <div class="card-header">
+                <span class="patient-name">Yuki Tanaka</span>
+                <span class="patient-priority priority-normal"></span>
+              </div>
+              <div class="card-detail">
+                Dental surgery completed · Transferred to Peking University Stomatology
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-lang">JA only</span>
+                <span class="tag tag-dept">Dental</span>
+              </div>
+              <div class="card-meta">
+                <span>Done Jul 2</span>
+                <span style="color:var(--success)">Completed</span>
+              </div>
+            </div>
+
+            <div class="patient-card">
+              <div class="card-header">
+                <span class="patient-name">Pierre Dubois</span>
+                <span class="patient-priority priority-normal"></span>
+              </div>
+              <div class="card-detail">
+                Dermatology consultation done · Follow-up scheduled in 3 months
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-lang">FR + EN</span>
+                <span class="tag tag-dept">Dermatology</span>
+              </div>
+              <div class="card-meta">
+                <span>Done Jun 30</span>
+                <span style="color:var(--success)">Completed</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Anomaly Alerts -->
+      <div class="anomaly-panel">
+        <div class="anomaly-panel-header">
+          <div class="dot"></div>
+          <span class="anomaly-panel-title">Anomaly Alerts</span>
+          <span class="anomaly-panel-count">3 active</span>
+        </div>
+        <div class="anomaly-list">
+          <div class="anomaly-item" id="anomaly-sarah">
+            <div class="anomaly-icon red">⚠</div>
+            <div class="anomaly-info">
+              <div class="anomaly-title">Overdue: Sarah Johnson — Anzhen appointment not confirmed</div>
+              <div class="anomaly-detail">Task "Call Anzhen Hospital" overdue by 1 day. No action taken.</div>
+            </div>
+            <button class="anomaly-action-btn" onclick="switchView('booking')">Resolve</button>
+          </div>
+          <div class="anomaly-item" id="anomaly-ahmed">
+            <div class="anomaly-icon amber">⏰</div>
+            <div class="anomaly-info">
+              <div class="anomaly-title">Approaching deadline: Ahmed Al-Rashid — Endoscopy slot</div>
+              <div class="anomaly-detail">Due in 4 hours. No confirmation received from Chaoyang Hospital.</div>
+            </div>
+            <button class="anomaly-action-btn" onclick="openFollowUpModal()">Follow Up</button>
+          </div>
+          <div class="anomaly-item" id="anomaly-interpreter">
+            <div class="anomaly-icon red">⚠</div>
+            <div class="anomaly-info">
+              <div class="anomaly-title">Interpreter missing: New patient from Germany</div>
+              <div class="anomaly-detail">German-speaking interpreter unassigned. Appointment in 2 days.</div>
+            </div>
+            <button class="anomaly-action-btn" onclick="openAssignModal()">Assign</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================
+         VIEW 2: Patient Detail (Sarah Johnson)
+         ============================================ -->
+    <div class="view" id="view-patients">
+
+      <button class="detail-back" onclick="switchView('dashboard')">← Back to Dashboard</button>
+
+      <div class="detail-header">
+        <div class="patient-avatar-large">SJ</div>
+        <div class="patient-meta">
+          <div class="meta-name">Sarah Johnson</div>
+          <div class="meta-item">
+            <div class="meta-label">Nationality</div>
+            <div class="meta-value">United States</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Languages</div>
+            <div class="meta-value">English only</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Referring Hospital</div>
+            <div class="meta-value">Beijing United Family</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Target Hospital</div>
+            <div class="meta-value">Beijing Anzhen Hospital</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Department</div>
+            <div class="meta-value">Fetal Cardiology</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Priority</div>
+            <div class="meta-value" style="color:var(--danger)">High — 32 weeks pregnant</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Template</div>
+            <div class="meta-value">Cross-Hospital OB Referral v3</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Opened</div>
+            <div class="meta-value">July 1, 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-body">
+
+        <!-- Task Chain -->
+        <div class="task-chain-section">
+          <div class="section-title">Task Chain</div>
+          <div class="section-subtitle">Cross-Hospital OB Referral v3 · 10 steps</div>
+
+          <div class="task-chain">
+            <div class="task-node">
+              <div class="node-dot done">1</div>
+              <div class="node-connector"></div>
+              <div class="node-content">
+                <div class="node-title">Collect Patient Records</div>
+                <div class="node-desc"><span class="owner">System</span> — Medical history, insurance, previous scans automatically retrieved from United Family EMR</div>
+                <span class="node-status-badge completed">Done · Jul 1, 09:30</span>
+              </div>
+            </div>
+            <div class="task-node">
+              <div class="node-dot done">2</div>
+              <div class="node-connector"></div>
+              <div class="node-content">
+                <div class="node-title">Identify Target Hospital & Department</div>
+                <div class="node-desc"><span class="owner">Coordinator</span> — Fetal cardiac echo → Beijing Anzhen Hospital, Dept. of Fetal Cardiology</div>
+                <span class="node-status-badge completed">Done · Jul 1, 10:15</span>
+              </div>
+            </div>
+            <div class="task-node">
+              <div class="node-dot done">3</div>
+              <div class="node-connector"></div>
+              <div class="node-content">
+                <div class="node-title">Prepare Referral Documents (ZH)</div>
+                <div class="node-desc"><span class="owner">System + Coordinator</span> — Auto-translate key records. Coordinator reviews accuracy of medical terms.</div>
+                <span class="node-status-badge completed">Done · Jul 1, 14:20</span>
+              </div>
+            </div>
+            <div class="task-node clickable" onclick="openTaskActionModal(4)">
+              <div class="node-dot active">4</div>
+              <div class="node-connector"></div>
+              <div class="node-content">
+                <div class="node-title">Contact Target Hospital — Book Appointment</div>
+                <div class="node-desc"><span class="owner">Coordinator</span> — Call Anzhen Hospital registration. Phone script available. Confirm fetal cardiac echo slot.</div>
+                <span class="node-status-badge in-progress">In Progress · Blocked</span>
+                <div style="margin-top:8px;">
+                  <button class="btn btn-primary" style="font-size:0.75rem;padding:6px 14px;" onclick="event.stopPropagation();switchView('booking')">📞 Start Guided Booking →</button>
+                </div>
+              </div>
+            </div>
+            <div class="task-node">
+              <div class="node-dot waiting">5</div>
+              <div class="node-connector"></div>
+              <div class="node-content">
+                <div class="node-title">Notify Patient — Appointment Confirmed</div>
+                <div class="node-desc"><span class="owner">System</span> — Push notification to patient app with date, time, location, prep instructions in EN</div>
+                <span class="node-status-badge pending">Waiting</span>
+              </div>
+            </div>
+            <div class="task-node">
+              <div class="node-dot waiting">6</div>
+              <div class="node-connector"></div>
+              <div class="node-content">
+                <div class="node-title">Day-Before Reminder + Route Guide</div>
+                <div class="node-desc"><span class="owner">System</span> — Send reminder with hospital map, check-in floor, required documents list</div>
+                <span class="node-status-badge pending">Waiting</span>
+              </div>
+            </div>
+            <div class="task-node">
+              <div class="node-dot waiting">7</div>
+              <div class="node-connector"></div>
+              <div class="node-content">
+                <div class="node-title">Day of Appointment — Navigator Guide</div>
+                <div class="node-desc"><span class="owner">System</span> — Real-time navigation within hospital. Step-by-step guide from registration → waiting → exam room</div>
+                <span class="node-status-badge pending">Waiting</span>
+              </div>
+            </div>
+            <div class="task-node">
+              <div class="node-dot waiting">8</div>
+              <div class="node-content">
+                <div class="node-title">Collect Results & Follow-up Planning</div>
+                <div class="node-desc"><span class="owner">Coordinator</span> — Obtain report from Anzhen. Translate key findings. Coordinate multi-disciplinary review if needed.</div>
+                <span class="node-status-badge pending">Waiting</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Timeline -->
+        <div class="timeline-section">
+          <div class="section-title">Activity</div>
+          <div class="section-subtitle">Recent updates</div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="tl-dot action">⏰</div>
+              <div class="tl-line"></div>
+              <div class="tl-content">
+                <div class="tl-time">Today, 14:30</div>
+                <div class="tl-desc">Anomaly raised: Step 4 (Contact Anzhen) overdue. No action taken in 24h.</div>
+                <div class="tl-by">System</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot call">📞</div>
+              <div class="tl-line"></div>
+              <div class="tl-content">
+                <div class="tl-time">Yesterday, 16:15</div>
+                <div class="tl-desc">Called Anzhen Hospital. Line busy. Will retry tomorrow morning.</div>
+                <div class="tl-by">Yuzhu Dai</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot action">📋</div>
+              <div class="tl-line"></div>
+              <div class="tl-content">
+                <div class="tl-time">Jul 1, 14:20</div>
+                <div class="tl-desc">Referral documents translated to Chinese. Reviewed and approved.</div>
+                <div class="tl-by">Yuzhu Dai</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot system">🔗</div>
+              <div class="tl-content">
+                <div class="tl-time">Jul 1, 09:30</div>
+                <div class="tl-desc">Patient record created. Template "Cross-Hospital OB Referral v3" applied.</div>
+                <div class="tl-by">System</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================
+         VIEW 3: Guided Booking
+         ============================================ -->
+    <div class="view" id="view-booking">
+
+      <div class="booking-back-bar">
+        <button class="booking-back-btn" onclick="switchView('dashboard')">← Dashboard</button>
+        <button class="booking-back-btn" onclick="switchView('patients')">← Patient Detail</button>
+      </div>
+
+      <div class="booking-layout">
+        <!-- Left: Call Script + Booking Form -->
+        <div class="booking-panel">
+          <div class="booking-panel-header">
+            <div class="call-icon">📞</div>
+            <div>
+              <div class="booking-panel-title">Guided Booking</div>
+              <div style="font-size:0.75rem;color:var(--text-tertiary);">Call Anzhen Hospital · Fetal Cardiac Echo</div>
+            </div>
+          </div>
+          <div class="booking-panel-body">
+
+            <div class="call-script">
+              <div class="script-label">Phone Script</div>
+              <div class="script-text">
+                Hello, I'm calling from <span class="placeholder">Beijing United Family Hospital</span>.<br><br>
+                We have a <span class="placeholder">32-week pregnant</span> patient, <span class="placeholder">Sarah Johnson</span>, who needs a <span class="placeholder">fetal cardiac ultrasound</span>.<br><br>
+                We have already prepared <span class="placeholder">referral documents + translated medical records</span>.<br><br>
+                Could we schedule an appointment for <span class="placeholder">this week</span> with <span class="placeholder">Dept. of Fetal Cardiology</span>?<br><br>
+                The patient is a <span class="placeholder">US citizen with international insurance</span>. Do you accept <span class="placeholder">Cigna Global</span>?
+              </div>
+            </div>
+
+            <div class="call-actions">
+              <button class="btn btn-primary btn-call-start" id="call-start-btn" style="flex:1" onclick="simulateCall()">📞 Start Call</button>
+              <button class="btn btn-ghost">Copy Script</button>
+            </div>
+            <div id="call-timer-display" style="display:none;" class="call-timer"></div>
+
+            <div class="call-result-form">
+              <div class="form-row">
+                <label>Call Status</label>
+                <select>
+                  <option>Connected — Proceeding</option>
+                  <option>Line Busy — Will Retry</option>
+                  <option>No Answer</option>
+                  <option>Wrong Number</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>Appointment Date</label>
+                <input type="text" value="July 5, 2026 (Saturday)" placeholder="Enter appointment date">
+              </div>
+              <div class="form-row">
+                <label>Appointment Time</label>
+                <input type="text" value="09:00 AM — First slot" placeholder="Enter time">
+              </div>
+              <div class="form-row">
+                <label>Department Confirmed</label>
+                <input type="text" value="Dept. of Fetal Cardiology, 3rd Floor, Building B">
+              </div>
+              <div class="form-row">
+                <label>Notes from Call</label>
+                <input type="text" placeholder="Special instructions, required documents..." value="Patient must bring passport + translated referral letter. Register at Window 3 (Foreign Patients).">
+              </div>
+              <button class="btn btn-primary btn-full" onclick="confirmBooking()">Confirm & Notify Patient</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Status Panel -->
+        <div class="status-panel">
+          <div class="status-panel-header">Current Status</div>
+          <div class="status-panel-body">
+            <div class="status-item">
+              <div class="st-icon green">✓</div>
+              <div class="st-info">
+                <div class="st-title">Records Collected</div>
+                <div class="st-subtitle">EMR auto-retrieved from United Family</div>
+              </div>
+            </div>
+            <div class="status-item">
+              <div class="st-icon green">✓</div>
+              <div class="st-info">
+                <div class="st-title">Hospital Identified</div>
+                <div class="st-subtitle">Beijing Anzhen · Fetal Cardiology</div>
+              </div>
+            </div>
+            <div class="status-item">
+              <div class="st-icon green">✓</div>
+              <div class="st-info">
+                <div class="st-title">Documents Translated</div>
+                <div class="st-subtitle">ZH referral package ready</div>
+              </div>
+            </div>
+            <div class="status-item">
+              <div class="st-icon blue">⟳</div>
+              <div class="st-info">
+                <div class="st-title">Booking in Progress</div>
+                <div class="st-subtitle">Contacting Anzhen Hospital now</div>
+              </div>
+            </div>
+            <div class="status-item">
+              <div class="st-icon gray">○</div>
+              <div class="st-info">
+                <div class="st-title">Notify Patient</div>
+                <div class="st-subtitle">Pending appointment confirmation</div>
+              </div>
+            </div>
+            <div class="status-item">
+              <div class="st-icon gray">○</div>
+              <div class="st-info">
+                <div class="st-title">Patient Reminder</div>
+                <div class="st-subtitle">Auto-scheduled for day before</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================
+         VIEW 4: Template Editor
+         ============================================ -->
+    <div class="view" id="view-templates">
+
+      <div class="template-layout">
+        <!-- Template List -->
+        <div class="template-list-panel">
+          <div class="template-list-header">
+            <span class="tl-title">Task Templates</span>
+            <button class="btn btn-ghost" style="padding:6px 10px;font-size:0.75rem;">+ New</button>
+          </div>
+          <div class="template-list-body">
+            <div class="template-item selected">
+              <div class="tm-name">Cross-Hospital OB Referral v3</div>
+              <div class="tm-dept">OB/GYN · High-Risk Pregnancy</div>
+              <div class="tm-meta"><span>10 steps</span><span>Used 23×</span><span>Last: Jul 1</span></div>
+            </div>
+            <div class="template-item">
+              <div class="tm-name">Orthopedic Surgery Transfer</div>
+              <div class="tm-dept">Orthopedics · Joint Replacement</div>
+              <div class="tm-meta"><span>8 steps</span><span>Used 15×</span><span>Last: Jun 28</span></div>
+            </div>
+            <div class="template-item">
+              <div class="tm-name">Cardiology Consultation</div>
+              <div class="tm-dept">Cardiology · General</div>
+              <div class="tm-meta"><span>7 steps</span><span>Used 31×</span><span>Last: Jul 2</span></div>
+            </div>
+            <div class="template-item">
+              <div class="tm-name">Pediatric Specialist Referral</div>
+              <div class="tm-dept">Pediatrics · Neurology</div>
+              <div class="tm-meta"><span>9 steps</span><span>Used 12×</span><span>Last: Jun 20</span></div>
+            </div>
+            <div class="template-item">
+              <div class="tm-name">Dental Surgery Coordination</div>
+              <div class="tm-dept">Stomatology · Implant</div>
+              <div class="tm-meta"><span>6 steps</span><span>Used 8×</span><span>Last: Jun 15</span></div>
+            </div>
+            <div class="template-item">
+              <div class="tm-name">Oncology Multi-Disciplinary</div>
+              <div class="tm-dept">Oncology · MDT</div>
+              <div class="tm-meta"><span>12 steps</span><span>Used 5×</span><span>Last: May 30</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chain Builder -->
+        <div class="template-editor">
+          <div class="editor-header">
+            <span class="editor-title">Cross-Hospital OB Referral v3</span>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-ghost" style="font-size:0.75rem;padding:6px 14px;">Save Draft</button>
+              <button class="btn btn-primary" style="font-size:0.75rem;padding:6px 14px;">Publish</button>
+            </div>
+          </div>
+          <div class="editor-body">
+            <div class="chain-builder">
+              <div class="chain-step">
+                <div class="step-number">1</div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                  <div class="step-title">Collect Patient Records</div>
+                  <div class="step-meta">
+                    <span>👤 Owner: System</span>
+                    <span>⏱ Est: 5 min</span>
+                    <span>⚡ Auto</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chain-step">
+                <div class="step-number">2</div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                  <div class="step-title">Identify Target Hospital & Department</div>
+                  <div class="step-meta">
+                    <span>👤 Owner: Coordinator</span>
+                    <span>⏱ Est: 15 min</span>
+                    <span>📋 Decision</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chain-step">
+                <div class="step-number">3</div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                  <div class="step-title">Translate Documents (ZH)</div>
+                  <div class="step-meta">
+                    <span>👤 Owner: System → Coordinator</span>
+                    <span>⏱ Est: 20 min</span>
+                    <span>🔍 Review required</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chain-step">
+                <div class="step-number">4</div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                  <div class="step-title">Contact Hospital — Book Appointment</div>
+                  <div class="step-meta">
+                    <span>👤 Owner: Coordinator</span>
+                    <span>⏱ Est: 30 min</span>
+                    <span>📞 Phone script</span>
+                    <span>⚠ SLA: 48h</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chain-step">
+                <div class="step-number">5</div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                  <div class="step-title">Notify Patient</div>
+                  <div class="step-meta">
+                    <span>👤 Owner: System</span>
+                    <span>⏱ Est: Instant</span>
+                    <span>📱 Push + Email</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chain-step">
+                <div class="step-number">6</div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                  <div class="step-title">Day-Before Reminder</div>
+                  <div class="step-meta">
+                    <span>👤 Owner: System</span>
+                    <span>⏱ Auto: T-24h</span>
+                    <span>🗺 Route + Docs</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chain-step">
+                <div class="step-number">7</div>
+                <div class="step-connector"></div>
+                <div class="step-card">
+                  <div class="step-title">Day-of In-Hospital Navigation</div>
+                  <div class="step-meta">
+                    <span>👤 Owner: System</span>
+                    <span>⏱ Real-time</span>
+                    <span>📍 Step-by-step</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chain-step">
+                <div class="step-number">8</div>
+                <div class="step-card">
+                  <div class="step-title">Collect Results & Follow-up</div>
+                  <div class="step-meta">
+                    <span>👤 Owner: Coordinator</span>
+                    <span>⏱ Est: 45 min</span>
+                    <span>📊 Report translation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chain-add">+ Add Step</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================
+         VIEW 5: Patient App
+         ============================================ -->
+    <div class="view" id="view-patient-app">
+      <div class="app-view-wrapper">
+        <div class="app-phone">
+
+          <!-- Status Bar -->
+          <div class="app-status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+
+          <!-- Nav -->
+          <div class="app-nav">
+            <span class="app-greeting">Hi Sarah 👋</span>
+            <div class="app-avatar">SJ</div>
+          </div>
+
+          <!-- Body -->
+          <div class="app-body">
+
+            <!-- Today Card -->
+            <div class="today-card">
+              <div class="today-label">Upcoming Appointment</div>
+              <div class="today-title">Fetal Cardiac Echo</div>
+              <div class="today-subtitle">Saturday, Jul 5 · 9:00 AM<br>Beijing Anzhen Hospital, Bldg B, 3F</div>
+              <button class="today-action">View Preparation Guide →</button>
+            </div>
+
+            <div class="app-section-label">What's Next</div>
+
+            <div class="upcoming-item">
+              <div class="up-icon blue">📋</div>
+              <div class="up-info">
+                <div class="up-title">Documents to Bring</div>
+                <div class="up-detail">Passport · Referral letter · Insurance card</div>
+              </div>
+              <span class="up-arrow">→</span>
+            </div>
+
+            <div class="upcoming-item">
+              <div class="up-icon green">📍</div>
+              <div class="up-info">
+                <div class="up-title">Hospital Navigation</div>
+                <div class="up-detail">Step-by-step guide inside Anzhen Hospital</div>
+              </div>
+              <span class="up-arrow">→</span>
+            </div>
+
+            <div class="upcoming-item">
+              <div class="up-icon blue">💬</div>
+              <div class="up-info">
+                <div class="up-title">Contact Your Coordinator</div>
+                <div class="up-detail">Yuzhu Dai · Available 9AM–6PM</div>
+              </div>
+              <span class="up-arrow">→</span>
+            </div>
+
+            <div class="upcoming-item">
+              <div class="up-icon green">📊</div>
+              <div class="up-info">
+                <div class="up-title">Your Medical Summary</div>
+                <div class="up-detail">Translated records ready for Anzhen doctors</div>
+              </div>
+              <span class="up-arrow">→</span>
+            </div>
+
+          </div>
+
+          <!-- Bottom Tabs -->
+          <div class="app-tabs">
+            <button class="app-tab active">
+              <span class="tab-icon">📅</span> Today
+            </button>
+            <button class="app-tab">
+              <span class="tab-icon">📋</span> Timeline
+            </button>
+            <button class="app-tab">
+              <span class="tab-icon">❓</span> Help
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         VIEW 6: New Patient Wizard
+         ============================================ -->
+    <div class="view" id="view-new-patient">
+      <div class="wizard-container">
+
+        <!-- Step Indicator -->
+        <div class="wizard-steps" id="wizard-steps">
+          <div class="wizard-step-indicator active" data-step="1">
+            <div class="step-circle">1</div>
+            <div class="step-label">Patient Info</div>
+          </div>
+          <div class="wizard-step-connector" data-connector="1"></div>
+          <div class="wizard-step-indicator" data-step="2">
+            <div class="step-circle">2</div>
+            <div class="step-label">Referral</div>
+          </div>
+          <div class="wizard-step-connector" data-connector="2"></div>
+          <div class="wizard-step-indicator" data-step="3">
+            <div class="step-circle">3</div>
+            <div class="step-label">Template</div>
+          </div>
+          <div class="wizard-step-connector" data-connector="3"></div>
+          <div class="wizard-step-indicator" data-step="4">
+            <div class="step-circle">4</div>
+            <div class="step-label">Customize</div>
+          </div>
+          <div class="wizard-step-connector" data-connector="4"></div>
+          <div class="wizard-step-indicator" data-step="5">
+            <div class="step-circle">5</div>
+            <div class="step-label">Review & Launch</div>
+          </div>
+        </div>
+
+        <!-- Wizard Card -->
+        <div class="wizard-card" id="wizard-card">
+
+          <!-- Step 1: Patient Information -->
+          <div class="wizard-step-content active" data-step-content="1">
+            <div class="wizard-card-header">
+              <div class="step-tag">Step 1 of 5</div>
+              <div class="step-title">Patient Information</div>
+              <div class="step-desc">Enter the patient's basic profile. This will be used across all hospital systems and the patient app.</div>
+            </div>
+            <div class="wizard-card-body">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">First Name <span class="required">*</span></label>
+                  <input class="form-input" type="text" placeholder="e.g. Sarah" value="Emma">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Last Name <span class="required">*</span></label>
+                  <input class="form-input" type="text" placeholder="e.g. Johnson" value="Schmidt">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Date of Birth <span class="required">*</span></label>
+                  <input class="form-input" type="date" value="1991-03-15">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Nationality <span class="required">*</span></label>
+                  <select class="form-select">
+                    <option>Germany</option>
+                    <option>United States</option>
+                    <option>Japan</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone (WeChat/WhatsApp)</label>
+                  <input class="form-input" type="text" placeholder="+49 170 1234567" value="+49 170 8834521">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <input class="form-input" type="email" placeholder="emma.schmidt@email.com">
+                </div>
+                <div class="form-group span-2">
+                  <label class="form-label">Preferred Languages <span class="required">*</span></label>
+                  <div class="lang-chips">
+                    <div class="lang-chip selected" onclick="this.classList.toggle('selected')">✓ German</div>
+                    <div class="lang-chip selected" onclick="this.classList.toggle('selected')">✓ English</div>
+                    <div class="lang-chip" onclick="this.classList.toggle('selected')">✓ French</div>
+                    <div class="lang-chip" onclick="this.classList.toggle('selected')">✓ Spanish</div>
+                    <div class="lang-chip" onclick="this.classList.toggle('selected')">✓ Japanese</div>
+                    <div class="lang-chip" onclick="this.classList.toggle('selected')">✓ Korean</div>
+                    <div class="lang-chip" onclick="this.classList.toggle('selected')">✓ Russian</div>
+                    <div class="lang-chip" onclick="this.classList.toggle('selected')">✓ Chinese</div>
+                  </div>
+                  <div class="form-hint">The patient app will display in the first selected language.</div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Insurance Type</label>
+                  <select class="form-select">
+                    <option>International Private</option>
+                    <option>Local Public</option>
+                    <option>Self-Pay</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Insurance Provider</label>
+                  <input class="form-input" type="text" placeholder="e.g. Allianz Care" value="Allianz Care">
+                </div>
+                <div class="form-group span-2">
+                  <label class="form-label">Notes / Special Requirements</label>
+                  <textarea class="form-textarea" placeholder="Dietary restrictions, mobility needs, anxiety triggers...">First pregnancy after 2 miscarriages. High anxiety. Husband accompanies to all appointments. Prefers detailed advance explanations.</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="wizard-card-footer">
+              <button class="wizard-btn wizard-btn-secondary" onclick="switchView('dashboard')">← Cancel</button>
+              <button class="wizard-btn wizard-btn-primary" onclick="wizardNext(1)">Next: Referral Source →</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Referral Source -->
+          <div class="wizard-step-content" data-step-content="2">
+            <div class="wizard-card-header">
+              <div class="step-tag">Step 2 of 5</div>
+              <div class="step-title">Referral & Medical Context</div>
+              <div class="step-desc">Where is this patient coming from, and why do they need cross-hospital care?</div>
+            </div>
+            <div class="wizard-card-body">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Referring Hospital <span class="required">*</span></label>
+                  <select class="form-select">
+                    <option>United Family Hospital (Beijing)</option>
+                    <option>OASIS International Hospital</option>
+                    <option>Raffles Medical Beijing</option>
+                    <option>BJU — Beijing United Family</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Referring Doctor</label>
+                  <input class="form-input" type="text" placeholder="Dr. ..." value="Dr. Li Wen">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Primary Department <span class="required">*</span></label>
+                  <select class="form-select">
+                    <option>OB/GYN — Prenatal</option>
+                    <option>Cardiology</option>
+                    <option>Orthopedics</option>
+                    <option>Pediatrics</option>
+                    <option>Internal Medicine</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Target Hospital <span class="required">*</span></label>
+                  <select class="form-select">
+                    <option>Anzhen Hospital (Public)</option>
+                    <option>Peking Union Medical College Hospital</option>
+                    <option>Fuwai Hospital</option>
+                    <option>Jishuitan Hospital</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Reason for Referral <span class="required">*</span></label>
+                  <select class="form-select">
+                    <option>Specialized diagnostic not available at referring hospital</option>
+                    <option>Surgical procedure referral</option>
+                    <option>Second opinion</option>
+                    <option>Insurance network requirement</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Urgency Level <span class="required">*</span></label>
+                  <select class="form-select">
+                    <option>🟠 Urgent — within 3 days</option>
+                    <option>🟡 Priority — within 1 week</option>
+                    <option>🟢 Routine — within 2 weeks</option>
+                  </select>
+                </div>
+                <div class="form-group span-2">
+                  <label class="form-label">Medical Summary <span class="required">*</span></label>
+                  <textarea class="form-textarea" placeholder="Brief clinical context for the receiving hospital...">32yo G1P0 at 22w6d. Anatomy scan at United Family showed suspected fetal cardiac anomaly (possible VSD). Referring for specialized fetal echocardiography at Anzhen Hospital. Patient has history of 2 first-trimester miscarriages. Currently on progesterone supplementation. No other comorbidities. Blood type A+.</textarea>
+                </div>
+                <div class="form-group span-2">
+                  <label class="form-label">Attach Records</label>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <div style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-full);background:var(--bg-stripe);border:1px solid var(--border-light);font-size:0.75rem;color:var(--text-secondary);">
+                      📄 Anatomy_Scan_22w.pdf
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-full);background:var(--bg-stripe);border:1px solid var(--border-light);font-size:0.75rem;color:var(--text-secondary);">
+                      📄 Blood_Panel_Jun.pdf
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-full);background:var(--accent-light);color:var(--accent);font-size:0.75rem;font-weight:500;cursor:pointer;">
+                      + Upload more
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wizard-card-footer">
+              <button class="wizard-btn wizard-btn-secondary" onclick="wizardPrev(2)">← Patient Info</button>
+              <button class="wizard-btn wizard-btn-primary" onclick="wizardNext(2)">Next: Select Template →</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Select Template -->
+          <div class="wizard-step-content" data-step-content="3">
+            <div class="wizard-card-header">
+              <div class="step-tag">Step 3 of 5</div>
+              <div class="step-title">Choose a Task Chain Template</div>
+              <div class="step-desc">Select a pre-built task chain that matches this patient's scenario. You can customize it in the next step.</div>
+            </div>
+            <div class="wizard-card-body">
+              <div class="template-select-grid">
+                <div class="template-select-card selected" onclick="selectTemplate(this)">
+                  <div class="tpl-icon" style="background:var(--accent-light);">🫀</div>
+                  <div class="tpl-name">Cross-Hospital OB Referral</div>
+                  <div class="tpl-desc">Fetal cardiac echo transfer from private to public hospital. Includes translation, appointment booking, and day-of navigation.</div>
+                  <div class="tpl-meta">
+                    <span>📋 10 steps</span>
+                    <span>⏱ ~5 days</span>
+                    <span>🔄 Used 24×</span>
+                  </div>
+                </div>
+                <div class="template-select-card" onclick="selectTemplate(this)">
+                  <div class="tpl-icon" style="background:var(--info-bg);">🦴</div>
+                  <div class="tpl-name">Orthopedic Surgery Transfer</div>
+                  <div class="tpl-desc">Pre-op assessment, surgical scheduling, post-op follow-up across hospitals.</div>
+                  <div class="tpl-meta">
+                    <span>📋 8 steps</span>
+                    <span>⏱ ~2 weeks</span>
+                    <span>🔄 Used 16×</span>
+                  </div>
+                </div>
+                <div class="template-select-card" onclick="selectTemplate(this)">
+                  <div class="tpl-icon" style="background:var(--success-bg);">👶</div>
+                  <div class="tpl-name">Routine Prenatal Follow-up</div>
+                  <div class="tpl-desc">Standard prenatal checkup coordination between facilities.</div>
+                  <div class="tpl-meta">
+                    <span>📋 6 steps</span>
+                    <span>⏱ ~3 days</span>
+                    <span>🔄 Used 42×</span>
+                  </div>
+                </div>
+                <div class="template-select-card" onclick="selectTemplate(this)">
+                  <div class="tpl-icon" style="background:var(--warning-bg);">🔬</div>
+                  <div class="tpl-name">Lab + Imaging Coordination</div>
+                  <div class="tpl-desc">Blood work and imaging at a different facility with results routing.</div>
+                  <div class="tpl-meta">
+                    <span>📋 5 steps</span>
+                    <span>⏱ ~2 days</span>
+                    <span>🔄 Used 38×</span>
+                  </div>
+                </div>
+                <div class="template-select-card" onclick="selectTemplate(this)">
+                  <div class="tpl-icon" style="background:var(--danger-bg);">🚨</div>
+                  <div class="tpl-name">Emergency Transfer</div>
+                  <div class="tpl-desc">Rapid transfer protocol for urgent cases. Escalated SLAs.</div>
+                  <div class="tpl-meta">
+                    <span>📋 7 steps</span>
+                    <span>⏱ Same day</span>
+                    <span>🔄 Used 9×</span>
+                  </div>
+                </div>
+                <div class="template-select-card" onclick="selectTemplate(this)" style="border-style:dashed;align-self:start;">
+                  <div class="tpl-icon" style="background:var(--bg-hover);">✏️</div>
+                  <div class="tpl-name">Build from Scratch</div>
+                  <div class="tpl-desc">Create a custom task chain without a template.</div>
+                  <div class="tpl-meta">
+                    <span>📋 Custom</span>
+                    <span>⏱ Variable</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wizard-card-footer">
+              <button class="wizard-btn wizard-btn-secondary" onclick="wizardPrev(3)">← Referral</button>
+              <button class="wizard-btn wizard-btn-primary" onclick="wizardNext(3)">Next: Customize Chain →</button>
+            </div>
+          </div>
+
+          <!-- Step 4: Customize Task Chain -->
+          <div class="wizard-step-content" data-step-content="4">
+            <div class="wizard-card-header">
+              <div class="step-tag">Step 4 of 5</div>
+              <div class="step-title">Customize Task Chain</div>
+              <div class="step-desc">Review the task chain steps. Toggle optional steps, adjust SLA, or add custom tasks before launching.</div>
+            </div>
+            <div class="wizard-card-body">
+              <div class="chain-preview">
+                <div class="chain-preview-header">
+                  <div class="chain-name">Cross-Hospital OB Referral · v3</div>
+                  <div class="chain-badge">10 steps · ~5 days</div>
+                </div>
+                <div class="chain-preview-list">
+
+                  <div class="chain-preview-step">
+                    <div class="cp-dot">1</div>
+                    <div class="cp-content">
+                      <div class="cp-title">Create Patient Profile</div>
+                      <div class="cp-detail">System · Auto-generated from intake form · 0 min</div>
+                    </div>
+                  </div>
+
+                  <div class="chain-preview-step">
+                    <div class="cp-dot">2</div>
+                    <div class="cp-content">
+                      <div class="cp-title">Translate Medical Records</div>
+                      <div class="cp-detail">Coordinator · EN→ZH summary for Anzhen · SLA 2h</div>
+                    </div>
+                  </div>
+
+                  <div class="chain-preview-step">
+                    <div class="cp-dot">3</div>
+                    <div class="cp-content">
+                      <div class="cp-title">Book Fetal Echo Appointment</div>
+                      <div class="cp-detail">Coordinator · Guided booking at Anzhen · SLA 1 day</div>
+                    </div>
+                  </div>
+
+                  <div class="chain-preview-step">
+                    <div class="cp-dot customizable">4</div>
+                    <div class="cp-content">
+                      <div class="cp-title">
+                        Send Pre-Visit Instructions
+                        <span class="cp-edit-tag">Optional</span>
+                      </div>
+                      <div class="cp-detail">System · Auto-push to patient app: fasting, documents, route map</div>
+                      <div class="cp-toggle">
+                        <label class="toggle-switch">
+                          <input type="checkbox" checked>
+                          <span class="toggle-slider"></span>
+                        </label>
+                        <label>Include hospital navigation guide</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="chain-preview-step">
+                    <div class="cp-dot customizable">5</div>
+                    <div class="cp-content">
+                      <div class="cp-title">
+                        Arrange Interpreter
+                        <span class="cp-edit-tag">Optional</span>
+                      </div>
+                      <div class="cp-detail">Coordinator · Book in-person interpreter for appointment day</div>
+                      <div class="cp-toggle">
+                        <label class="toggle-switch">
+                          <input type="checkbox">
+                          <span class="toggle-slider"></span>
+                        </label>
+                        <label>Patient speaks English — interpreter may not be needed</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="chain-preview-step">
+                    <div class="cp-dot">6</div>
+                    <div class="cp-content">
+                      <div class="cp-title">Day-Before Reminder</div>
+                      <div class="cp-detail">System · Auto SMS + app push 24h before appointment</div>
+                    </div>
+                  </div>
+
+                  <div class="chain-preview-step">
+                    <div class="cp-dot">7</div>
+                    <div class="cp-content">
+                      <div class="cp-title">Day-of Check-in Navigation</div>
+                      <div class="cp-detail">Patient App · Step-by-step guide inside Anzhen Hospital</div>
+                    </div>
+                  </div>
+
+                  <div class="chain-preview-step">
+                    <div class="cp-dot">8</div>
+                    <div class="cp-content">
+                      <div class="cp-title">Collect Results & Translate</div>
+                      <div class="cp-detail">Coordinator · Pick up report, translate ZH→EN, upload to app · SLA 1 day</div>
+                    </div>
+                  </div>
+
+                  <div class="chain-preview-step">
+                    <div class="cp-dot customizable">9</div>
+                    <div class="cp-content">
+                      <div class="cp-title">
+                        Schedule MDT Consultation
+                        <span class="cp-edit-tag">Optional</span>
+                      </div>
+                      <div class="cp-detail">Coordinator · Multi-disciplinary team review if findings are abnormal</div>
+                      <div class="cp-toggle">
+                        <label class="toggle-switch">
+                          <input type="checkbox" checked>
+                          <span class="toggle-slider"></span>
+                        </label>
+                        <label>Auto-trigger if echo findings are abnormal</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="chain-preview-step">
+                    <div class="cp-dot">10</div>
+                    <div class="cp-content">
+                      <div class="cp-title">Close Case & Archive</div>
+                      <div class="cp-detail">System · Auto-generate case summary, save to knowledge base</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div style="margin-top:16px;display:flex;gap:10px;align-items:center;">
+                <button class="wizard-btn wizard-btn-secondary" style="padding:8px 16px;font-size:0.8125rem;">+ Add Custom Task</button>
+                <span class="form-hint">Added tasks will be saved as part of this patient's chain only</span>
+              </div>
+            </div>
+            <div class="wizard-card-footer">
+              <button class="wizard-btn wizard-btn-secondary" onclick="wizardPrev(4)">← Template</button>
+              <button class="wizard-btn wizard-btn-primary" onclick="wizardNext(4)">Next: Review & Launch →</button>
+            </div>
+          </div>
+
+          <!-- Step 5: Review & Launch -->
+          <div class="wizard-step-content" data-step-content="5">
+            <div class="wizard-card-header">
+              <div class="step-tag">Step 5 of 5</div>
+              <div class="step-title">Review & Launch</div>
+              <div class="step-desc">Confirm the details below. The task chain will start immediately and the patient app will be activated.</div>
+            </div>
+            <div class="wizard-card-body">
+
+              <div class="review-section">
+                <div class="review-section-title">Patient</div>
+                <div class="review-grid">
+                  <div class="review-item">
+                    <div class="review-label">Name</div>
+                    <div class="review-value">Emma Schmidt</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">Age / DOB</div>
+                    <div class="review-value">35 · Mar 15, 1991</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">Nationality</div>
+                    <div class="review-value">German</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">Languages</div>
+                    <div class="review-value">German, English</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">Insurance</div>
+                    <div class="review-value">Allianz Care (International Private)</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">Contact</div>
+                    <div class="review-value">+49 170 8834521</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="review-section">
+                <div class="review-section-title">Referral</div>
+                <div class="review-grid">
+                  <div class="review-item">
+                    <div class="review-label">From → To</div>
+                    <div class="review-value">United Family → Anzhen Hospital</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">Department</div>
+                    <div class="review-value">OB/GYN → Fetal Cardiology</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">Referring Doctor</div>
+                    <div class="review-value">Dr. Li Wen</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">Urgency</div>
+                    <div class="review-value">🟠 Urgent — within 3 days</div>
+                  </div>
+                  <div class="review-item" style="grid-column:span 2;">
+                    <div class="review-label">Medical Summary</div>
+                    <div class="review-value" style="font-size:0.8125rem;line-height:1.5;font-weight:400;color:var(--text-secondary);">32yo G1P0 at 22w6d. Suspected fetal cardiac anomaly (VSD). History of 2 miscarriages. On progesterone. Blood type A+.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="review-section">
+                <div class="review-section-title">Task Chain</div>
+                <div class="review-grid">
+                  <div class="review-item">
+                    <div class="review-label">Template</div>
+                    <div class="review-value">Cross-Hospital OB Referral v3</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">Active Steps</div>
+                    <div class="review-value">9 of 10 (1 optional disabled)</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">Estimated Duration</div>
+                    <div class="review-value">~5 days</div>
+                  </div>
+                  <div class="review-item">
+                    <div class="review-label">First Task Due</div>
+                    <div class="review-value">Today · Translate records (SLA 2h)</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:flex-start;gap:10px;padding:16px 20px;background:var(--accent-light);border-radius:var(--radius-md);margin-top:4px;">
+                <div style="font-size:1.125rem;">💡</div>
+                <div style="font-size:0.8125rem;color:var(--text-secondary);line-height:1.5;">
+                  Upon launch, the system will: (1) create the patient's app account, (2) push the first 3 tasks to your dashboard, (3) send a welcome message to the patient in German, and (4) begin the SLA timer for task #2.
+                </div>
+              </div>
+
+            </div>
+            <div class="wizard-card-footer">
+              <button class="wizard-btn wizard-btn-secondary" onclick="wizardPrev(5)">← Customize</button>
+              <button class="wizard-btn wizard-btn-success" onclick="wizardLaunch()">🚀 Launch Task Chain</button>
+            </div>
+          </div>
+
+          <!-- Success State -->
+          <div class="wizard-step-content" data-step-content="success">
+            <div class="wizard-success">
+              <div class="success-icon">✓</div>
+              <div class="success-title">Task Chain Launched!</div>
+              <div class="success-desc">
+                Emma Schmidt's care journey has been initiated.<br>
+                9 tasks are now active. The patient app has been activated in German.
+              </div>
+              <div style="display:flex;gap:16px;justify-content:center;margin-bottom:24px;">
+                <div style="text-align:center;">
+                  <div style="font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--accent);">9</div>
+                  <div style="font-size:0.75rem;color:var(--text-tertiary);">Active Tasks</div>
+                </div>
+                <div style="width:1px;background:var(--border);"></div>
+                <div style="text-align:center;">
+                  <div style="font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--success);">2h</div>
+                  <div style="font-size:0.75rem;color:var(--text-tertiary);">First SLA</div>
+                </div>
+                <div style="width:1px;background:var(--border);"></div>
+                <div style="text-align:center;">
+                  <div style="font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--info);">DE</div>
+                  <div style="font-size:0.75rem;color:var(--text-tertiary);">App Language</div>
+                </div>
+              </div>
+              <div class="success-actions">
+                <button class="wizard-btn wizard-btn-primary" onclick="switchView('new-patient-detail')">View Patient Details →</button>
+                <button class="wizard-btn wizard-btn-secondary" onclick="switchView('patient-app')">View Patient App</button>
+                <button class="wizard-btn wizard-btn-secondary" onclick="switchView('dashboard')">Back to Dashboard</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         VIEW 7: New Patient Detail (Emma Schmidt — just created)
+         ============================================ -->
+    <div class="view" id="view-new-patient-detail">
+
+    <button class="detail-back" onclick="switchView('dashboard')">← Back to Dashboard</button>
+
+    <div class="detail-header">
+      <div class="patient-avatar-large" style="background: linear-gradient(135deg, #7C3AED, #6366F1);">ES</div>
+      <div class="patient-meta">
+        <div class="meta-name">Emma Schmidt <span style="font-size:0.625rem;background:var(--accent);color:white;padding:2px 7px;border-radius:var(--radius-full);font-weight:600;margin-left:6px;vertical-align:middle;">NEW</span></div>
+        <div class="meta-item">
+          <div class="meta-label">Nationality</div>
+          <div class="meta-value">Germany</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Languages</div>
+          <div class="meta-value">German, English</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Referring Hospital</div>
+          <div class="meta-value">Beijing United Family</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Target Hospital</div>
+          <div class="meta-value">Beijing Anzhen Hospital</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Department</div>
+          <div class="meta-value">Fetal Cardiology</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Priority</div>
+          <div class="meta-value" style="color:var(--danger)">Urgent — 22w6d, suspected VSD</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Template</div>
+          <div class="meta-value">Cross-Hospital OB Referral v3</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Opened</div>
+          <div class="meta-value">Just now</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-body">
+      <div class="task-chain-section">
+        <div class="section-title">Task Chain</div>
+        <div class="section-subtitle">Cross-Hospital OB Referral v3 · 10 steps · 9 active (1 optional disabled)</div>
+
+        <div class="task-chain">
+          <div class="task-node clickable" onclick="openTaskActionModal(1)">
+            <div class="node-dot active">1</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Create Patient Profile</div>
+              <div class="node-desc"><span class="owner">System</span> — Auto-generated from intake form. Patient app account created in German.</div>
+              <span class="node-status-badge in-progress">In Progress · Just started</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">2</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Translate Medical Records</div>
+              <div class="node-desc"><span class="owner">Coordinator</span> — EN→ZH summary for Anzhen · SLA 2h</div>
+              <span class="node-status-badge pending">Waiting · SLA starts after Step 1</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">3</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Book Fetal Echo Appointment</div>
+              <div class="node-desc"><span class="owner">Coordinator</span> — Guided booking at Anzhen · SLA 1 day</div>
+              <span class="node-status-badge pending">Waiting</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">4</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Send Pre-Visit Instructions</div>
+              <div class="node-desc"><span class="owner">System</span> — Auto-push to patient app: fasting, documents, route map</div>
+              <span class="node-status-badge pending">Waiting</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">5</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Arrange Interpreter</div>
+              <div class="node-desc"><span class="owner">Coordinator</span> — Book in-person interpreter for appointment day · <em>Optional — disabled (patient speaks English)</em></div>
+              <span class="node-status-badge" style="background:var(--bg-hover);color:var(--text-tertiary);">Disabled</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">6</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Day-Before Reminder</div>
+              <div class="node-desc"><span class="owner">System</span> — Auto SMS + app push 24h before appointment</div>
+              <span class="node-status-badge pending">Waiting</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">7</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Day-of Check-in Navigation</div>
+              <div class="node-desc"><span class="owner">System</span> — Patient App: step-by-step guide inside Anzhen Hospital</div>
+              <span class="node-status-badge pending">Waiting</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">8</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Collect Results & Translate</div>
+              <div class="node-desc"><span class="owner">Coordinator</span> — Pick up report, translate ZH→EN, upload to app · SLA 1 day</div>
+              <span class="node-status-badge pending">Waiting</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">9</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Schedule MDT Consultation</div>
+              <div class="node-desc"><span class="owner">Coordinator</span> — Multi-disciplinary team review if findings are abnormal · <em>Auto-trigger if echo findings are abnormal</em></div>
+              <span class="node-status-badge pending">Waiting</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">10</div>
+            <div class="node-content">
+              <div class="node-title">Close Case & Archive</div>
+              <div class="node-desc"><span class="owner">System</span> — Auto-generate case summary, save to knowledge base</div>
+              <span class="node-status-badge pending">Waiting</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-section">
+        <div class="section-title">Activity</div>
+        <div class="section-subtitle">Recent updates</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-dot system">🚀</div>
+            <div class="tl-line"></div>
+            <div class="tl-content">
+              <div class="tl-time">Just now</div>
+              <div class="tl-desc">Task chain launched. 9 tasks activated. Patient app account created in German.</div>
+              <div class="tl-by">System</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot action">📋</div>
+            <div class="tl-content">
+              <div class="tl-time">Just now</div>
+              <div class="tl-desc">Patient profile created from intake form. Template "Cross-Hospital OB Referral v3" applied.</div>
+              <div class="tl-by">Yuzhu Dai</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       VIEW 8: Updated Patient Detail (Sarah — after booking confirmed)
+       ============================================ -->
+  <div class="view" id="view-patient-updated">
+
+    <button class="detail-back" onclick="switchView('dashboard')">← Back to Dashboard</button>
+
+    <div class="detail-header">
+      <div class="patient-avatar-large">SJ</div>
+      <div class="patient-meta">
+        <div class="meta-name">Sarah Johnson</div>
+        <div class="meta-item">
+          <div class="meta-label">Nationality</div>
+          <div class="meta-value">United States</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Languages</div>
+          <div class="meta-value">English only</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Referring Hospital</div>
+          <div class="meta-value">Beijing United Family</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Target Hospital</div>
+          <div class="meta-value">Beijing Anzhen Hospital</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Department</div>
+          <div class="meta-value">Fetal Cardiology</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Priority</div>
+          <div class="meta-value" style="color:var(--success)">Appointment Confirmed — Jul 5, 9:00 AM</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Template</div>
+          <div class="meta-value">Cross-Hospital OB Referral v3</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Opened</div>
+          <div class="meta-value">July 1, 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-body">
+      <div class="task-chain-section">
+        <div class="section-title">Task Chain</div>
+        <div class="section-subtitle">Cross-Hospital OB Referral v3 · 10 steps · Updated just now</div>
+
+        <div class="task-chain">
+          <div class="task-node">
+            <div class="node-dot done">1</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Collect Patient Records</div>
+              <div class="node-desc"><span class="owner">System</span> — Medical history, insurance, previous scans auto-retrieved</div>
+              <span class="node-status-badge completed">Done · Jul 1, 09:30</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot done">2</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Identify Target Hospital & Department</div>
+              <div class="node-desc"><span class="owner">Coordinator</span> — Fetal cardiac echo → Anzhen Hospital, Dept. of Fetal Cardiology</div>
+              <span class="node-status-badge completed">Done · Jul 1, 10:15</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot done">3</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Prepare Referral Documents (ZH)</div>
+              <div class="node-desc"><span class="owner">System + Coordinator</span> — Auto-translate + review</div>
+              <span class="node-status-badge completed">Done · Jul 1, 14:20</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot done">4</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Contact Target Hospital — Book Appointment</div>
+              <div class="node-desc"><span class="owner">Coordinator</span> — Called Anzhen Hospital. Appointment confirmed: Jul 5, 9:00 AM. Fetal Cardiology, 3F, Building B.</div>
+              <span class="node-status-badge completed">Done · Just now</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot done">5</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Notify Patient — Appointment Confirmed</div>
+              <div class="node-desc"><span class="owner">System</span> — Push notification sent to patient app in EN. Patient acknowledged.</div>
+              <span class="node-status-badge completed">Done · Just now · Auto</span>
+            </div>
+          </div>
+          <div class="task-node clickable" onclick="openTaskActionModal(6)">
+            <div class="node-dot active">6</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Day-Before Reminder + Route Guide</div>
+              <div class="node-desc"><span class="owner">System</span> — Auto-scheduled for Jul 4, 9:00 AM. Will send: hospital map, check-in floor, required documents list</div>
+              <span class="node-status-badge in-progress">Scheduled · Jul 4, 09:00</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">7</div>
+            <div class="node-connector"></div>
+            <div class="node-content">
+              <div class="node-title">Day of Appointment — Navigator Guide</div>
+              <div class="node-desc"><span class="owner">System</span> — Real-time navigation within hospital. Registration → waiting → exam room</div>
+              <span class="node-status-badge pending">Waiting · Jul 5</span>
+            </div>
+          </div>
+          <div class="task-node">
+            <div class="node-dot waiting">8</div>
+            <div class="node-content">
+              <div class="node-title">Collect Results & Follow-up Planning</div>
+              <div class="node-desc"><span class="owner">Coordinator</span> — Obtain report from Anzhen. Translate key findings. Coordinate MDT review if needed.</div>
+              <span class="node-status-badge pending">Waiting</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-section">
+        <div class="section-title">Activity</div>
+        <div class="section-subtitle">Recent updates</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-dot system">✓</div>
+            <div class="tl-line"></div>
+            <div class="tl-content">
+              <div class="tl-time">Just now</div>
+              <div class="tl-desc">Appointment confirmed at Anzhen Hospital. Patient notified via app. Anomaly auto-resolved.</div>
+              <div class="tl-by">System</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot call">📞</div>
+            <div class="tl-line"></div>
+            <div class="tl-content">
+              <div class="tl-time">Just now</div>
+              <div class="tl-desc">Called Anzhen Hospital. Connected. Confirmed fetal cardiac echo for Jul 5, 9:00 AM. Window 3 (Foreign Patients).</div>
+              <div class="tl-by">Yuzhu Dai</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot action">⏰</div>
+            <div class="tl-line"></div>
+            <div class="tl-content">
+              <div class="tl-time">Today, 14:30</div>
+              <div class="tl-desc">Anomaly raised: Step 4 overdue. Resolved.</div>
+              <div class="tl-by">System</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot call">📞</div>
+            <div class="tl-line"></div>
+            <div class="tl-content">
+              <div class="tl-time">Yesterday, 16:15</div>
+              <div class="tl-desc">Called Anzhen Hospital. Line busy. Will retry tomorrow morning.</div>
+              <div class="tl-by">Yuzhu Dai</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot system">🔗</div>
+            <div class="tl-content">
+              <div class="tl-time">Jul 1, 09:30</div>
+              <div class="tl-desc">Patient record created. Template applied.</div>
+              <div class="tl-by">System</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       VIEW 9: Updated Patient App (after booking confirmed)
+       ============================================ -->
+  <div class="view" id="view-patient-app-updated">
+    <div class="app-view-wrapper">
+      <div class="app-phone">
+
+        <div class="app-status-bar">
+          <span>9:41</span>
+          <span>📶 🔋</span>
+        </div>
+
+        <div class="app-nav">
+          <span class="app-greeting">Hi Sarah 👋</span>
+          <div class="app-avatar">SJ</div>
+        </div>
+
+        <div class="app-body">
+          <div class="app-notification-banner">
+            <div class="anb-icon">✓</div>
+            <div class="anb-text">
+              <div class="anb-title">Appointment Confirmed!</div>
+              <div class="anb-desc">Fetal Cardiac Echo · Jul 5, 9:00 AM</div>
+            </div>
+          </div>
+
+          <div class="today-card" style="background: linear-gradient(135deg, #059669, #10b981);">
+            <div class="today-label">✓ Confirmed Appointment</div>
+            <div class="today-title">Fetal Cardiac Echo</div>
+            <div class="today-subtitle">Saturday, Jul 5 · 9:00 AM<br>Beijing Anzhen Hospital, Bldg B, 3F<br><small style="opacity:0.85;">Register at Window 3 (Foreign Patients)</small></div>
+            <button class="today-action">View Preparation Guide →</button>
+          </div>
+
+          <div class="app-section-label">What's Next</div>
+
+          <div class="upcoming-item">
+            <div class="up-icon blue">📋</div>
+            <div class="up-info">
+              <div class="up-title">Documents to Bring</div>
+              <div class="up-detail">Passport · Referral letter · Insurance card</div>
+            </div>
+            <span class="up-arrow">→</span>
+          </div>
+
+          <div class="upcoming-item">
+            <div class="up-icon green">📍</div>
+            <div class="up-info">
+              <div class="up-title">Hospital Navigation</div>
+              <div class="up-detail">Step-by-step guide inside Anzhen Hospital</div>
+            </div>
+            <span class="up-arrow">→</span>
+          </div>
+
+          <div class="upcoming-item">
+            <div class="up-icon blue">💬</div>
+            <div class="up-info">
+              <div class="up-title">Contact Your Coordinator</div>
+              <div class="up-detail">Yuzhu Dai · Available 9AM–6PM</div>
+            </div>
+            <span class="up-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="app-tabs">
+          <button class="app-tab active">
+            <span class="tab-icon">📅</span> Today
+          </button>
+          <button class="app-tab">
+            <span class="tab-icon">📋</span> Timeline
+          </button>
+          <button class="app-tab">
+            <span class="tab-icon">❓</span> Help
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+</main>
+
+<!-- ============================================
+     Modal: Follow Up (Ahmed's anomaly)
+     ============================================ -->
+<div class="modal-overlay" id="modal-followup" onclick="closeModal('modal-followup', event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-icon amber">⏰</div>
+      <div>
+        <div class="modal-title">Follow Up: Ahmed Al-Rashid</div>
+        <div class="modal-subtitle">Endoscopy slot · Due in 4 hours</div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="followup-record">
+        <div class="fr-label">Last Contact Attempt</div>
+        <div class="fr-value">📞 Called Chaoyang Hospital — Yesterday, 15:30</div>
+        <div class="fr-value" style="font-size:0.8125rem;color:var(--text-tertiary);margin-top:4px;">Spoke with registration desk. Transferred to gastroenterology. No answer. Left message.</div>
+      </div>
+      <div class="followup-actions">
+        <div class="followup-action" onclick="closeModal('modal-followup'); showToast('Calling Chaoyang Hospital...')">
+          <div class="fa-icon" style="background:var(--info-bg);color:var(--info);">📞</div>
+          <div class="fa-text">
+            <div class="fa-title">Call Chaoyang Hospital Again</div>
+            <div class="fa-desc">Same number · Gastroenterology registration</div>
+          </div>
+          <span style="color:var(--text-tertiary);">→</span>
+        </div>
+        <div class="followup-action" onclick="closeModal('modal-followup'); showToast('SMS reminder sent to Chaoyang Hospital')">
+          <div class="fa-icon" style="background:var(--accent-light);color:var(--accent);">💬</div>
+          <div class="fa-text">
+            <div class="fa-title">Send SMS Reminder</div>
+            <div class="fa-desc">Pre-filled template with patient ID and urgency note</div>
+          </div>
+          <span style="color:var(--text-tertiary);">→</span>
+        </div>
+        <div class="followup-action" onclick="closeModal('modal-followup'); resolveAnomaly('anomaly-ahmed')">
+          <div class="fa-icon" style="background:var(--warning-bg);color:var(--warning);">⏸</div>
+          <div class="fa-text">
+            <div class="fa-title">Mark as "Waiting for Hospital"</div>
+            <div class="fa-desc">Pause SLA timer · Auto-check every 2h</div>
+          </div>
+          <span style="color:var(--text-tertiary);">→</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="wizard-btn wizard-btn-secondary" onclick="closeModal('modal-followup')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     Modal: Assign Interpreter
+     ============================================ -->
+<div class="modal-overlay" id="modal-assign" onclick="closeModal('modal-assign', event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-icon blue">🗣</div>
+      <div>
+        <div class="modal-title">Assign German Interpreter</div>
+        <div class="modal-subtitle">For Emma Schmidt · Appointment in 2 days</div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:0.8125rem;color:var(--text-secondary);margin-bottom:14px;">Available German-speaking interpreters:</div>
+      <div class="assign-list">
+        <div class="assign-item" onclick="closeModal('modal-assign'); resolveAnomaly('anomaly-interpreter'); showToast('Interpreter assigned: Anna Müller')">
+          <div class="ai-avatar">AM</div>
+          <div class="ai-info">
+            <div class="ai-name">Anna Müller</div>
+            <div class="ai-meta">German native · 5 years medical interpreting · 4.9★</div>
+          </div>
+          <span class="ai-status available">Available</span>
+        </div>
+        <div class="assign-item" onclick="closeModal('modal-assign'); resolveAnomaly('anomaly-interpreter'); showToast('Interpreter assigned: Klaus Weber')">
+          <div class="ai-avatar">KW</div>
+          <div class="ai-info">
+            <div class="ai-name">Klaus Weber</div>
+            <div class="ai-meta">German native · 3 years medical interpreting · 4.7★</div>
+          </div>
+          <span class="ai-status available">Available</span>
+        </div>
+        <div class="assign-item" onclick="closeModal('modal-assign'); showToast('Interpreter notified. Awaiting confirmation.')">
+          <div class="ai-avatar">SL</div>
+          <div class="ai-info">
+            <div class="ai-name">Sophie Lange</div>
+            <div class="ai-meta">German fluent · 7 years medical interpreting · 5.0★</div>
+          </div>
+          <span class="ai-status busy">On another case</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="wizard-btn wizard-btn-secondary" onclick="closeModal('modal-assign')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     Modal: Task Action Panel
+     ============================================ -->
+<div class="modal-overlay" id="modal-task-action" onclick="closeModal('modal-task-action', event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-icon purple" id="task-action-icon">⚡</div>
+      <div>
+        <div class="modal-title" id="task-action-title">Task Action</div>
+        <div class="modal-subtitle" id="task-action-subtitle">Select an action</div>
+      </div>
+    </div>
+    <div class="modal-body task-action-panel" id="task-action-body">
+      <!-- Filled dynamically -->
+    </div>
+    <div class="modal-footer">
+      <button class="wizard-btn wizard-btn-secondary" onclick="closeModal('modal-task-action')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     Booking Success Overlay
+     ============================================ -->
+<div class="booking-success-overlay" id="booking-success-overlay">
+  <div class="booking-success-card">
+    <div class="bs-icon">✓</div>
+    <div class="bs-title">Appointment Confirmed!</div>
+    <div class="bs-desc">Sarah Johnson's fetal cardiac echo has been booked at Anzhen Hospital.<br>The patient has been notified and the task chain has been updated.</div>
+    <div class="bs-checklist">
+      <div class="bs-check-item">
+        <div class="bs-check-icon">✓</div>
+        <div class="bs-check-text"><strong>Appointment booked:</strong> Jul 5, 9:00 AM · Anzhen Hospital, Bldg B, 3F · Window 3 (Foreign Patients)</div>
+      </div>
+      <div class="bs-check-item">
+        <div class="bs-check-icon">✓</div>
+        <div class="bs-check-text"><strong>Patient notified:</strong> Push notification sent to Sarah's app in English. Patient acknowledged.</div>
+      </div>
+      <div class="bs-check-item">
+        <div class="bs-check-icon">✓</div>
+        <div class="bs-check-text"><strong>Task chain updated:</strong> Step 4 → Done · Step 5 → Done (auto) · Step 6 → Scheduled (Jul 4)</div>
+      </div>
+      <div class="bs-check-item">
+        <div class="bs-check-icon">✓</div>
+        <div class="bs-check-text"><strong>Anomaly resolved:</strong> "Overdue: Sarah Johnson" has been auto-closed.</div>
+      </div>
+    </div>
+    <div class="bs-actions">
+      <button class="wizard-btn wizard-btn-primary" onclick="closeBookingSuccess(); switchView('patient-updated')">View Updated Task Chain →</button>
+      <button class="wizard-btn wizard-btn-secondary" onclick="closeBookingSuccess(); switchView('patient-app-updated')">View Patient App</button>
+      <button class="wizard-btn wizard-btn-secondary" onclick="closeBookingSuccess(); resolveAnomaly('anomaly-sarah'); switchView('dashboard')">Back to Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div id="toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--bg-sidebar);color:white;padding:12px 24px;border-radius:var(--radius-full);font-size:0.875rem;font-weight:500;z-index:2000;transition:transform 0.3s var(--ease-out);box-shadow:var(--shadow-lg);"></div>
+
+<!-- ============================================
+     View Switching Logic
+     ============================================ -->
+<script>
+function switchView(viewId) {
+  // Deactivate all views
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  // Deactivate all nav items
+  document.querySelectorAll('.sidebar-nav-item[data-view]').forEach(n => n.classList.remove('active'));
+  // Activate target view
+  const targetView = document.getElementById('view-' + viewId);
+  if (targetView) targetView.classList.add('active');
+  // Activate corresponding nav
+  const targetNav = document.querySelector(`.sidebar-nav-item[data-view="${viewId}"]`);
+  if (targetNav) targetNav.classList.add('active');
+  // Scroll to top
+  if (targetView) targetView.parentElement.scrollTop = 0;
+}
+
+// Sidebar navigation
+document.querySelectorAll('.sidebar-nav-item[data-view]').forEach(item => {
+  item.addEventListener('click', () => {
+    const viewId = item.getAttribute('data-view');
+    switchView(viewId);
+  });
+});
+
+// ============================================
+// New Patient Wizard Logic
+// ============================================
+
+let wizardCurrentStep = 1;
+
+function wizardGoToStep(step) {
+  // Hide all step contents
+  document.querySelectorAll('.wizard-step-content').forEach(c => c.classList.remove('active'));
+  // Show target step
+  const target = document.querySelector(`.wizard-step-content[data-step-content="${step}"]`);
+  if (target) target.classList.add('active');
+
+  // Update step indicators
+  document.querySelectorAll('.wizard-step-indicator').forEach(ind => {
+    const indStep = parseInt(ind.getAttribute('data-step'));
+    ind.classList.remove('active', 'done');
+    if (indStep < step) {
+      ind.classList.add('done');
+      ind.querySelector('.step-circle').textContent = '✓';
+    } else if (indStep === step) {
+      ind.classList.add('active');
+      ind.querySelector('.step-circle').textContent = indStep;
+    } else {
+      ind.querySelector('.step-circle').textContent = indStep;
+    }
+  });
+
+  // Update connectors
+  document.querySelectorAll('.wizard-step-connector').forEach(conn => {
+    const connStep = parseInt(conn.getAttribute('data-connector'));
+    conn.classList.toggle('done', connStep < step);
+  });
+
+  wizardCurrentStep = step;
+
+  // Scroll to top of wizard
+  const wizardView = document.getElementById('view-new-patient');
+  if (wizardView) wizardView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function wizardNext(currentStep) {
+  if (currentStep < 5) {
+    wizardGoToStep(currentStep + 1);
+  }
+}
+
+function wizardPrev(currentStep) {
+  if (currentStep > 1) {
+    wizardGoToStep(currentStep - 1);
+  }
+}
+
+function selectTemplate(card) {
+  // Deselect all
+  document.querySelectorAll('.template-select-card').forEach(c => c.classList.remove('selected'));
+  // Select clicked
+  card.classList.add('selected');
+}
+
+function wizardLaunch() {
+  // Hide all step contents
+  document.querySelectorAll('.wizard-step-content').forEach(c => c.classList.remove('active'));
+  // Show success
+  document.querySelector('.wizard-step-content[data-step-content="success"]').classList.add('active');
+
+  // Mark all indicators as done
+  document.querySelectorAll('.wizard-step-indicator').forEach(ind => {
+    ind.classList.remove('active');
+    ind.classList.add('done');
+    ind.querySelector('.step-circle').textContent = '✓';
+  });
+  document.querySelectorAll('.wizard-step-connector').forEach(conn => {
+    conn.classList.add('done');
+  });
+
+  // Scroll to top
+  const wizardView = document.getElementById('view-new-patient');
+  if (wizardView) wizardView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Allow clicking on step indicators to jump (only to completed or current)
+document.querySelectorAll('.wizard-step-indicator').forEach(ind => {
+  ind.addEventListener('click', () => {
+    const step = parseInt(ind.getAttribute('data-step'));
+    const indStep = parseInt(ind.getAttribute('data-step'));
+    // Allow jumping to any step that's already been visited
+    if (ind.classList.contains('done') || ind.classList.contains('active')) {
+      wizardGoToStep(step);
+    }
+  });
+});
+
+// ============================================
+// Modal System
+// ============================================
+
+function openModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) modal.classList.add('active');
+}
+
+function closeModal(modalId, event) {
+  if (event && event.target !== event.currentTarget) return;
+  const modal = document.getElementById(modalId);
+  if (modal) modal.classList.remove('active');
+}
+
+function openFollowUpModal() {
+  openModal('modal-followup');
+}
+
+function openAssignModal() {
+  openModal('modal-assign');
+}
+
+// ============================================
+// Task Action Modal (dynamic content)
+// ============================================
+
+const taskActionData = {
+  1: {
+    icon: '🚀', title: 'Create Patient Profile', subtitle: 'Step 1 · Owner: System',
+    desc: 'Auto-generated from intake form. Patient app account created in German. This task is system-automated and will complete shortly.',
+    actions: [
+      { label: '✓ Mark as Complete', primary: false, toast: 'Task 1 completed. Step 2 (Translate Records) now active. SLA timer started.' },
+      { label: '📋 View Patient App Welcome Message', primary: false, toast: 'Opening patient app...' },
+    ]
+  },
+  4: {
+    icon: '📞', title: 'Contact Target Hospital — Book Appointment', subtitle: 'Step 4 · Owner: Coordinator · SLA: 48h',
+    desc: 'Call Anzhen Hospital registration. Phone script available with patient-specific details pre-filled. Confirm fetal cardiac echo slot for this week.',
+    actions: [
+      { label: '📞 Start Guided Booking', primary: true, view: 'booking' },
+      { label: '⏸ Mark as Blocked', primary: false, toast: 'Task 4 marked as blocked. Anomaly will be created.' },
+      { label: '📝 Add Note', primary: false, toast: 'Note added to task.' },
+    ]
+  },
+  6: {
+    icon: '🗺', title: 'Day-Before Reminder + Route Guide', subtitle: 'Step 6 · Owner: System · Scheduled: Jul 4, 09:00',
+    desc: 'System will automatically send reminder with hospital map, check-in floor, and required documents list 24 hours before the appointment.',
+    actions: [
+      { label: '👁 Preview Reminder Message', primary: false, toast: 'Opening preview...' },
+      { label: '✏️ Edit Reminder Content', primary: false, toast: 'Opening editor...' },
+      { label: '⚡ Send Now (Manual Override)', primary: false, toast: 'Reminder sent immediately.' },
+    ]
+  }
+};
+
+function openTaskActionModal(step) {
+  const data = taskActionData[step];
+  if (!data) return;
+
+  document.getElementById('task-action-icon').textContent = data.icon;
+  document.getElementById('task-action-title').textContent = data.title;
+  document.getElementById('task-action-subtitle').textContent = data.subtitle;
+
+  const body = document.getElementById('task-action-body');
+  body.innerHTML = `
+    <div class="ta-header">
+      <div class="ta-dot active">${step}</div>
+      <div>
+        <div class="ta-title">${data.title}</div>
+        <div class="ta-owner">${data.subtitle}</div>
+      </div>
+    </div>
+    <div class="ta-desc">${data.desc}</div>
+    <div class="ta-actions">
+      ${data.actions.map(a => `<button class="ta-btn ${a.primary ? 'primary' : ''}" onclick="handleTaskAction('${a.label}', '${a.view || ''}', '${a.toast || ''}')">${a.label}</button>`).join('')}
+    </div>
+  `;
+
+  openModal('modal-task-action');
+}
+
+function handleTaskAction(label, view, toast) {
+  closeModal('modal-task-action');
+  if (view) {
+    switchView(view);
+  } else if (toast) {
+    showToast(toast);
+  }
+}
+
+// ============================================
+// Call Simulation
+// ============================================
+
+let callTimerInterval = null;
+let callSeconds = 0;
+
+function simulateCall() {
+  const btn = document.getElementById('call-start-btn');
+  const timerDisplay = document.getElementById('call-timer-display');
+
+  // Phase 1: Calling
+  btn.textContent = '📞 Calling...';
+  btn.classList.add('calling');
+  btn.disabled = true;
+  timerDisplay.style.display = 'block';
+  timerDisplay.textContent = 'Connecting to Anzhen Hospital...';
+  timerDisplay.style.color = 'var(--warning)';
+
+  setTimeout(() => {
+    // Phase 2: Connected
+    btn.textContent = '✓ Connected — 0:00';
+    btn.classList.remove('calling');
+    btn.classList.add('connected');
+    timerDisplay.textContent = '✓ Connected to Anzhen Hospital · Dept. of Fetal Cardiology';
+    timerDisplay.style.color = 'var(--success)';
+
+    callSeconds = 0;
+    callTimerInterval = setInterval(() => {
+      callSeconds++;
+      const mins = Math.floor(callSeconds / 60);
+      const secs = callSeconds % 60;
+      btn.textContent = `✓ Connected — ${mins}:${secs.toString().padStart(2, '0')}`;
+    }, 1000);
+  }, 2500);
+}
+
+// ============================================
+// Booking Confirmation
+// ============================================
+
+function confirmBooking() {
+  // Stop call timer if running
+  if (callTimerInterval) {
+    clearInterval(callTimerInterval);
+    callTimerInterval = null;
+  }
+
+  // Show success overlay
+  const overlay = document.getElementById('booking-success-overlay');
+  overlay.classList.add('active');
+}
+
+function closeBookingSuccess() {
+  document.getElementById('booking-success-overlay').classList.remove('active');
+
+  // Reset call button
+  const btn = document.getElementById('call-start-btn');
+  if (btn) {
+    btn.textContent = '📞 Start Call';
+    btn.classList.remove('calling', 'connected');
+    btn.disabled = false;
+    const timerDisplay = document.getElementById('call-timer-display');
+    if (timerDisplay) timerDisplay.style.display = 'none';
+  }
+}
+
+// ============================================
+// Anomaly Resolution
+// ============================================
+
+function resolveAnomaly(anomalyId) {
+  const anomaly = document.getElementById(anomalyId);
+  if (!anomaly) return;
+
+  anomaly.classList.add('resolved');
+  const btn = anomaly.querySelector('.anomaly-action-btn');
+  if (btn) {
+    btn.textContent = '✓ Resolved';
+  }
+
+  // Update anomaly count
+  const countEl = document.querySelector('.anomaly-panel-count');
+  if (countEl) {
+    const activeAnomalies = document.querySelectorAll('.anomaly-item:not(.resolved)').length;
+    countEl.textContent = `${activeAnomalies} active`;
+  }
+
+  // Update stat card
+  const statCards = document.querySelectorAll('.stat-card');
+  if (statCards[2]) {
+    const valueEl = statCards[2].querySelector('.stat-value');
+    const changeEl = statCards[2].querySelector('.stat-change');
+    if (valueEl) {
+      const current = parseInt(valueEl.textContent);
+      valueEl.textContent = Math.max(0, current - 1);
+    }
+    if (changeEl) {
+      changeEl.textContent = 'Decreasing';
+      changeEl.className = 'stat-change up';
+    }
+  }
+}
+
+// ============================================
+// Toast Notification
+// ============================================
+
+let toastTimer = null;
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.style.transform = 'translateX(-50%) translateY(100px)';
+  }, 3000);
+}
+
+// ============================================
+// Keyboard: ESC to close modals
+// ============================================
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+    closeBookingSuccess();
+  }
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BridgeCare · Care coordination</title>
+  <meta name="theme-color" content="#261d55">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="brand"><span class="brand-mark">BC</span><span>BridgeCare<small id="brand-subtitle">Care coordination</small></span></div>
+      <div class="side-section" id="workspace-label">WORKSPACE</div>
+      <div class="nav-stack">
+        <button class="nav active" data-view="dashboard"><span class="nav-icon">▦</span><span id="dashboard-nav-label">Dashboard</span><b id="nav-alert-count"></b></button>
+        <button class="nav" data-view="case"><span class="nav-icon">◇</span> <span id="case-nav-label">Sarah’s case</span></button>
+        <button class="nav" data-view="patient"><span class="nav-icon">▣</span><span id="patient-nav-label">Patient preview</span></button>
+        <button class="nav mobile-language-switch" data-action="toggle-language" aria-label="Switch interface language to Chinese"><span class="nav-icon">A文</span><span id="mobile-language-target">中文</span></button>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="demo-note"><span class="demo-kicker" id="demo-mode-label">DEMO MODE</span><strong id="demo-note-title">One referral. Every handoff.</strong><br><span id="demo-note-copy">Opens with Sarah’s overdue booking. Calls and patient updates are simulated.</span></div>
+        <button class="reset" data-action="reset" title="Return to Sarah’s booking-overdue case"><span id="desktop-reset-label">↺ Reset demo</span></button>
+        <div class="user"><span class="avatar">YD</span><span>Yuzhu Dai<small id="user-role-label">Care coordinator</small></span></div>
+      </div>
+    </aside>
+    <div class="main-wrap">
+      <header class="topbar"><div class="crumb"><span class="crumb-mark">BC</span><span id="workspace-crumb">Coordinator workspace</span><span class="crumb-slash">/</span><strong id="current-view-label">Dashboard</strong></div><div class="top-right"><div class="locale-control desktop-locale" role="group" aria-label="Interface language"><button type="button" data-action="set-language" data-language="en" aria-pressed="true">English</button><button type="button" data-action="set-language" data-language="zh" aria-pressed="false">中文</button></div><span class="mock-tag"><i></i><span id="mock-label">INTERACTIVE MOCK</span></span><button class="reset-mini" data-action="reset" title="Return to Sarah’s booking-overdue case"><span id="mobile-reset-label">Reset demo</span></button><span class="header-avatar">YD</span></div></header>
+      <main id="app" class="main" tabindex="-1"></main>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="i18n.js"></script>
+  <script src="model.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BridgeCare — Research Section (Expanded)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --indigo: #6366F1;
+  --violet: #7C3AED;
+  --blue: #3B82F6;
+  --indigo-light: #EEF2FF;
+  --violet-light: #F5F3FF;
+  --blue-light: #EFF6FF;
+
+  --text-1: #1A1A2E;
+  --text-2: #4A4A5E;
+  --text-3: #8A8A9A;
+  --text-4: #B0B0BC;
+  --text-white: #FFFFFF;
+
+  --bg-page: #FAFAFC;
+  --bg-surface: #FFFFFF;
+  --bg-tint: #F5F5F8;
+  --bg-tint-2: #F0F0F4;
+
+  --border: #E5E7EB;
+  --border-light: #F0F0F4;
+
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --teal: #14B8A6;
+  --rose: #F43F5E;
+
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  --page-w: 1400px;
+  --page-h: 990px;
+  --page-pad: 40px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: #E0E0E8;
+  color: var(--text-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 20px;
+}
+
+/* ==================== PAGE FRAME ==================== */
+.portfolio-page {
+  width: var(--page-w);
+  height: var(--page-h);
+  background: var(--bg-page);
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-bar {
+  height: 30px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 36px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-bar .bar-left { display: flex; align-items: center; gap: 10px; }
+.page-bar .bar-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--indigo); }
+.page-bar .bar-right { display: flex; align-items: center; gap: 14px; }
+
+.page-body {
+  flex: 1;
+  padding: var(--page-pad);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 14px;
+}
+
+.page-num {
+  position: absolute;
+  bottom: 14px;
+  right: 36px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-4);
+  letter-spacing: 0.1em;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.section-label::before {
+  content: '';
+  width: 14px; height: 1px;
+  background: var(--text-3);
+}
+
+/* ==================== SHARED COMPONENTS ==================== */
+.page-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.page-subtitle {
+  font-size: 11px;
+  color: var(--text-2);
+  line-height: 1.5;
+  max-width: 620px;
+}
+
+.accent-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.accent-tag.indigo { background: var(--indigo-light); color: var(--indigo); }
+.accent-tag.violet { background: var(--violet-light); color: var(--violet); }
+.accent-tag.blue { background: var(--blue-light); color: var(--blue); }
+.accent-tag.green { background: #ECFDF5; color: var(--success); }
+.accent-tag.amber { background: #FFFBEB; color: var(--warning); }
+.accent-tag.red { background: #FEF2F2; color: var(--danger); }
+.accent-tag.teal { background: #F0FDFA; color: var(--teal); }
+.accent-tag.rose { background: #FFF1F2; color: var(--rose); }
+.accent-tag.gray { background: var(--bg-tint-2); color: var(--text-2); }
+
+/* ==================== PAGE 2: DISCOVERY ==================== */
+.p2-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Header row */
+.p2-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Research approach strip */
+.research-approach {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.ra-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.ra-card .ra-num {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.ra-card .ra-num.indigo { color: var(--indigo); }
+.ra-card .ra-num.violet { color: var(--violet); }
+.ra-card .ra-num.blue { color: var(--blue); }
+.ra-card .ra-num.teal { color: var(--teal); }
+
+.ra-card .ra-title {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin-bottom: 2px;
+}
+
+.ra-card .ra-desc {
+  font-size: 9px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* Timeline */
+.timeline-strip {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 8px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+
+.ts-phase {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  color: var(--text-2);
+  padding: 0 12px;
+  position: relative;
+}
+
+.ts-phase .ts-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ts-phase:not(:last-child)::after {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--border);
+  margin-left: 8px;
+}
+
+.ts-phase.active { font-weight: 600; color: var(--text-1); }
+
+/* Main content area */
+.p2-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 14px;
+  min-height: 0;
+}
+
+/* Interview notes column */
+.interview-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.interview-col-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col-title {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.quote-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.quote-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  transition: all 0.2s;
+}
+
+.quote-card:hover {
+  border-color: var(--indigo);
+  box-shadow: 0 2px 8px rgba(99,102,241,0.08);
+}
+
+.quote-card .qc-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.qc-avatar.c1 { background: linear-gradient(135deg, #6366F1, #818CF8); }
+.qc-avatar.c2 { background: linear-gradient(135deg, #7C3AED, #A78BFA); }
+.qc-avatar.c3 { background: linear-gradient(135deg, #3B82F6, #60A5FA); }
+.qc-avatar.c4 { background: linear-gradient(135deg, #14B8A6, #2DD4BF); }
+.qc-avatar.c5 { background: linear-gradient(135deg, #F59E0B, #FBBF24); }
+
+.quote-card .qc-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.quote-card .qc-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.quote-card .qc-name {
+  font-family: var(--font-display);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.quote-card .qc-quote {
+  font-size: 9.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.quote-card .qc-quote::before {
+  content: '"';
+  color: var(--indigo);
+  font-weight: 700;
+  font-style: normal;
+}
+.quote-card .qc-quote::after {
+  content: '"';
+  color: var(--indigo);
+  font-weight: 700;
+  font-style: normal;
+}
+
+.quote-card .qc-obs {
+  font-size: 8.5px;
+  color: var(--text-3);
+  line-height: 1.4;
+  padding-left: 8px;
+  border-left: 2px solid var(--border);
+}
+
+/* Patient interview + observation column */
+.patient-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.patient-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pq-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 9px 11px;
+  border-left: 3px solid;
+}
+
+.pq-card.p1 { border-left-color: var(--rose); }
+.pq-card.p2 { border-left-color: var(--warning); }
+.pq-card.p3 { border-left-color: var(--blue); }
+
+.pq-card .pq-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.pq-card .pq-name {
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.pq-card .pq-quote {
+  font-size: 9px;
+  color: var(--text-2);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Observation notes */
+.observation-block {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 10px 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.obs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.obs-items {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.obs-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 9px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+.obs-item .obs-day {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--indigo);
+  background: var(--indigo-light);
+  padding: 1px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.obs-item .obs-metric {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+/* Emotion journey map */
+.journey-map {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.jm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.jm-stages {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  position: relative;
+  height: 90px;
+}
+
+.jm-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  position: relative;
+  padding-top: 4px;
+}
+
+.jm-stage-label {
+  font-family: var(--font-display);
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--text-2);
+  text-align: center;
+}
+
+.jm-stage-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.jm-stage-dot.high { background: var(--success); }
+.jm-stage-dot.mid { background: var(--warning); }
+.jm-stage-dot.low { background: var(--danger); }
+.jm-stage-dot.crisis { background: var(--rose); box-shadow: 0 0 0 3px rgba(244,63,94,0.2); }
+
+.jm-stage-emo {
+  font-size: 7.5px;
+  color: var(--text-3);
+  text-align: center;
+  line-height: 1.3;
+}
+
+.jm-curve {
+  position: absolute;
+  top: 18px; left: 0; right: 0;
+  height: 30px;
+  pointer-events: none;
+}
+
+.jm-friction {
+  font-size: 7px;
+  color: var(--danger);
+  font-family: var(--font-mono);
+  text-align: center;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.jm-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 14px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.jm-bar-cell {
+  border-radius: 3px;
+  font-size: 6.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.jm-bar-cell.sys { background: var(--bg-tint-2); color: var(--text-3); }
+.jm-bar-cell.coord { background: var(--indigo-light); color: var(--indigo); }
+.jm-bar-cell.patient { background: var(--violet-light); color: var(--violet); }
+
+.jm-legend {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 7.5px;
+  color: var(--text-3);
+}
+
+.jm-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.jm-legend-dot {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+}
+
+
+/* ==================== PAGE 3: SYNTHESIS ==================== */
+.p3-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.p3-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Affinity diagram */
+.affinity-section {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+.affinity-diagram {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.ad-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.ad-clusters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  flex: 1;
+}
+
+.ad-cluster {
+  border-radius: 10px;
+  padding: 10px 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ad-cluster.t1 { background: linear-gradient(160deg, #EEF2FF 0%, #F5F3FF 100%); border: 1px solid #E0E7FF; }
+.ad-cluster.t2 { background: linear-gradient(160deg, #EFF6FF 0%, #F0F9FF 100%); border: 1px solid #DBEAFE; }
+.ad-cluster.t3 { background: linear-gradient(160deg, #F0FDFA 0%, #ECFDF5 100%); border: 1px solid #CCFBF1; }
+.ad-cluster.t4 { background: linear-gradient(160deg, #FFFBEB 0%, #FEF3C7 100%); border: 1px solid #FDE68A; }
+
+.ad-cluster-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ad-cluster-title {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1.2;
+}
+
+.ad-cluster-count {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--text-3);
+  background: rgba(255,255,255,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.ad-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ad-note {
+  background: rgba(255,255,255,0.75);
+  border-radius: 5px;
+  padding: 4px 7px;
+  font-size: 8px;
+  color: var(--text-2);
+  line-height: 1.35;
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.ad-note .ad-note-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.ad-note .ad-note-tag {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  color: var(--text-4);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Insights column */
+.insights-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.insight-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  gap: 10px;
+  flex: 1;
+}
+
+.insight-card .ic-num {
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+}
+.ic-num.n1 { background: linear-gradient(135deg, #6366F1, #818CF8); }
+.ic-num.n2 { background: linear-gradient(135deg, #7C3AED, #A78BFA); }
+.ic-num.n3 { background: linear-gradient(135deg, #3B82F6, #60A5FA); }
+
+.insight-card .ic-body { flex: 1; min-width: 0; }
+
+.insight-card .ic-title {
+  font-family: var(--font-display);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 3px;
+  line-height: 1.2;
+}
+
+.insight-card .ic-desc {
+  font-size: 8.5px;
+  color: var(--text-2);
+  line-height: 1.45;
+  margin-bottom: 4px;
+}
+
+.insight-card .ic-evidence {
+  font-size: 8px;
+  color: var(--text-3);
+  line-height: 1.4;
+  padding: 4px 6px;
+  background: var(--bg-tint);
+  border-radius: 5px;
+  border-left: 2px solid var(--indigo);
+}
+
+.insight-card .ic-implication {
+  font-size: 8px;
+  color: var(--text-2);
+  line-height: 1.4;
+  margin-top: 4px;
+}
+.insight-card .ic-implication strong {
+  color: var(--indigo);
+  font-weight: 600;
+}
+
+/* Ideation section */
+.ideation-section {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.id-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.id-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.id-card {
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  position: relative;
+}
+
+.id-card.rejected {
+  background: var(--bg-tint);
+  border: 1px solid var(--border-light);
+  opacity: 0.75;
+}
+
+.id-card.selected {
+  background: linear-gradient(160deg, var(--indigo-light) 0%, var(--violet-light) 100%);
+  border: 2px solid var(--indigo);
+  box-shadow: 0 2px 12px rgba(99,102,241,0.12);
+}
+
+.id-card .id-status {
+  position: absolute;
+  top: 6px; right: 6px;
+  font-size: 7px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.id-card.rejected .id-status { color: var(--danger); }
+.id-card.selected .id-status { color: var(--success); }
+
+.id-card .id-name {
+  font-family: var(--font-display);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1.2;
+  padding-right: 30px;
+}
+
+.id-card .id-desc {
+  font-size: 8px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.id-card .id-reason {
+  font-size: 7.5px;
+  color: var(--text-3);
+  line-height: 1.35;
+  margin-top: 2px;
+  padding-top: 3px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.id-card.selected .id-reason {
+  color: var(--indigo);
+  border-top-color: rgba(99,102,241,0.15);
+}
+
+/* Convergence: HMW + Principles */
+.convergence {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 10px;
+}
+
+.hmw-block {
+  background: linear-gradient(135deg, #4C3A8E 0%, #6366F1 50%, #7C3AED 100%);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.hmw-block::after {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+
+.hmw-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+.hmw-text {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.principles-block {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.principle-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.principle-card .pc-icon {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  margin-bottom: 2px;
+}
+
+.pc-icon.p1 { background: var(--indigo-light); color: var(--indigo); }
+.pc-icon.p2 { background: var(--violet-light); color: var(--violet); }
+.pc-icon.p3 { background: var(--blue-light); color: var(--blue); }
+
+.principle-card .pc-name {
+  font-family: var(--font-display);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1.15;
+}
+
+.principle-card .pc-desc {
+  font-size: 7.5px;
+  color: var(--text-2);
+  line-height: 1.35;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ================================================================ -->
+<!-- PAGE 2: RESEARCH — DISCOVERY & INTERVIEWS                        -->
+<!-- ================================================================ -->
+<div class="portfolio-page" id="page-2">
+  <div class="page-bar">
+    <div class="bar-left">
+      <div class="bar-dot"></div>
+      <span>BridgeCare</span>
+      <span>·</span>
+      <span>Research — Discovery</span>
+    </div>
+    <div class="bar-right">
+      <span>Page 02</span>
+    </div>
+  </div>
+
+  <div class="page-body p2-body">
+    <!-- Header -->
+    <div class="p2-header">
+      <div>
+        <div class="section-label" style="margin-bottom: 5px;">02 — Research · Discovery</div>
+        <div class="page-title">Understanding the Invisible System</div>
+      </div>
+      <div class="page-subtitle">
+        The coordinator <em>is</em> the system — but the system doesn't exist in any tool. I spent 3 weeks studying how coordinators actually work, what patients actually feel, and where the gaps hide.
+      </div>
+    </div>
+
+    <!-- Research Approach Strip -->
+    <div class="research-approach">
+      <div class="ra-card">
+        <div class="ra-num indigo">5</div>
+        <div>
+          <div class="ra-title">Coordinator Interviews</div>
+          <div class="ra-desc">Semi-structured, 45–60 min. International hospital referral & patient service staff — from 8-month juniors to 6-year seniors.</div>
+        </div>
+      </div>
+      <div class="ra-card">
+        <div class="ra-num violet">3</div>
+        <div>
+          <div class="ra-title">Patient Interviews</div>
+          <div class="ra-desc">Retrospective, 30–45 min. Foreign patients who experienced cross-hospital care in Shanghai within the past 6 months.</div>
+        </div>
+      </div>
+      <div class="ra-card">
+        <div class="ra-num blue">3d</div>
+        <div>
+          <div class="ra-title">On-Site Shadowing</div>
+          <div class="ra-desc">Shadowed 2 coordinators through 3 real referral cases across 2 hospitals. Timed tasks, logged every channel switch.</div>
+        </div>
+      </div>
+      <div class="ra-card">
+        <div class="ra-num teal">2</div>
+        <div>
+          <div class="ra-title">System Audits</div>
+          <div class="ra-desc">Reviewed the hospital's existing CRM, referral log spreadsheet, and WeChat workflow. Mapped tool fragmentation.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline-strip">
+      <div class="ts-phase active"><div class="ts-dot" style="background: var(--indigo);"></div>Week 1 · Recruitment & Prep</div>
+      <div class="ts-phase active"><div class="ts-dot" style="background: var(--violet);"></div>Week 1–2 · Interviews</div>
+      <div class="ts-phase active"><div class="ts-dot" style="background: var(--blue);"></div>Week 2 · On-Site Observation</div>
+      <div class="ts-phase active"><div class="ts-dot" style="background: var(--teal);"></div>Week 3 · Affinity Synthesis & Ideation</div>
+      <div style="margin-left: auto; font-family: var(--font-mono); font-size: 8px; color: var(--text-4);">127 notes · 4 themes · 3 insights</div>
+    </div>
+
+    <!-- Main: Interview Notes + Patient/Observation -->
+    <div class="p2-main">
+
+      <!-- Left: Coordinator Interview Notes -->
+      <div class="interview-col">
+        <div class="interview-col-header">
+          <div class="col-title">Coordinator Interview Notes</div>
+          <span class="accent-tag indigo">5 sessions · 127 min total</span>
+        </div>
+
+        <div class="quote-cards">
+          <!-- C1 -->
+          <div class="quote-card">
+            <div class="qc-avatar c1">C1</div>
+            <div class="qc-body">
+              <div class="qc-meta">
+                <span class="qc-name">Senior Coordinator · 6 yrs</span>
+                <span class="accent-tag gray">Theme: Knowledge Silos</span>
+              </div>
+              <div class="qc-quote">I keep everything in my WeChat favorites — doctors' phone numbers, which department does what, prep instructions for each test. If I lose my phone, I lose my job.</div>
+              <div class="qc-obs">Personal messaging app as de facto knowledge base. Zero institutional documentation.</div>
+            </div>
+          </div>
+
+          <!-- C2 -->
+          <div class="quote-card">
+            <div class="qc-avatar c2">C2</div>
+            <div class="qc-body">
+              <div class="qc-meta">
+                <span class="qc-name">Junior Coordinator · 8 mo</span>
+                <span class="accent-tag gray">Theme: Onboarding Gap</span>
+              </div>
+              <div class="qc-quote">When I started, the senior just said 'follow me for a week.' There's no manual. Every patient type has a different process and I just try to remember.</div>
+              <div class="qc-obs">Knowledge transfer is purely oral/shadow-based. 4–6 week ramp-up, high error rate during transition.</div>
+            </div>
+          </div>
+
+          <!-- C3 -->
+          <div class="quote-card">
+            <div class="qc-avatar c3">C3</div>
+            <div class="qc-body">
+              <div class="qc-meta">
+                <span class="qc-name">Patient Service Lead · 4 yrs</span>
+                <span class="accent-tag gray">Theme: Cross-Hospital Friction</span>
+              </div>
+              <div class="qc-quote">We had a patient who needed an MRI at the public hospital. I called 6 times before someone picked up. Then they told me the patient needs a referral letter in Chinese. I had to come back, translate it, scan it, send it back. The whole morning was gone.</div>
+              <div class="qc-obs">Single referral = 6+ phone calls, 3+ system switches, 2+ hours. Requirements discovered reactively, not proactively.</div>
+            </div>
+          </div>
+
+          <!-- C4 -->
+          <div class="quote-card">
+            <div class="qc-avatar c4">C4</div>
+            <div class="qc-body">
+              <div class="qc-meta">
+                <span class="qc-name">Bilingual Coordinator · 3 yrs</span>
+                <span class="accent-tag gray">Theme: Workflow Opacity</span>
+              </div>
+              <div class="qc-quote">The hardest part isn't the language. It's knowing what the patient should do next. They ask me 'what happens after the scan?' and I have to call the doctor, wait, call back the patient. If I could just see the whole path, I wouldn't be the bottleneck.</div>
+              <div class="qc-obs">Coordinator spends most time as information router, not translator. Full journey invisible until each step is manually clarified.</div>
+            </div>
+          </div>
+
+          <!-- C5 -->
+          <div class="quote-card">
+            <div class="qc-avatar c5">C5</div>
+            <div class="qc-body">
+              <div class="qc-meta">
+                <span class="qc-name">Night Shift Coordinator · 2 yrs</span>
+                <span class="accent-tag gray">Theme: Continuity Gap</span>
+              </div>
+              <div class="qc-quote">At night it's just me. If a patient has an emergency question about their appointment tomorrow, I have to dig through chat history to find what we discussed. There's no single place where the patient's journey is recorded.</div>
+              <div class="qc-obs">Single point of failure on night shifts. Patient context scattered across WeChat, CRM, and personal memory.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Patient Quotes + Observation -->
+      <div class="patient-col">
+        <div class="interview-col-header">
+          <div class="col-title">Patient Interviews</div>
+          <span class="accent-tag violet">3 sessions · retrospective</span>
+        </div>
+
+        <div class="patient-quotes">
+          <div class="pq-card p1">
+            <div class="pq-meta">
+              <span class="pq-name">P1 · German, prenatal care</span>
+              <span class="accent-tag rose">High Anxiety</span>
+            </div>
+            <div class="pq-quote">I didn't even know I needed to fast before the glucose test. Nobody told me until I arrived and they said they couldn't do it that day. I had taken a half-day off work for nothing.</div>
+          </div>
+
+          <div class="pq-card p2">
+            <div class="pq-meta">
+              <span class="pq-name">P2 · American, orthopedic referral</span>
+              <span class="accent-tag amber">Lost & Confused</span>
+            </div>
+            <div class="pq-quote">After the X-ray, the doctor said 'go to the second building, third floor, room 305.' I got lost for 20 minutes. There were no English signs. I was in pain and just stood in the hallway.</div>
+          </div>
+
+          <div class="pq-card p3">
+            <div class="pq-meta">
+              <span class="pq-name">P3 · French, pediatric</span>
+              <span class="accent-tag blue">Relief → Anxiety</span>
+            </div>
+            <div class="pq-quote">The coordinator was amazing — she called the hospital, arranged everything, and sent me a message. But the next day when I had a question, she was off. Nobody else knew about my case.</div>
+          </div>
+        </div>
+
+        <!-- Observation Notes -->
+        <div class="observation-block">
+          <div class="obs-header">
+            <div class="col-title" style="font-size: 11px;">On-Site Observation Log</div>
+            <span class="accent-tag teal">3 days · 2 hospitals</span>
+          </div>
+
+          <div class="obs-items">
+            <div class="obs-item">
+              <span class="obs-day">Day 1</span>
+              <span>Shadowed C2 through an OB-GYN referral. Total coordination time: <span class="obs-metric">2h 47min</span> across <span class="obs-metric">9 phone calls</span>, <span class="obs-metric">14 WeChat messages</span>, <span class="obs-metric">3 system logins</span>. Channel switching every 4.2 min on average.</span>
+            </div>
+            <div class="obs-item">
+              <span class="obs-day">Day 2</span>
+              <span>Observed patient P2 arriving at public hospital. <span class="obs-metric">22 minutes</span> from entrance to correct department. <span class="obs-metric">3 wrong turns</span>, <span class="obs-metric">2 requests for directions</span> (both in Chinese).</span>
+            </div>
+            <div class="obs-item">
+              <span class="obs-day">Day 3</span>
+              <span>Timed common coordinator tasks: <span class="obs-metric">8.5 min</span> avg to book one appointment by phone · <span class="obs-metric">12 min</span> to translate &amp; send prep instructions · <span class="obs-metric">5 min</span> to check if results are ready (requires calling 2 departments).</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emotion Journey Map -->
+    <div class="journey-map">
+      <div class="jm-header">
+        <div class="col-title" style="font-size: 11px;">Patient Emotion Journey — Cross-Hospital Referral</div>
+        <div style="display: flex; gap: 8px;">
+          <span class="accent-tag green">Positive</span>
+          <span class="accent-tag amber">Confused</span>
+          <span class="accent-tag red">Anxious</span>
+          <span class="accent-tag rose">Crisis Point</span>
+        </div>
+      </div>
+
+      <div class="jm-stages">
+        <!-- Stage 1: Discovery -->
+        <div class="jm-stage">
+          <div class="jm-stage-label">Discovery</div>
+          <div class="jm-stage-dot high"></div>
+          <div class="jm-stage-emo">"We're pregnant!"</div>
+          <div class="jm-friction"></div>
+        </div>
+        <!-- Stage 2: Diagnosis -->
+        <div class="jm-stage">
+          <div class="jm-stage-label">Diagnosis</div>
+          <div class="jm-stage-dot mid"></div>
+          <div class="jm-stage-emo">"Something might be wrong"</div>
+          <div class="jm-friction">First anxiety spike</div>
+        </div>
+        <!-- Stage 3: Referral -->
+        <div class="jm-stage">
+          <div class="jm-stage-label">Referral</div>
+          <div class="jm-stage-dot low"></div>
+          <div class="jm-stage-emo">"We need to go where?"</div>
+          <div class="jm-friction">No clear next step</div>
+        </div>
+        <!-- Stage 4: Booking -->
+        <div class="jm-stage">
+          <div class="jm-stage-label">Booking</div>
+          <div class="jm-stage-dot crisis"></div>
+          <div class="jm-stage-emo">"Nobody answers, nothing in English"</div>
+          <div class="jm-friction">🔥 6 calls, no response</div>
+        </div>
+        <!-- Stage 5: Hospital Visit -->
+        <div class="jm-stage">
+          <div class="jm-stage-label">Hospital Visit</div>
+          <div class="jm-stage-dot crisis"></div>
+          <div class="jm-stage-emo">"Lost 22 min in hallways"</div>
+          <div class="jm-friction">🔥 No English signage</div>
+        </div>
+        <!-- Stage 6: Results -->
+        <div class="jm-stage">
+          <div class="jm-stage-label">Waiting for Results</div>
+          <div class="jm-stage-dot low"></div>
+          <div class="jm-stage-emo">"When will we know?"</div>
+          <div class="jm-friction">No status updates</div>
+        </div>
+        <!-- Stage 7: Follow-up -->
+        <div class="jm-stage">
+          <div class="jm-stage-label">Follow-up</div>
+          <div class="jm-stage-dot mid"></div>
+          <div class="jm-stage-emo">"Coordinator explains"</div>
+          <div class="jm-friction">Relief only if coord. available</div>
+        </div>
+
+        <!-- SVG curve -->
+        <svg class="jm-curve" viewBox="0 0 700 30" preserveAspectRatio="none">
+          <path d="M 50 8 Q 100 6, 150 14 Q 200 22, 250 24 Q 300 26, 350 28 Q 400 26, 450 28 Q 500 24, 550 20 Q 600 16, 650 14"
+                fill="none" stroke="#F43F5E" stroke-width="2" stroke-dasharray="0" opacity="0.5"/>
+          <path d="M 50 8 Q 100 6, 150 14 Q 200 22, 250 24 Q 300 26, 350 28 Q 400 26, 450 28 Q 500 24, 550 20 Q 600 16, 650 14"
+                fill="none" stroke="#F43F5E" stroke-width="1" opacity="0.2"/>
+        </svg>
+
+        <!-- Channel ownership bar -->
+        <div class="jm-bar">
+          <div class="jm-bar-cell coord">Coord.</div>
+          <div class="jm-bar-cell sys">Sys.</div>
+          <div class="jm-bar-cell coord">Coord.</div>
+          <div class="jm-bar-cell coord">Coord.</div>
+          <div class="jm-bar-cell patient">Patient</div>
+          <div class="jm-bar-cell sys">Sys.</div>
+          <div class="jm-bar-cell coord">Coord.</div>
+        </div>
+      </div>
+
+      <div class="jm-legend">
+        <div class="jm-legend-item"><div class="jm-legend-dot" style="background: var(--bg-tint-2);"></div>Hospital System</div>
+        <div class="jm-legend-item"><div class="jm-legend-dot" style="background: var(--indigo-light);"></div>Coordinator (manual)</div>
+        <div class="jm-legend-item"><div class="jm-legend-dot" style="background: var(--violet-light);"></div>Patient (unguided)</div>
+        <div class="jm-legend-item" style="margin-left: auto; color: var(--danger);">🔥 = information breakdown point</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-num">02 / 06</div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- PAGE 3: RESEARCH — SYNTHESIS & IDEATION                           -->
+<!-- ================================================================ -->
+<div class="portfolio-page" id="page-3">
+  <div class="page-bar">
+    <div class="bar-left">
+      <div class="bar-dot"></div>
+      <span>BridgeCare</span>
+      <span>·</span>
+      <span>Research — Synthesis & Ideation</span>
+    </div>
+    <div class="bar-right">
+      <span>Page 03</span>
+    </div>
+  </div>
+
+  <div class="page-body p3-body">
+    <!-- Header -->
+    <div class="p3-header">
+      <div>
+        <div class="section-label" style="margin-bottom: 5px;">03 — Research · Synthesis</div>
+        <div class="page-title">From 127 Notes to a Design Direction</div>
+      </div>
+      <div class="page-subtitle">
+        Clustering interview and observation data into themes, generating divergent concept directions, and converging on a design framework that serves both coordinators and patients.
+      </div>
+    </div>
+
+    <!-- Main: Affinity Diagram + Insights -->
+    <div class="affinity-section">
+
+      <!-- Affinity Diagram -->
+      <div class="affinity-diagram">
+        <div class="ad-header">
+          <div class="col-title" style="font-size: 11px;">Affinity Diagram</div>
+          <div style="display: flex; gap: 6px;">
+            <span class="accent-tag gray">127 notes</span>
+            <span class="accent-tag indigo">4 themes</span>
+          </div>
+        </div>
+
+        <div class="ad-clusters">
+          <!-- Theme 1 -->
+          <div class="ad-cluster t1">
+            <div class="ad-cluster-header">
+              <div class="ad-cluster-title">Knowledge is personal,<br>not institutional</div>
+              <div class="ad-cluster-count">23 notes</div>
+            </div>
+            <div class="ad-notes">
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--indigo);"></div>WeChat favorites as knowledge base <span class="ad-note-tag">C1</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--indigo);"></div>"Follow me for a week" onboarding <span class="ad-note-tag">C2</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--indigo);"></div>Personal phone contacts for doctors <span class="ad-note-tag">C3</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--indigo);"></div>Mental checklists, no shared templates <span class="ad-note-tag">C4</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--indigo);"></div>"When they leave, knowledge leaves" <span class="ad-note-tag">Obs</span></div>
+            </div>
+          </div>
+
+          <!-- Theme 2 -->
+          <div class="ad-cluster t2">
+            <div class="ad-cluster-header">
+              <div class="ad-cluster-title">Cross-hospital processes<br>are unpredictable</div>
+              <div class="ad-cluster-count">31 notes</div>
+            </div>
+            <div class="ad-notes">
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--blue);"></div>6 calls before hospital picks up <span class="ad-note-tag">C3</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--blue);"></div>Referral letter must be in Chinese <span class="ad-note-tag">C3</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--blue);"></div>Different hospitals, different systems <span class="ad-note-tag">C1</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--blue);"></div>Requirements change without notice <span class="ad-note-tag">Obs</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--blue);"></div>No shared patient record across hospitals <span class="ad-note-tag">C5</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--blue);"></div>8.5 min avg per phone booking <span class="ad-note-tag">Obs</span></div>
+            </div>
+          </div>
+
+          <!-- Theme 3 -->
+          <div class="ad-cluster t3">
+            <div class="ad-cluster-header">
+              <div class="ad-cluster-title">Coordinator is a router,<br>not just a translator</div>
+              <div class="ad-cluster-count">28 notes</div>
+            </div>
+            <div class="ad-notes">
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--teal);"></div>"What happens next?" is hardest question <span class="ad-note-tag">C4</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--teal);"></div>Need to see the whole path <span class="ad-note-tag">C4</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--teal);"></div>Bottleneck when unavailable <span class="ad-note-tag">P3</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--teal);"></div>Night shift = single point of failure <span class="ad-note-tag">C5</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--teal);"></div>Channel switching every 4.2 min <span class="ad-note-tag">Obs</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--teal);"></div>14 WeChat msgs per single referral <span class="ad-note-tag">Obs</span></div>
+            </div>
+          </div>
+
+          <!-- Theme 4 -->
+          <div class="ad-cluster t4">
+            <div class="ad-cluster-header">
+              <div class="ad-cluster-title">Patients need guidance,<br>not more information</div>
+              <div class="ad-cluster-count">19 notes</div>
+            </div>
+            <div class="ad-notes">
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--warning);"></div>Didn't know to fast before glucose test <span class="ad-note-tag">P1</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--warning);"></div>Lost 22 min in hospital hallways <span class="ad-note-tag">P2</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--warning);"></div>Long instructions = noise under stress <span class="ad-note-tag">P3</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--warning);"></div>"Just tell me what to do next" <span class="ad-note-tag">P3</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--warning);"></div>No English signage at public hospital <span class="ad-note-tag">P2</span></div>
+              <div class="ad-note"><div class="ad-note-dot" style="background: var(--warning);"></div>Took half-day off for nothing <span class="ad-note-tag">P1</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Insights Column -->
+      <div class="insights-col">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div class="col-title" style="font-size: 11px;">Key Insights</div>
+          <span class="accent-tag indigo">3 insights · evidence-based</span>
+        </div>
+
+        <div class="insight-card">
+          <div class="ic-num n1">1</div>
+          <div class="ic-body">
+            <div class="ic-title">The coordinator IS the system.</div>
+            <div class="ic-desc">Patients rely entirely on coordinators to translate, route, and remember every step. When the coordinator is unavailable, the journey stalls.</div>
+            <div class="ic-evidence">Evidence: "I keep everything in WeChat" (C1) · "No manual, just follow me" (C2) · "No single place where journey is recorded" (C5) · Night shift = single point of failure (Obs)</div>
+            <div class="ic-implication"><strong>Implication:</strong> The system exists in people's heads. To scale, we must externalize it — without removing the human.</div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="ic-num n2">2</div>
+          <div class="ic-body">
+            <div class="ic-title">80% of the journey is predictable — the 20% defines success.</div>
+            <div class="ic-desc">Same referral types follow similar steps. But edge cases (abnormal results, insurance changes, hospital-specific requirements) are where coordinators add the most value — and where current tools fail hardest.</div>
+            <div class="ic-evidence">Evidence: OB-GYN referral follows same 8-step pattern (C1, C4) · MRI requirements discovered reactively (C3) · Glucose test prep never communicated (P1) · 8.5 min per booking × predictable steps (Obs)</div>
+            <div class="ic-implication"><strong>Implication:</strong> Automate the predictable 80% with reusable templates. Design flexible tools for the 20% that requires human judgment.</div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="ic-num n3">3</div>
+          <div class="ic-body">
+            <div class="ic-title">Patients don't need a portal — they need a guide.</div>
+            <div class="ic-desc">Under stress, long instructions become noise. Patients don't want to navigate a healthcare portal; they want to know the single right next action, delivered calmly.</div>
+            <div class="ic-evidence">Evidence: "Just tell me what to do next" (P3) · 22 min lost in hospital (P2) · Glucose test miscommunication (P1) · Emotional curve hits crisis at booking + visit stages (Journey Map)</div>
+            <div class="ic-implication"><strong>Implication:</strong> Reduce patient-facing complexity to absolute minimum — one action at a time, contextually timed, in their language.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ideation -->
+    <div class="ideation-section">
+      <div class="id-header">
+        <div class="col-title" style="font-size: 11px;">Ideation — 4 Concept Directions Explored</div>
+        <span class="accent-tag gray">Divergent → Convergent</span>
+      </div>
+
+      <div class="id-cards">
+        <div class="id-card rejected">
+          <div class="id-status">✕ Rejected</div>
+          <div class="id-name">Smart Checklist</div>
+          <div class="id-desc">A digital checklist app for coordinators to track referral steps.</div>
+          <div class="id-reason">Too simple. Doesn't solve cross-hospital coordination, knowledge sharing, or patient-facing guidance. Misses the system-level problem.</div>
+        </div>
+
+        <div class="id-card rejected">
+          <div class="id-status">✕ Rejected</div>
+          <div class="id-name">Patient Self-Service Portal</div>
+          <div class="id-desc">Let patients book appointments and navigate hospitals themselves.</div>
+          <div class="id-reason">Medical appointments require clinical judgment. Patients under stress can't self-navigate. Removes coordinator's value. Conflicts with Insight 3.</div>
+        </div>
+
+        <div class="id-card rejected">
+          <div class="id-status">✕ Rejected</div>
+          <div class="id-name">Unified Hospital API</div>
+          <div class="id-desc">Connect all hospitals' booking and records systems into one platform.</div>
+          <div class="id-reason">Technically infeasible short-term. Hospitals won't open APIs. Scope too large for individual project. Doesn't solve the coordinator's workflow problem.</div>
+        </div>
+
+        <div class="id-card selected">
+          <div class="id-status">✓ Selected</div>
+          <div class="id-name">Task Chain Engine + Dual Interface</div>
+          <div class="id-desc">A rule-based task chain engine powering a coordinator desktop platform (B2B) and a minimal patient app (B2C).</div>
+          <div class="id-reason">Addresses all 4 themes: externalizes knowledge (T1), handles cross-hospital unpredictability (T2), supports routing (T3), gives patients one next step (T4). Keeps human in control.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Convergence: HMW + Principles -->
+    <div class="convergence">
+      <div class="hmw-block">
+        <div class="hmw-label">↪ How Might We</div>
+        <div class="hmw-text">Help care coordinators manage complex cross-hospital journeys with a structured, reusable task-chain system — while still giving patients clear, calm, human-centered guidance at every step?</div>
+      </div>
+
+      <div class="principles-block">
+        <div class="principle-card">
+          <div class="pc-icon p1">①</div>
+          <div class="pc-name">Task-First</div>
+          <div class="pc-desc">Organize information by patient task path, not hospital department structure.</div>
+        </div>
+        <div class="principle-card">
+          <div class="pc-icon p2">②</div>
+          <div class="pc-name">Continuity</div>
+          <div class="pc-desc">Every step carries context, status, and a clear next action across hospital boundaries.</div>
+        </div>
+        <div class="principle-card">
+          <div class="pc-icon p3">③</div>
+          <div class="pc-name">Human-in-the-Loop</div>
+          <div class="pc-desc">Automate repetitive friction, but keep coordinators in control of critical decisions.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-num">03 / 06</div>
+</div>
+
+</body>
+</html>

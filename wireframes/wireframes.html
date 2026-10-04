@@ -1,0 +1,2298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BridgeCare Wireframes</title>
+<style>
+/* ============================================
+   WIREFRAME BASE SYSTEM
+   ============================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #E8E8E8;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #333;
+}
+
+.screen {
+  width: 1280px;
+  min-height: 800px;
+  background: #FFF;
+  margin: 40px auto;
+  position: relative;
+  border: 1px solid #DDD;
+  overflow: hidden;
+}
+
+.screen.mobile {
+  width: 375px;
+  min-height: 720px;
+  border-radius: 24px;
+}
+
+.screen-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen-label {
+  position: absolute;
+  top: -28px;
+  left: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Typography */
+.wf-h1 { font-size: 22px; font-weight: 700; color: #333; }
+.wf-h2 { font-size: 16px; font-weight: 700; color: #333; }
+.wf-h3 { font-size: 14px; font-weight: 700; color: #333; }
+.wf-body { font-size: 13px; font-weight: 400; color: #555; }
+.wf-small { font-size: 11px; font-weight: 400; color: #999; }
+.wf-label { font-size: 11px; font-weight: 600; color: #777; text-transform: uppercase; letter-spacing: 0.04em; }
+.wf-placeholder { color: #AAA; font-style: italic; }
+
+/* Layout */
+.wf-sidebar {
+  width: 200px;
+  background: #F5F5F5;
+  border-right: 1px solid #DDD;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+}
+
+.wf-sidebar-item {
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #777;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid #EEE;
+}
+
+.wf-sidebar-item.active {
+  background: #E8E8E8;
+  color: #333;
+  font-weight: 700;
+}
+
+.wf-sidebar-brand {
+  padding: 16px;
+  border-bottom: 2px solid #DDD;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.wf-main {
+  margin-left: 200px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 800px;
+}
+
+.wf-header {
+  padding: 12px 24px;
+  border-bottom: 1px solid #DDD;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Cards & Panels */
+.wf-card {
+  background: #FFF;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  padding: 14px;
+}
+
+.wf-card-gray {
+  background: #F5F5F5;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  padding: 14px;
+}
+
+.wf-card-dashed {
+  background: #FAFAFA;
+  border: 1px dashed #CCC;
+  border-radius: 4px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #AAA;
+  font-style: italic;
+}
+
+.wf-panel {
+  background: #FFF;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.wf-panel-header {
+  padding: 10px 14px;
+  background: #F5F5F5;
+  border-bottom: 1px solid #DDD;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.wf-panel-body {
+  padding: 14px;
+}
+
+/* Tags & Badges */
+.wf-tag {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 2px;
+  border: 1px solid #DDD;
+  background: #F5F5F5;
+  color: #777;
+  display: inline-block;
+}
+
+.wf-tag-solid {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 2px;
+  background: #555;
+  color: #FFF;
+  display: inline-block;
+}
+
+/* Buttons */
+.wf-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 3px;
+  border: 1px solid #BBB;
+  background: #FFF;
+  color: #333;
+  cursor: default;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wf-btn-primary {
+  background: #333;
+  color: #FFF;
+  border-color: #333;
+}
+
+.wf-btn-dark {
+  background: #555;
+  color: #FFF;
+  border-color: #555;
+}
+
+/* Form Elements */
+.wf-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  font-size: 13px;
+  background: #FAFAFA;
+  color: #AAA;
+}
+
+.wf-input-filled {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  font-size: 13px;
+  background: #FFF;
+  color: #333;
+}
+
+.wf-select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  font-size: 13px;
+  background: #FAFAFA;
+  color: #999;
+}
+
+.wf-checkbox {
+  width: 14px; height: 14px;
+  border: 1px solid #BBB;
+  border-radius: 2px;
+  background: #FFF;
+  display: inline-block;
+}
+
+.wf-checkbox.checked {
+  background: #333;
+}
+
+.wf-toggle {
+  width: 36px; height: 18px;
+  border: 1px solid #BBB;
+  border-radius: 9px;
+  background: #DDD;
+  position: relative;
+  display: inline-block;
+}
+
+.wf-toggle.on {
+  background: #555;
+}
+
+.wf-toggle-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #FFF;
+  position: absolute;
+  top: 1px; left: 2px;
+}
+
+.wf-toggle.on .wf-toggle-dot {
+  left: 20px;
+}
+
+/* Grid helpers */
+.wf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.wf-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.wf-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+.wf-grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+
+/* Flex helpers */
+.wf-flex { display: flex; }
+.wf-flex-col { display: flex; flex-direction: column; }
+.wf-flex-between { display: flex; justify-content: space-between; align-items: center; }
+.wf-flex-center { display: flex; align-items: center; justify-content: center; }
+.wf-flex-gap { display: flex; gap: 12px; }
+.wf-flex-gap-sm { display: flex; gap: 8px; }
+.wf-gap-8 > * { margin-bottom: 8px; }
+.wf-gap-12 > * { margin-bottom: 12px; }
+.wf-grow { flex: 1; }
+
+/* Avatar placeholder */
+.wf-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid #DDD;
+  background: #EEE;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #777;
+}
+
+.wf-avatar-lg {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1px solid #DDD;
+  background: #EEE;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #777;
+}
+
+/* Kanban column */
+.wf-kanban-col {
+  background: #F5F5F5;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wf-kanban-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid #DDD;
+  font-weight: 700;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wf-kanban-body {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wf-patient-card {
+  background: #FFF;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  padding: 10px 12px;
+}
+
+.wf-patient-card.highlight {
+  border: 2px solid #333;
+}
+
+/* Task Chain Node */
+.wf-task-node {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.wf-task-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 2px solid #BBB;
+  background: #FFF;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #999;
+}
+
+.wf-task-dot.done {
+  background: #333;
+  border-color: #333;
+  color: #FFF;
+}
+
+.wf-task-dot.active {
+  background: #FFF;
+  border-color: #333;
+  color: #333;
+}
+
+.wf-task-dot.blocked {
+  background: #FFF;
+  border-color: #555;
+  color: #555;
+  border-width: 3px;
+}
+
+.wf-task-dot.waiting {
+  background: #F5F5F5;
+  border-color: #DDD;
+  color: #999;
+}
+
+.wf-task-connector {
+  width: 24px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wf-task-connector-line {
+  width: 2px;
+  height: 20px;
+  background: #DDD;
+}
+
+.wf-task-connector-line.done {
+  background: #333;
+}
+
+/* Progress bar */
+.wf-progress {
+  height: 6px;
+  background: #EEE;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.wf-progress-fill {
+  height: 100%;
+  background: #555;
+  border-radius: 3px;
+}
+
+/* Wizard step indicator */
+.wf-step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 0;
+}
+
+.wf-step-dot-ind {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid #DDD;
+  background: #FFF;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #999;
+}
+
+.wf-step-dot-ind.done {
+  background: #333;
+  border-color: #333;
+  color: #FFF;
+}
+
+.wf-step-dot-ind.active {
+  border-color: #333;
+  color: #333;
+  background: #FFF;
+}
+
+.wf-step-line-ind {
+  width: 32px; height: 2px;
+  background: #DDD;
+}
+
+.wf-step-line-ind.done {
+  background: #333;
+}
+
+/* Icon placeholder */
+.wf-icon {
+  width: 28px; height: 28px;
+  border-radius: 4px;
+  border: 1px solid #DDD;
+  background: #EEE;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: #999;
+}
+
+.wf-icon-lg {
+  width: 40px; height: 40px;
+  border-radius: 6px;
+  border: 1px solid #DDD;
+  background: #EEE;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: #999;
+}
+
+/* Modal */
+.wf-modal {
+  width: 480px;
+  background: #FFF;
+  border: 1px solid #DDD;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.wf-modal-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid #DDD;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wf-modal-body {
+  padding: 18px;
+}
+
+.wf-modal-footer {
+  padding: 14px 18px;
+  border-top: 1px solid #DDD;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Mobile specific */
+.wf-mobile-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #DDD;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wf-mobile-card {
+  background: #FFF;
+  border: 1px solid #DDD;
+  border-radius: 6px;
+  padding: 14px;
+}
+
+.wf-mobile-card-dark {
+  background: #333;
+  color: #FFF;
+  border-radius: 6px;
+  padding: 14px;
+}
+
+.wf-mobile-tab-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 56px;
+  background: #FFF;
+  border-top: 1px solid #DDD;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.wf-tab-item {
+  font-size: 10px;
+  color: #999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.wf-tab-item.active {
+  color: #333;
+}
+
+/* Timeline item */
+.wf-timeline-item {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.wf-timeline-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1px solid #DDD;
+  background: #EEE;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8px;
+}
+
+/* Call script */
+.wf-script-block {
+  background: #F5F5F5;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  padding: 12px;
+  font-size: 13px;
+}
+
+.wf-script-highlight {
+  background: #EEE;
+  border-bottom: 2px dashed #555;
+  padding: 1px 4px;
+  font-weight: 600;
+}
+
+/* Phone icon placeholder */
+.wf-phone-icon {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+
+/* Arrow annotation */
+.wf-arrow {
+  font-size: 18px;
+  color: #333;
+  font-weight: 700;
+}
+
+/* Success checkmark */
+.wf-success-circle {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  border: 3px solid #333;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; color: #333; font-weight: 700;
+}
+
+/* Numbered list */
+.wf-number-badge {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #555;
+  color: #FFF;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+}
+
+/* Section divider */
+.wf-divider {
+  height: 1px;
+  background: #DDD;
+  margin: 8px 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     SCREEN 01: Dashboard (Kanban + Stats + Anomaly Panel)
+     ============================================ -->
+<div class="screen" id="screen-01" data-name="01-dashboard">
+  <div class="screen-label">Screen 01 — Dashboard</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item active">█ Dashboard</div>
+    <div class="wf-sidebar-item">○ Patients</div>
+    <div class="wf-sidebar-item">○ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+    <div class="wf-sidebar-item">○ Patient App</div>
+    <div style="flex:1"></div>
+    <div class="wf-sidebar-item" style="border-top:2px solid #DDD;font-weight:700">+ New Patient</div>
+    <div class="wf-sidebar-item">⊙ YZ · Coordinator</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="wf-h2">Coordinator Dashboard</span>
+        <span class="wf-small">Wed, Jul 3</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div style="width:200px"><div class="wf-input" style="font-size:11px">🔍 Search patients...</div></div>
+        <div class="wf-icon">🔔</div>
+        <div class="wf-icon">⚙</div>
+      </div>
+    </div>
+    
+    <div style="padding:20px;display:flex;flex-direction:column;gap:16px">
+      <!-- Stats row -->
+      <div class="wf-grid-4">
+        <div class="wf-card" style="text-align:center">
+          <div class="wf-label">Active Patients</div>
+          <div class="wf-h1" style="font-size:28px;margin:4px 0">24</div>
+          <div class="wf-small">+3 this week</div>
+        </div>
+        <div class="wf-card" style="text-align:center">
+          <div class="wf-label">Pending Tasks</div>
+          <div class="wf-h1" style="font-size:28px;margin:4px 0">47</div>
+          <div class="wf-small">12 overdue</div>
+        </div>
+        <div class="wf-card" style="text-align:center">
+          <div class="wf-label">Anomalies</div>
+          <div class="wf-h1" style="font-size:28px;margin:4px 0">3</div>
+          <div class="wf-small">Needs attention</div>
+        </div>
+        <div class="wf-card" style="text-align:center">
+          <div class="wf-label">Completed Today</div>
+          <div class="wf-h1" style="font-size:28px;margin:4px 0">12</div>
+          <div class="wf-small">+2 vs yesterday</div>
+        </div>
+      </div>
+      
+      <!-- Kanban Board -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+        <div class="wf-kanban-col">
+          <div class="wf-kanban-header">To Do <span class="wf-tag-solid">8</span></div>
+          <div class="wf-kanban-body">
+            <div class="wf-patient-card highlight">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="font-weight:700">Emma Schmidt</span>
+                <span class="wf-tag-solid">NEW</span>
+              </div>
+              <div class="wf-small" style="margin-top:4px">High-risk pregnancy · Fetal cardiac echo</div>
+              <div style="display:flex;gap:4px;margin-top:6px">
+                <span class="wf-tag">DE</span>
+                <span class="wf-tag">OB-GYN</span>
+                <span class="wf-tag">Urgent</span>
+              </div>
+            </div>
+            <div class="wf-patient-card">
+              <span style="font-weight:700">James Williams</span>
+              <div class="wf-small">Orthopedic follow-up · Knee MRI</div>
+              <div style="display:flex;gap:4px;margin-top:4px">
+                <span class="wf-tag">EN</span>
+                <span class="wf-tag">Ortho</span>
+              </div>
+            </div>
+            <div class="wf-patient-card">
+              <span style="font-weight:700">Maria Garcia</span>
+              <div class="wf-small">Annual health check · Blood work</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="wf-kanban-col">
+          <div class="wf-kanban-header">In Progress <span class="wf-tag-solid">11</span></div>
+          <div class="wf-kanban-body">
+            <div class="wf-patient-card">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="font-weight:700">Sarah Johnson</span>
+                <span style="color:#555;font-size:10px">● Blocked</span>
+              </div>
+              <div class="wf-small">High-risk pregnancy · Anzhen transfer</div>
+              <div style="display:flex;gap:4px;margin-top:6px">
+                <span class="wf-tag">EN only</span>
+                <span class="wf-tag">Cardio</span>
+                <span class="wf-tag">Urgent</span>
+              </div>
+            </div>
+            <div class="wf-patient-card">
+              <span style="font-weight:700">Ahmed Al-Rashid</span>
+              <div class="wf-small">Endoscopy · Chaoyang Hospital</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="wf-kanban-col">
+          <div class="wf-kanban-header">Waiting <span class="wf-tag-solid">6</span></div>
+          <div class="wf-kanban-body">
+            <div class="wf-patient-card">
+              <span style="font-weight:700">Kenji Tanaka</span>
+              <div class="wf-small">Waiting for lab results</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="wf-kanban-col">
+          <div class="wf-kanban-header">Done <span class="wf-tag-solid">3</span></div>
+          <div class="wf-kanban-body">
+            <div class="wf-patient-card">
+              <span style="font-weight:700">Li Wei</span>
+              <div class="wf-small">Completed · Health check</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Anomaly Panel -->
+      <div class="wf-panel">
+        <div class="wf-panel-header" style="display:flex;align-items:center;gap:8px">
+          ⚠ Active Anomalies (3)
+        </div>
+        <div style="padding:0">
+          <div style="padding:10px 14px;border-bottom:1px solid #EEE;display:flex;align-items:center;gap:10px">
+            <div class="wf-icon" style="background:#EEE;border-color:#555;color:#555">⚠</div>
+            <div style="flex:1">
+              <div style="font-weight:600;font-size:13px">Overdue: Sarah Johnson — Anzhen appointment not confirmed</div>
+              <div class="wf-small">Task "Call Anzhen Hospital" overdue by 1 day</div>
+            </div>
+            <div class="wf-btn-primary" style="font-size:11px;padding:6px 12px">Resolve →</div>
+          </div>
+          <div style="padding:10px 14px;border-bottom:1px solid #EEE;display:flex;align-items:center;gap:10px">
+            <div class="wf-icon" style="background:#EEE;border-color:#BBB;color:#777">⏰</div>
+            <div style="flex:1">
+              <div style="font-weight:600;font-size:13px">Approaching deadline: Ahmed Al-Rashid — Endoscopy slot</div>
+              <div class="wf-small">Due in 4 hours. No confirmation received.</div>
+            </div>
+            <div class="wf-btn" style="font-size:11px;padding:6px 12px">Follow Up</div>
+          </div>
+          <div style="padding:10px 14px;display:flex;align-items:center;gap:10px">
+            <div class="wf-icon" style="background:#EEE;border-color:#555;color:#555">⚠</div>
+            <div style="flex:1">
+              <div style="font-weight:600;font-size:13px">Interpreter missing: New patient from Germany</div>
+              <div class="wf-small">German-speaking interpreter unassigned</div>
+            </div>
+            <div class="wf-btn" style="font-size:11px;padding:6px 12px">Assign</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 02: Wizard Step 1 — Patient Info
+     ============================================ -->
+<div class="screen" id="screen-02" data-name="02-wizard-step1-patient-info">
+  <div class="screen-label">Screen 02 — New Patient Wizard · Step 1</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item">○ Patients</div>
+    <div class="wf-sidebar-item" style="background:#E8E8E8;font-weight:700;color:#333">█ + New Patient</div>
+    <div class="wf-sidebar-item">○ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <span class="wf-h2">New Patient Onboarding</span>
+      <div class="wf-btn">Cancel</div>
+    </div>
+    
+    <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+      <!-- Step Indicator -->
+      <div class="wf-step-indicator" style="justify-content:center">
+        <div class="wf-step-dot-ind active">1</div>
+        <div class="wf-step-line-ind"></div>
+        <div class="wf-step-dot-ind">2</div>
+        <div class="wf-step-line-ind"></div>
+        <div class="wf-step-dot-ind">3</div>
+        <div class="wf-step-line-ind"></div>
+        <div class="wf-step-dot-ind">4</div>
+        <div class="wf-step-line-ind"></div>
+        <div class="wf-step-dot-ind">5</div>
+      </div>
+      
+      <div class="wf-h2">Step 1: Patient Information</div>
+      <div class="wf-body">Enter the patient's basic information and language preferences.</div>
+      
+      <div class="wf-grid-2" style="gap:16px">
+        <div class="wf-flex-col wf-gap-12">
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Full Name *</div>
+            <div class="wf-input-filled">Emma Schmidt</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Date of Birth *</div>
+            <div class="wf-input-filled">1990-03-15</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Nationality *</div>
+            <div class="wf-input-filled">Germany 🇩🇪</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Phone Number *</div>
+            <div class="wf-input-filled">+49 170 1234567</div>
+          </div>
+        </div>
+        
+        <div class="wf-flex-col wf-gap-12">
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Email</div>
+            <div class="wf-input-filled">emma.schmidt@email.de</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Preferred Languages *</div>
+            <div style="display:flex;gap:6px;margin-top:4px">
+              <span class="wf-tag-solid">German</span>
+              <span class="wf-tag">English</span>
+              <span class="wf-tag" style="border-style:dashed;color:#AAA">+ Add</span>
+            </div>
+            <div class="wf-small" style="margin-top:4px">App language = first selected</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Insurance Provider</div>
+            <div class="wf-input-filled">Allianz Health International</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Special Needs / Notes</div>
+            <div class="wf-input-filled" style="height:60px">Previous miscarriages (3). High-risk pregnancy. Husband accompanies.</div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <div class="wf-btn">Cancel</div>
+        <div class="wf-btn-primary">Next: Referral Context →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 03: Wizard Step 2 — Referral Context
+     ============================================ -->
+<div class="screen" id="screen-03" data-name="03-wizard-step2-referral">
+  <div class="screen-label">Screen 03 — New Patient Wizard · Step 2</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item">○ Patients</div>
+    <div class="wf-sidebar-item" style="background:#E8E8E8;font-weight:700;color:#333">█ + New Patient</div>
+    <div class="wf-sidebar-item">○ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <span class="wf-h2">New Patient Onboarding</span>
+      <div class="wf-btn">Cancel</div>
+    </div>
+    
+    <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+      <!-- Step Indicator -->
+      <div class="wf-step-indicator" style="justify-content:center">
+        <div class="wf-step-dot-ind done">✓</div>
+        <div class="wf-step-line-ind done"></div>
+        <div class="wf-step-dot-ind active">2</div>
+        <div class="wf-step-line-ind"></div>
+        <div class="wf-step-dot-ind">3</div>
+        <div class="wf-step-line-ind"></div>
+        <div class="wf-step-dot-ind">4</div>
+        <div class="wf-step-line-ind"></div>
+        <div class="wf-step-dot-ind">5</div>
+      </div>
+      
+      <div class="wf-h2">Step 2: Referral Context</div>
+      <div class="wf-body">Link this patient to their referral source and target hospital.</div>
+      
+      <div class="wf-grid-2" style="gap:16px">
+        <div class="wf-flex-col wf-gap-12">
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Referring Hospital *</div>
+            <div class="wf-input-filled">United Family Hospital (和睦家)</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Referring Doctor</div>
+            <div class="wf-input-filled">Dr. Zhang Wei · OB-GYN</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Target Hospital *</div>
+            <div class="wf-input-filled">Anzhen Hospital (安贞医院)</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Target Department *</div>
+            <div class="wf-input-filled">Fetal Cardiology · Cardiac Echo</div>
+          </div>
+        </div>
+        
+        <div class="wf-flex-col wf-gap-12">
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Referral Reason *</div>
+            <div class="wf-input-filled" style="height:48px">Fetal cardiac anomaly detected during routine OB scan. Hospital lacks fetal cardiac echo capability.</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Urgency *</div>
+            <div style="display:flex;gap:8px;margin-top:4px">
+              <span class="wf-tag">Normal</span>
+              <span class="wf-tag-solid">Urgent</span>
+              <span class="wf-tag">Critical</span>
+            </div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Medical Summary</div>
+            <div class="wf-input-filled" style="height:48px">Gravida 4, Para 0. History of 3 miscarriages. Current gestation: 28 weeks. Fetal cardiac structure abnormal on scan.</div>
+          </div>
+          <div>
+            <div class="wf-label" style="margin-bottom:4px">Medical Records</div>
+            <div style="display:flex;gap:6px;margin-top:4px">
+              <div class="wf-card-gray" style="padding:6px 10px;font-size:11px;display:flex;align-items:center;gap:4px">
+                📄 OB-scan-report.pdf
+              </div>
+              <div class="wf-btn" style="font-size:10px;padding:4px 10px">+ Attach</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display:flex;justify-content:space-between;margin-top:16px">
+        <div class="wf-btn">← Back</div>
+        <div class="wf-btn-primary">Next: Select Template →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 04: Wizard Step 3 — Template Selection
+     ============================================ -->
+<div class="screen" id="screen-04" data-name="04-wizard-step3-template">
+  <div class="screen-label">Screen 04 — New Patient Wizard · Step 3</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item">○ Patients</div>
+    <div class="wf-sidebar-item" style="background:#E8E8E8;font-weight:700;color:#333">█ + New Patient</div>
+    <div class="wf-sidebar-item">○ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <span class="wf-h2">New Patient Onboarding</span>
+      <div class="wf-btn">Cancel</div>
+    </div>
+    
+    <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+      <!-- Step Indicator -->
+      <div class="wf-step-indicator" style="justify-content:center">
+        <div class="wf-step-dot-ind done">✓</div>
+        <div class="wf-step-line-ind done"></div>
+        <div class="wf-step-dot-ind done">✓</div>
+        <div class="wf-step-line-ind done"></div>
+        <div class="wf-step-dot-ind active">3</div>
+        <div class="wf-step-line-ind"></div>
+        <div class="wf-step-dot-ind">4</div>
+        <div class="wf-step-line-ind"></div>
+        <div class="wf-step-dot-ind">5</div>
+      </div>
+      
+      <div class="wf-h2">Step 3: Select Task Chain Template</div>
+      <div class="wf-body">Choose a pre-built task chain template, or start from scratch.</div>
+      
+      <div class="wf-grid-3" style="gap:12px">
+        <div class="wf-card" style="border:2px solid #333;position:relative">
+          <div style="position:absolute;top:8px;right:8px;width:20px;height:20px;background:#333;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFF;font-size:10px;font-weight:700">✓</div>
+          <div style="font-weight:700;margin-bottom:4px">Cross-Hospital OB Referral</div>
+          <div class="wf-small">10 steps · ~5 days · Used 23×</div>
+          <div style="display:flex;gap:4px;margin-top:8px">
+            <span class="wf-tag">OB-GYN</span>
+            <span class="wf-tag">Cardio</span>
+            <span class="wf-tag">Interpreter</span>
+          </div>
+          <div class="wf-small" style="margin-top:6px;color:#555">Includes: registration, appointment booking, interpreter, MDT, report transfer</div>
+        </div>
+        
+        <div class="wf-card">
+          <div style="font-weight:700;margin-bottom:4px">Orthopedic Follow-Up</div>
+          <div class="wf-small">7 steps · ~3 days · Used 31×</div>
+          <div style="display:flex;gap:4px;margin-top:8px">
+            <span class="wf-tag">Ortho</span>
+            <span class="wf-tag">MRI</span>
+          </div>
+        </div>
+        
+        <div class="wf-card">
+          <div style="font-weight:700;margin-bottom:4px">Routine Annual Check</div>
+          <div class="wf-small">8 steps · ~2 days · Used 28×</div>
+          <div style="display:flex;gap:4px;margin-top:8px">
+            <span class="wf-tag">Lab</span>
+            <span class="wf-tag">Imaging</span>
+          </div>
+        </div>
+        
+        <div class="wf-card">
+          <div style="font-weight:700;margin-bottom:4px">Lab & Imaging Only</div>
+          <div class="wf-small">5 steps · ~1 day · Used 19×</div>
+          <div style="display:flex;gap:4px;margin-top:8px">
+            <span class="wf-tag">Lab</span>
+          </div>
+        </div>
+        
+        <div class="wf-card">
+          <div style="font-weight:700;margin-bottom:4px">Emergency Transfer</div>
+          <div class="wf-small">6 steps · ~4 hrs · Used 8×</div>
+          <div style="display:flex;gap:4px;margin-top:8px">
+            <span class="wf-tag">ER</span>
+            <span class="wf-tag">Urgent</span>
+          </div>
+        </div>
+        
+        <div class="wf-card-dashed" style="min-height:80px;flex-direction:column">
+          <div style="font-weight:700">+ Build from Scratch</div>
+          <div class="wf-small">Create custom task chain</div>
+        </div>
+      </div>
+      
+      <div style="display:flex;justify-content:space-between;margin-top:16px">
+        <div class="wf-btn">← Back</div>
+        <div class="wf-btn-primary">Next: Customize Chain →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 05: Wizard Step 4 — Customize Task Chain
+     ============================================ -->
+<div class="screen" id="screen-05" data-name="05-wizard-step4-customize">
+  <div class="screen-label">Screen 05 — New Patient Wizard · Step 4</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item">○ Patients</div>
+    <div class="wf-sidebar-item" style="background:#E8E8E8;font-weight:700;color:#333">█ + New Patient</div>
+    <div class="wf-sidebar-item">○ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <span class="wf-h2">New Patient Onboarding</span>
+      <div class="wf-btn">Cancel</div>
+    </div>
+    
+    <div style="padding:24px;display:flex;flex-direction:column;gap:12px">
+      <!-- Step Indicator -->
+      <div class="wf-step-indicator" style="justify-content:center">
+        <div class="wf-step-dot-ind done">✓</div>
+        <div class="wf-step-line-ind done"></div>
+        <div class="wf-step-dot-ind done">✓</div>
+        <div class="wf-step-line-ind done"></div>
+        <div class="wf-step-dot-ind done">✓</div>
+        <div class="wf-step-line-ind done"></div>
+        <div class="wf-step-dot-ind active">4</div>
+        <div class="wf-step-line-ind"></div>
+        <div class="wf-step-dot-ind">5</div>
+      </div>
+      
+      <div class="wf-h2">Step 4: Customize Task Chain</div>
+      <div class="wf-body">Adjust the task chain for this patient. Toggle optional steps on/off.</div>
+      
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <!-- Core steps -->
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EEE">
+          <div class="wf-number-badge">1</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Register at Target Hospital</div>
+            <div class="wf-small">Auto → System fills form · ~15min · SLA: 2h</div>
+          </div>
+          <span class="wf-tag">Core</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EEE">
+          <div class="wf-number-badge">2</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Share Medical Records</div>
+            <div class="wf-small">Coordinator → Upload & translate · ~30min · SLA: 4h</div>
+          </div>
+          <span class="wf-tag">Core</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EEE">
+          <div class="wf-number-badge">3</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Assign Interpreter</div>
+            <div class="wf-small">Auto → Match German speaker · ~10min · SLA: 24h</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <div class="wf-toggle on"><div class="wf-toggle-dot"></div></div>
+            <span class="wf-small">Optional</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EEE">
+          <div class="wf-number-badge">4</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Book Appointment — Guided Call</div>
+            <div class="wf-small">Coordinator → Phone script + confirm · ~20min · SLA: 48h</div>
+          </div>
+          <span class="wf-tag">Core</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EEE">
+          <div class="wf-number-badge">5</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Notify Patient — Appointment Details</div>
+            <div class="wf-small">Auto → Push to Patient App · ~5min · SLA: 1h</div>
+          </div>
+          <span class="wf-tag">Core</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EEE">
+          <div class="wf-number-badge">6</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Day-Before Reminder</div>
+            <div class="wf-small">Auto → Push + SMS · ~2min · SLA: 24h before</div>
+          </div>
+          <span class="wf-tag">Core</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EEE">
+          <div class="wf-number-badge">7</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Arrange MDT Consultation</div>
+            <div class="wf-small">Coordinator → Coordinate multi-discipline · ~1hr · SLA: 72h</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <div class="wf-toggle on"><div class="wf-toggle-dot"></div></div>
+            <span class="wf-small">Optional</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EEE">
+          <div class="wf-number-badge">8</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Day-of Navigation Support</div>
+            <div class="wf-small">Auto → In-app navigation · ~5min · SLA: same day</div>
+          </div>
+          <span class="wf-tag">Core</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EEE">
+          <div class="wf-number-badge">9</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Transfer Results Back</div>
+            <div class="wf-small">Coordinator → Obtain & translate · ~45min · SLA: 48h</div>
+          </div>
+          <span class="wf-tag">Core</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+          <div class="wf-number-badge">10</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Close Case & Follow-Up</div>
+            <div class="wf-small">Auto → Survey + next steps · ~5min · SLA: 72h</div>
+          </div>
+          <span class="wf-tag">Core</span>
+        </div>
+      </div>
+      
+      <div style="display:flex;justify-content:space-between;margin-top:16px">
+        <div class="wf-btn">← Back</div>
+        <div class="wf-btn-primary">Next: Review & Launch →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 06: Wizard Step 5 — Review & Launch
+     ============================================ -->
+<div class="screen" id="screen-06" data-name="06-wizard-step5-review">
+  <div class="screen-label">Screen 06 — New Patient Wizard · Step 5</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item">○ Patients</div>
+    <div class="wf-sidebar-item" style="background:#E8E8E8;font-weight:700;color:#333">█ + New Patient</div>
+    <div class="wf-sidebar-item">○ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <span class="wf-h2">New Patient Onboarding</span>
+      <div class="wf-btn">Cancel</div>
+    </div>
+    
+    <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+      <!-- Step Indicator -->
+      <div class="wf-step-indicator" style="justify-content:center">
+        <div class="wf-step-dot-ind done">✓</div>
+        <div class="wf-step-line-ind done"></div>
+        <div class="wf-step-dot-ind done">✓</div>
+        <div class="wf-step-line-ind done"></div>
+        <div class="wf-step-dot-ind done">✓</div>
+        <div class="wf-step-line-ind done"></div>
+        <div class="wf-step-dot-ind done">✓</div>
+        <div class="wf-step-line-ind done"></div>
+        <div class="wf-step-dot-ind active">5</div>
+      </div>
+      
+      <div class="wf-h2">Step 5: Review & Launch</div>
+      <div class="wf-body">Verify all information before launching the task chain.</div>
+      
+      <div class="wf-grid-3" style="gap:12px">
+        <!-- Patient Summary -->
+        <div class="wf-panel">
+          <div class="wf-panel-header">Patient Information</div>
+          <div class="wf-panel-body" style="font-size:12px">
+            <div style="display:flex;gap:6px;margin-bottom:6px"><span style="font-weight:600;width:80px">Name:</span> Emma Schmidt</div>
+            <div style="display:flex;gap:6px;margin-bottom:6px"><span style="font-weight:600;width:80px">DOB:</span> 1990-03-15</div>
+            <div style="display:flex;gap:6px;margin-bottom:6px"><span style="font-weight:600;width:80px">Nationality:</span> Germany</div>
+            <div style="display:flex;gap:6px;margin-bottom:6px"><span style="font-weight:600;width:80px">Language:</span> German (app) · English</div>
+            <div style="display:flex;gap:6px;margin-bottom:6px"><span style="font-weight:600;width:80px">Insurance:</span> Allianz Health</div>
+            <div style="display:flex;gap:6px"><span style="font-weight:600;width:80px">Notes:</span> 3 miscarriages, high-risk</div>
+          </div>
+        </div>
+        
+        <!-- Referral Summary -->
+        <div class="wf-panel">
+          <div class="wf-panel-header">Referral Context</div>
+          <div class="wf-panel-body" style="font-size:12px">
+            <div style="display:flex;gap:6px;margin-bottom:6px"><span style="font-weight:600;width:80px">From:</span> United Family Hospital</div>
+            <div style="display:flex;gap:6px;margin-bottom:6px"><span style="font-weight:600;width:80px">Doctor:</span> Dr. Zhang Wei · OB-GYN</div>
+            <div style="display:flex;gap:6px;margin-bottom:6px"><span style="font-weight:600;width:80px">To:</span> Anzhen Hospital</div>
+            <div style="display:flex;gap:6px;margin-bottom:6px"><span style="font-weight:600;width:80px">Dept:</span> Fetal Cardiology</div>
+            <div style="display:flex;gap:6px;margin-bottom:6px"><span style="font-weight:600;width:80px">Urgency:</span> Urgent</div>
+            <div style="display:flex;gap:6px"><span style="font-weight:600;width:80px">Reason:</span> Fetal cardiac anomaly</div>
+          </div>
+        </div>
+        
+        <!-- Task Chain Summary -->
+        <div class="wf-panel">
+          <div class="wf-panel-header">Task Chain · 10 steps</div>
+          <div class="wf-panel-body" style="font-size:11px">
+            <div>1. Register at Target Hospital <span class="wf-tag">Auto</span></div>
+            <div>2. Share Medical Records <span class="wf-tag">Coord</span></div>
+            <div>3. Assign Interpreter <span class="wf-tag">Auto</span> <span class="wf-tag">Optional</span></div>
+            <div>4. Book Appointment <span class="wf-tag">Coord</span> <span class="wf-tag">Guided</span></div>
+            <div>5. Notify Patient <span class="wf-tag">Auto</span></div>
+            <div>6. Day-Before Reminder <span class="wf-tag">Auto</span></div>
+            <div>7. MDT Consultation <span class="wf-tag">Coord</span> <span class="wf-tag">Optional</span></div>
+            <div>8. Day-of Navigation <span class="wf-tag">Auto</span></div>
+            <div>9. Transfer Results <span class="wf-tag">Coord</span></div>
+            <div>10. Close Case <span class="wf-tag">Auto</span></div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display:flex;justify-content:space-between;margin-top:24px">
+        <div class="wf-btn">← Back</div>
+        <div class="wf-btn-dark" style="padding:10px 24px;font-size:14px">🚀 Launch Task Chain</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 07: Success — Launch Confirmation
+     ============================================ -->
+<div class="screen" id="screen-07" data-name="07-success-launch">
+  <div class="screen-label">Screen 07 — Success · Task Chain Launched</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item">○ Patients</div>
+    <div class="wf-sidebar-item">○ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px;display:flex;align-items:center;justify-content:center;min-height:800px">
+    <div style="text-align:center;max-width:480px">
+      <div class="wf-success-circle">✓</div>
+      <div class="wf-h1" style="margin-top:16px">Task Chain Launched!</div>
+      <div class="wf-body" style="margin-top:8px">Emma Schmidt's cross-hospital care journey is now active.</div>
+      
+      <div class="wf-grid-3" style="margin-top:24px;gap:12px">
+        <div class="wf-card" style="text-align:center">
+          <div class="wf-label">Active Tasks</div>
+          <div class="wf-h1" style="font-size:24px">10</div>
+        </div>
+        <div class="wf-card" style="text-align:center">
+          <div class="wf-label">First SLA</div>
+          <div class="wf-h2" style="font-size:14px">Step 1 · 2h</div>
+        </div>
+        <div class="wf-card" style="text-align:center">
+          <div class="wf-label">App Language</div>
+          <div class="wf-h2" style="font-size:14px">German 🇩🇪</div>
+        </div>
+      </div>
+      
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:24px">
+        <div class="wf-btn-primary">View Patient Details →</div>
+        <div class="wf-btn">View Patient App</div>
+        <div class="wf-btn">Back to Dashboard</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 08: New Patient Detail — Emma Schmidt
+     ============================================ -->
+<div class="screen" id="screen-08" data-name="08-patient-detail-emma">
+  <div class="screen-label">Screen 08 — Patient Detail · Emma Schmidt (new)</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item active">█ Patients</div>
+    <div class="wf-sidebar-item">○ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <span style="font-size:13px;color:#777">← Back to Dashboard</span>
+    </div>
+    
+    <div style="padding:20px;display:flex;flex-direction:column;gap:12px">
+      <!-- Patient Header -->
+      <div class="wf-card" style="display:flex;align-items:center;gap:16px;padding:16px">
+        <div class="wf-avatar-lg">ES</div>
+        <div>
+          <div class="wf-h2">Emma Schmidt</div>
+          <div class="wf-small">German · 35 y/o · High-risk pregnancy · United Family → Anzhen</div>
+          <div style="display:flex;gap:4px;margin-top:4px">
+            <span class="wf-tag">DE</span>
+            <span class="wf-tag">OB-GYN → Cardio</span>
+            <span class="wf-tag-solid">Urgent</span>
+            <span class="wf-tag-solid">NEW</span>
+          </div>
+        </div>
+        <div style="flex:1;text-align:right">
+          <div class="wf-label">Task Chain Progress</div>
+          <div class="wf-h3">1 / 10 steps</div>
+          <div class="wf-progress" style="margin-top:4px"><div class="wf-progress-fill" style="width:10%"></div></div>
+        </div>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <!-- Task Chain -->
+        <div class="wf-panel">
+          <div class="wf-panel-header">Task Chain · Cross-Hospital OB Referral</div>
+          <div class="wf-panel-body" style="display:flex;flex-direction:column;gap:2px">
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot active">1</div>
+                <div class="wf-task-connector-line" style="height:16px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px">Register at Target Hospital</div>
+                <div class="wf-small">Auto · In progress · SLA: 2h remaining</div>
+                <span class="wf-tag" style="background:#EEE;color:#555;border-color:#555">Active</span>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot waiting">2</div>
+                <div class="wf-task-connector-line" style="height:16px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#999">Share Medical Records</div>
+                <div class="wf-small" style="color:#AAA">Coordinator · Waiting · After Step 1</div>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot waiting">3</div>
+                <div class="wf-task-connector-line" style="height:16px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#999">Assign Interpreter</div>
+                <div class="wf-small" style="color:#AAA">Auto · Optional · After Step 2</div>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot waiting">4</div>
+                <div class="wf-task-connector-line" style="height:16px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#999">Book Appointment — Guided Call</div>
+                <div class="wf-small" style="color:#AAA">Coordinator · After Step 3</div>
+              </div>
+            </div>
+            <div class="wf-small" style="text-align:center;color:#AAA;margin-top:4px">... Steps 5-10 · Waiting</div>
+          </div>
+        </div>
+        
+        <!-- Activity Timeline -->
+        <div class="wf-panel">
+          <div class="wf-panel-header">Activity Timeline</div>
+          <div class="wf-panel-body" style="display:flex;flex-direction:column;gap:8px">
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-dot" style="background:#333;border-color:#333;color:#FFF">✓</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:12px">Task chain created</div>
+                <div class="wf-small">System · Template: Cross-Hospital OB Referral · 10 steps</div>
+              </div>
+              <div class="wf-small">2 min ago</div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-dot">1</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:12px">Step 1 started: Registration</div>
+                <div class="wf-small">Auto · Filling form at Anzhen Hospital</div>
+              </div>
+              <div class="wf-small">Just now</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 09: Patient Detail — Sarah Johnson (Task Chain)
+     ============================================ -->
+<div class="screen" id="screen-09" data-name="09-patient-detail-sarah">
+  <div class="screen-label">Screen 09 — Patient Detail · Sarah Johnson (blocked)</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item active">█ Patients</div>
+    <div class="wf-sidebar-item">○ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <span style="font-size:13px;color:#777">← Back to Dashboard</span>
+    </div>
+    
+    <div style="padding:20px;display:flex;flex-direction:column;gap:12px">
+      <!-- Patient Header -->
+      <div class="wf-card" style="display:flex;align-items:center;gap:16px;padding:16px">
+        <div class="wf-avatar-lg">SJ</div>
+        <div>
+          <div class="wf-h2">Sarah Johnson</div>
+          <div class="wf-small">English only · 32 y/o · High-risk pregnancy · United Family → Anzhen</div>
+          <div style="display:flex;gap:4px;margin-top:4px">
+            <span class="wf-tag">EN only</span>
+            <span class="wf-tag">Cardio</span>
+            <span class="wf-tag-solid">Urgent</span>
+          </div>
+        </div>
+        <div style="flex:1;text-align:right">
+          <div class="wf-label">Task Chain Progress</div>
+          <div class="wf-h3">3 / 8 steps · Step 4 blocked</div>
+          <div class="wf-progress" style="margin-top:4px"><div class="wf-progress-fill" style="width:37%"></div></div>
+        </div>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <!-- Task Chain -->
+        <div class="wf-panel">
+          <div class="wf-panel-header">Task Chain · Cross-Hospital OB Referral v2</div>
+          <div class="wf-panel-body" style="display:flex;flex-direction:column;gap:2px">
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot done">✓</div>
+                <div class="wf-task-connector-line done" style="height:16px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#555">Register at Target Hospital</div>
+                <div class="wf-small" style="color:#777">Auto · Completed Jul 1</div>
+                <span class="wf-tag" style="background:#333;color:#FFF;border-color:#333">Done</span>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot done">✓</div>
+                <div class="wf-task-connector-line done" style="height:16px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#555">Share Medical Records</div>
+                <div class="wf-small" style="color:#777">Coordinator · Completed Jul 2</div>
+                <span class="wf-tag" style="background:#333;color:#FFF;border-color:#333">Done</span>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot done">✓</div>
+                <div class="wf-task-connector-line done" style="height:16px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#555">Assign Interpreter</div>
+                <div class="wf-small" style="color:#777">Auto · Completed Jul 2</div>
+                <span class="wf-tag" style="background:#333;color:#FFF;border-color:#333">Done</span>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot blocked">4</div>
+                <div class="wf-task-connector-line" style="height:16px;background:#DDD"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:700;font-size:13px">Book Appointment — Guided Call</div>
+                <div class="wf-small">Coordinator · BLOCKED · Overdue 1 day</div>
+                <div style="display:flex;gap:4px;margin-top:2px">
+                  <span class="wf-tag" style="background:#555;color:#FFF;border-color:#555">Blocked</span>
+                  <span class="wf-tag">Overdue</span>
+                </div>
+                <div class="wf-btn-primary" style="margin-top:6px;font-size:11px;padding:4px 10px">Start Guided Booking →</div>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot waiting">5</div>
+                <div class="wf-task-connector-line" style="height:16px;background:#DDD"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#999">Notify Patient</div>
+                <div class="wf-small" style="color:#AAA">Auto · After Step 4</div>
+              </div>
+            </div>
+            <div class="wf-small" style="text-align:center;color:#AAA;margin-top:4px">... Steps 6-8 · Waiting</div>
+          </div>
+        </div>
+        
+        <!-- Activity Timeline -->
+        <div class="wf-panel">
+          <div class="wf-panel-header">Activity Timeline</div>
+          <div class="wf-panel-body" style="display:flex;flex-direction:column;gap:8px">
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-dot" style="background:#555;border-color:#555;color:#FFF">⚠</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:12px">⚠ Step 4 overdue</div>
+                <div class="wf-small">Anomaly triggered · No action taken on booking call</div>
+              </div>
+              <div class="wf-small">1d ago</div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-dot" style="background:#333;border-color:#333;color:#FFF">✓</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:12px">Interpreter assigned: Lisa M.</div>
+                <div class="wf-small">Auto · German → English interpreter</div>
+              </div>
+              <div class="wf-small">Jul 2</div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-dot" style="background:#333;border-color:#333;color:#FFF">✓</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:12px">Medical records shared with Anzhen</div>
+                <div class="wf-small">Coordinator · Uploaded OB scan + translation</div>
+              </div>
+              <div class="wf-small">Jul 2</div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-dot" style="background:#333;border-color:#333;color:#FFF">✓</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:12px">Registration completed at Anzhen</div>
+                <div class="wf-small">Auto · Form auto-filled</div>
+              </div>
+              <div class="wf-small">Jul 1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 10: Follow Up Modal — Ahmed
+     ============================================ -->
+<div class="screen" id="screen-10" data-name="10-follow-up-modal">
+  <div class="screen-label">Screen 10 — Follow Up Modal · Ahmed Al-Rashid</div>
+  
+  <!-- Dashboard background (dimmed) -->
+  <div style="width:1280px;height:800px;background:#FFF;opacity:0.5">
+    <div style="margin-left:200px;padding:40px">
+      <div class="wf-card-dashed" style="height:60px">[Dashboard content — dimmed]</div>
+    </div>
+  </div>
+  
+  <!-- Modal overlay -->
+  <div class="screen-overlay">
+    <div class="wf-modal">
+      <div class="wf-modal-header">
+        <span class="wf-h3">Follow Up: Ahmed Al-Rashid · Endoscopy Slot</span>
+        <div style="font-size:18px;color:#999;cursor:default">✕</div>
+      </div>
+      <div class="wf-modal-body" style="display:flex;flex-direction:column;gap:12px">
+        <div class="wf-card-gray">
+          <div class="wf-label">Last Contact</div>
+          <div style="font-size:13px;margin-top:4px">Phone call to Chaoyang Hospital · Jul 2, 14:30</div>
+          <div class="wf-small">Result: "Slot available, pending confirmation"</div>
+        </div>
+        
+        <div class="wf-label">Quick Actions</div>
+        <div style="display:flex;gap:8px">
+          <div class="wf-btn-primary" style="flex:1;text-align:center">📞 Call Again</div>
+          <div class="wf-btn" style="flex:1;text-align:center">📧 Send Email</div>
+          <div class="wf-btn" style="flex:1;text-align:center">📝 Add Note</div>
+        </div>
+        
+        <div>
+          <div class="wf-label" style="margin-bottom:4px">Add Note</div>
+          <div class="wf-input" style="height:48px">Type follow-up note here...</div>
+        </div>
+      </div>
+      <div class="wf-modal-footer">
+        <div class="wf-btn">Mark as Resolved Later</div>
+        <div class="wf-btn-primary">Save & Continue</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 11: Assign Interpreter Modal
+     ============================================ -->
+<div class="screen" id="screen-11" data-name="11-assign-interpreter-modal">
+  <div class="screen-label">Screen 11 — Assign Interpreter Modal</div>
+  
+  <!-- Dashboard background (dimmed) -->
+  <div style="width:1280px;height:800px;background:#FFF;opacity:0.5">
+    <div style="margin-left:200px;padding:40px">
+      <div class="wf-card-dashed" style="height:60px">[Dashboard content — dimmed]</div>
+    </div>
+  </div>
+  
+  <!-- Modal overlay -->
+  <div class="screen-overlay">
+    <div class="wf-modal">
+      <div class="wf-modal-header">
+        <span class="wf-h3">Assign Interpreter · German-speaking</span>
+        <div style="font-size:18px;color:#999;cursor:default">✕</div>
+      </div>
+      <div class="wf-modal-body" style="display:flex;flex-direction:column;gap:10px">
+        <div class="wf-label">Available Interpreters (German)</div>
+        
+        <div class="wf-card" style="display:flex;align-items:center;gap:12px;padding:12px;border:2px solid #333">
+          <div class="wf-avatar">LM</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Lisa Müller</div>
+            <div class="wf-small">German · English · Medical certified · 4 yrs exp</div>
+          </div>
+          <span class="wf-tag" style="background:#333;color:#FFF;border-color:#333">Available</span>
+          <div class="wf-btn-primary" style="font-size:11px;padding:4px 10px">Assign</div>
+        </div>
+        
+        <div class="wf-card" style="display:flex;align-items:center;gap:12px;padding:12px">
+          <div class="wf-avatar">HK</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Hans Krause</div>
+            <div class="wf-small">German · Chinese · General · 2 yrs exp</div>
+          </div>
+          <span class="wf-tag">Busy until Jul 5</span>
+          <div class="wf-btn" style="font-size:11px;padding:4px 10px">Assign</div>
+        </div>
+        
+        <div class="wf-card" style="display:flex;align-items:center;gap:12px;padding:12px">
+          <div class="wf-avatar">AS</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">Anna Schneider</div>
+            <div class="wf-small">German · English · On-call</div>
+          </div>
+          <span class="wf-tag">On-call</span>
+          <div class="wf-btn" style="font-size:11px;padding:4px 10px">Assign</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 12: Task Action Modal
+     ============================================ -->
+<div class="screen" id="screen-12" data-name="12-task-action-modal">
+  <div class="screen-label">Screen 12 — Task Action Modal · Step 4</div>
+  
+  <!-- Patient Detail background (dimmed) -->
+  <div style="width:1280px;height:800px;background:#FFF;opacity:0.5">
+    <div style="margin-left:200px;padding:40px">
+      <div class="wf-card-dashed" style="height:60px">[Patient Detail — dimmed]</div>
+    </div>
+  </div>
+  
+  <!-- Modal overlay -->
+  <div class="screen-overlay">
+    <div class="wf-modal">
+      <div class="wf-modal-header">
+        <span class="wf-h3">Step 4: Book Appointment</span>
+        <div style="font-size:18px;color:#999;cursor:default">✕</div>
+      </div>
+      <div class="wf-modal-body" style="display:flex;flex-direction:column;gap:12px">
+        <div class="wf-card-gray">
+          <div style="font-weight:600;font-size:13px">Sarah Johnson · Anzhen Hospital · Fetal Cardiac Echo</div>
+          <div class="wf-small">Status: Blocked · Overdue 1 day</div>
+        </div>
+        
+        <div class="wf-label">Actions</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="wf-btn-dark" style="width:100%;text-align:center;padding:12px">📞 Start Guided Booking →</div>
+          <div class="wf-btn" style="width:100%;text-align:center;padding:12px">📝 Mark as Manual — Already Done</div>
+          <div class="wf-btn" style="width:100%;text-align:center;padding:12px">⏭ Skip This Step</div>
+          <div class="wf-btn" style="width:100%;text-align:center;padding:12px">📋 Request Help from Colleague</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 13: Guided Booking — Phone Script + Form
+     ============================================ -->
+<div class="screen" id="screen-13" data-name="13-guided-booking">
+  <div class="screen-label">Screen 13 — Guided Cross-Hospital Booking</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item">○ Patients</div>
+    <div class="wf-sidebar-item active">█ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:13px;color:#777">← Back to Patient Detail</span>
+        <span class="wf-h2">Guided Booking · Sarah Johnson</span>
+      </div>
+    </div>
+    
+    <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <!-- Left: Call Script -->
+      <div class="wf-panel">
+        <div class="wf-panel-header" style="display:flex;align-items:center;gap:8px">
+          📞 Phone Script · Anzhen Hospital Registration
+        </div>
+        <div class="wf-panel-body" style="display:flex;flex-direction:column;gap:10px">
+          <div class="wf-script-block">
+            <div class="wf-label" style="margin-bottom:6px">Opening:</div>
+            <div>"Hello, this is <span class="wf-script-highlight">[Coordinator Name]</span> from <span class="wf-script-highlight">[United Family Hospital]</span>. I'm calling to book a <span class="wf-script-highlight">[fetal cardiac echo]</span> appointment for an international patient."</div>
+          </div>
+          
+          <div class="wf-script-block">
+            <div class="wf-label" style="margin-bottom:6px">Patient Info:</div>
+            <div>"Patient name: <span class="wf-script-highlight">[Sarah Johnson]</span>. Date of birth: <span class="wf-script-highlight">[DOB]</span>. Referral from <span class="wf-script-highlight">[Dr. Zhang Wei]</span> at United Family."</div>
+          </div>
+          
+          <div class="wf-script-block">
+            <div class="wf-label" style="margin-bottom:6px">Key Questions:</div>
+            <div>1. "When is the next available slot for <span class="wf-script-highlight">[fetal cardiac echo]</span>?"<br>
+            2. "Which building/floor is the <span class="wf-script-highlight">[Cardiology Department]</span> located?"<br>
+            3. "What documents does the patient need to bring?"</div>
+          </div>
+          
+          <div style="display:flex;gap:8px">
+            <div class="wf-btn-primary" style="flex:1;text-align:center">📞 Start Call</div>
+            <div class="wf-btn">📋 Copy Script</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right: Booking Result Form + Status -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="wf-panel">
+          <div class="wf-panel-header">Booking Result</div>
+          <div class="wf-panel-body" style="display:flex;flex-direction:column;gap:8px">
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Appointment Date *</div>
+              <div class="wf-input">Select date...</div>
+            </div>
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Appointment Time *</div>
+              <div class="wf-input">Select time...</div>
+            </div>
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Doctor Name</div>
+              <div class="wf-input">Doctor name from call...</div>
+            </div>
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Location / Building / Floor</div>
+              <div class="wf-input">Building 3, Floor 5...</div>
+            </div>
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Documents to Bring</div>
+              <div class="wf-input">ID, insurance card, referral letter...</div>
+            </div>
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Call Result *</div>
+              <div style="display:flex;gap:6px;margin-top:4px">
+                <span class="wf-tag-solid">Confirmed</span>
+                <span class="wf-tag">No Slot</span>
+                <span class="wf-tag">Callback Needed</span>
+                <span class="wf-tag">Failed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="wf-panel">
+          <div class="wf-panel-header">Progress</div>
+          <div class="wf-panel-body">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <div class="wf-task-dot done" style="width:18px;height:18px;font-size:8px">✓</div>
+                <span class="wf-small" style="color:#555">Anomaly identified</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div class="wf-task-dot done" style="width:18px;height:18px;font-size:8px">✓</div>
+                <span class="wf-small" style="color:#555">Navigated to booking</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div class="wf-task-dot active" style="width:18px;height:18px;font-size:8px;border-width:2px">3</div>
+                <span style="font-weight:600;font-size:12px">Make phone call</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div class="wf-task-dot waiting" style="width:18px;height:18px;font-size:8px">4</div>
+                <span class="wf-small">Record result</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div class="wf-task-dot waiting" style="width:18px;height:18px;font-size:8px">5</div>
+                <span class="wf-small">Confirm & notify patient</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 14: Call Connected — Active Call State
+     ============================================ -->
+<div class="screen" id="screen-14" data-name="14-call-connected">
+  <div class="screen-label">Screen 14 — Call Connected · Active Call</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item">○ Patients</div>
+    <div class="wf-sidebar-item active">█ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:13px;color:#777">← Back to Patient Detail</span>
+        <span class="wf-h2">Guided Booking · Sarah Johnson</span>
+      </div>
+    </div>
+    
+    <!-- Call status bar -->
+    <div style="margin-left:0;background:#333;color:#FFF;padding:8px 24px;display:flex;align-items:center;justify-content:center;gap:12px">
+      <div class="wf-phone-icon" style="border-color:#FFF;color:#FFF;width:24px;height:24px;font-size:12px">📞</div>
+      <span style="font-weight:700;font-size:14px">Connected to Anzhen Hospital</span>
+      <span style="font-size:13px;background:#555;padding:2px 8px;border-radius:2px">02:34</span>
+      <div class="wf-btn" style="background:#555;color:#FFF;border-color:#555;font-size:11px;padding:4px 12px">End Call</div>
+    </div>
+    
+    <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <!-- Left: Call Script (scrollable reference) -->
+      <div class="wf-panel">
+        <div class="wf-panel-header" style="display:flex;align-items:center;gap:8px">
+          📞 Phone Script · Currently Reading
+        </div>
+        <div class="wf-panel-body" style="display:flex;flex-direction:column;gap:10px">
+          <div class="wf-script-block" style="border:2px solid #333">
+            <div class="wf-label" style="margin-bottom:6px">✓ Opening — Spoken</div>
+            <div style="color:#777">"Hello, this is [Coordinator Name] from [United Family Hospital]..."</div>
+          </div>
+          
+          <div class="wf-script-block" style="border:2px solid #333">
+            <div class="wf-label" style="margin-bottom:6px">✓ Patient Info — Spoken</div>
+            <div style="color:#777">"Patient name: Sarah Johnson. Date of birth..."</div>
+          </div>
+          
+          <div class="wf-script-block" style="background:#FFF;border:2px solid #555">
+            <div class="wf-label" style="margin-bottom:6px;color:#333">▶ Key Questions — Current</div>
+            <div>1. "When is the next available slot for <span class="wf-script-highlight">fetal cardiac echo</span>?"<br>
+            2. "Which building/floor is the Cardiology Department?"<br>
+            3. "What documents does the patient need to bring?"</div>
+          </div>
+          
+          <div class="wf-script-block">
+            <div class="wf-label" style="margin-bottom:6px">Closing:</div>
+            <div style="color:#AAA">"Thank you. I will confirm the details with the patient and send the referral documents."</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right: Booking Result Form (partially filled) -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="wf-panel">
+          <div class="wf-panel-header">Booking Result · Filling</div>
+          <div class="wf-panel-body" style="display:flex;flex-direction:column;gap:8px">
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Appointment Date *</div>
+              <div class="wf-input-filled">Jul 5, 2026</div>
+            </div>
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Appointment Time *</div>
+              <div class="wf-input-filled">10:30 AM</div>
+            </div>
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Doctor Name</div>
+              <div class="wf-input-filled">Dr. Liu Fang · Fetal Cardiology</div>
+            </div>
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Location / Building / Floor</div>
+              <div class="wf-input-filled">Building 3, Floor 5, Room 512</div>
+            </div>
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Documents to Bring</div>
+              <div class="wf-input-filled">Passport, insurance card, referral letter, previous scan</div>
+            </div>
+            <div>
+              <div class="wf-label" style="margin-bottom:4px">Call Result *</div>
+              <div style="display:flex;gap:6px;margin-top:4px">
+                <span class="wf-tag-solid">Confirmed ✓</span>
+                <span class="wf-tag">No Slot</span>
+                <span class="wf-tag">Callback Needed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="wf-btn-dark" style="width:100%;text-align:center;padding:12px;font-size:14px">Confirm & Notify Patient →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 15: Booking Success — Overlay
+     ============================================ -->
+<div class="screen" id="screen-15" data-name="15-booking-success">
+  <div class="screen-label">Screen 15 — Booking Success Overlay</div>
+  
+  <!-- Booking page background (dimmed) -->
+  <div style="width:1280px;height:800px;background:#FFF;opacity:0.4">
+    <div style="margin-left:200px;padding:40px">
+      <div class="wf-card-dashed" style="height:60px">[Guided Booking — dimmed]</div>
+    </div>
+  </div>
+  
+  <!-- Success overlay -->
+  <div class="screen-overlay">
+    <div class="wf-modal" style="width:420px;text-align:center">
+      <div style="padding:24px;display:flex;flex-direction:column;gap:12px;align-items:center">
+        <div class="wf-success-circle">✓</div>
+        <div class="wf-h2">Booking Confirmed!</div>
+        <div class="wf-body">Appointment at Anzhen Hospital has been booked and patient notified.</div>
+        
+        <div class="wf-grid-2" style="gap:8px;margin-top:12px;text-align:left">
+          <div class="wf-card-gray" style="padding:8px">
+            <div class="wf-label">Date & Time</div>
+            <div style="font-weight:600;font-size:13px">Jul 5 · 10:30 AM</div>
+          </div>
+          <div class="wf-card-gray" style="padding:8px">
+            <div class="wf-label">Doctor</div>
+            <div style="font-weight:600;font-size:13px">Dr. Liu Fang</div>
+          </div>
+          <div class="wf-card-gray" style="padding:8px">
+            <div class="wf-label">Anomaly</div>
+            <div style="font-weight:600;font-size:13px">Resolved ✓</div>
+          </div>
+          <div class="wf-card-gray" style="padding:8px">
+            <div class="wf-label">Patient Notified</div>
+            <div style="font-weight:600;font-size:13px">App push ✓</div>
+          </div>
+        </div>
+        
+        <div style="display:flex;gap:8px;margin-top:16px">
+          <div class="wf-btn-primary">View Updated Task Chain →</div>
+          <div class="wf-btn">View Patient App</div>
+          <div class="wf-btn">Back to Dashboard</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 16: Updated Patient Detail — Step 4/5 Done
+     ============================================ -->
+<div class="screen" id="screen-16" data-name="16-patient-detail-updated">
+  <div class="screen-label">Screen 16 — Patient Detail · Sarah Johnson (updated)</div>
+  
+  <div class="wf-sidebar">
+    <div class="wf-sidebar-brand">BridgeCare</div>
+    <div class="wf-sidebar-item">○ Dashboard</div>
+    <div class="wf-sidebar-item active">█ Patients</div>
+    <div class="wf-sidebar-item">○ Guided Booking</div>
+    <div class="wf-sidebar-item">○ Templates</div>
+  </div>
+  
+  <div style="margin-left:200px">
+    <div class="wf-header">
+      <span style="font-size:13px;color:#777">← Back to Dashboard</span>
+    </div>
+    
+    <div style="padding:20px;display:flex;flex-direction:column;gap:12px">
+      <!-- Patient Header -->
+      <div class="wf-card" style="display:flex;align-items:center;gap:16px;padding:16px">
+        <div class="wf-avatar-lg">SJ</div>
+        <div>
+          <div class="wf-h2">Sarah Johnson</div>
+          <div class="wf-small">English only · 32 y/o · High-risk pregnancy · United Family → Anzhen</div>
+          <div style="display:flex;gap:4px;margin-top:4px">
+            <span class="wf-tag">EN only</span>
+            <span class="wf-tag">Cardio</span>
+            <span class="wf-tag">Urgent</span>
+          </div>
+        </div>
+        <div style="flex:1;text-align:right">
+          <div class="wf-label">Task Chain Progress</div>
+          <div class="wf-h3">5 / 8 steps · Step 6 active</div>
+          <div class="wf-progress" style="margin-top:4px"><div class="wf-progress-fill" style="width:62%"></div></div>
+        </div>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <!-- Task Chain -->
+        <div class="wf-panel">
+          <div class="wf-panel-header">Task Chain · Cross-Hospital OB Referral v2</div>
+          <div class="wf-panel-body" style="display:flex;flex-direction:column;gap:2px">
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot done">✓</div>
+                <div class="wf-task-connector-line done" style="height:14px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#555">Register at Target Hospital</div>
+                <div class="wf-small" style="color:#777">Auto · Completed Jul 1</div>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot done">✓</div>
+                <div class="wf-task-connector-line done" style="height:14px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#555">Share Medical Records</div>
+                <div class="wf-small" style="color:#777">Coordinator · Completed Jul 2</div>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot done">✓</div>
+                <div class="wf-task-connector-line done" style="height:14px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#555">Assign Interpreter</div>
+                <div class="wf-small" style="color:#777">Auto · Completed Jul 2</div>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot done">✓</div>
+                <div class="wf-task-connector-line done" style="height:14px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#555">Book Appointment — Guided Call</div>
+                <div class="wf-small" style="color:#777">Coordinator · Completed Jul 3 · Confirmed Jul 5, 10:30</div>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot done">✓</div>
+                <div class="wf-task-connector-line done" style="height:14px"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#555">Notify Patient</div>
+                <div class="wf-small" style="color:#777">Auto · Push sent · Jul 3</div>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot active">6</div>
+                <div class="wf-task-connector-line" style="height:14px;background:#DDD"></div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:700;font-size:13px">Day-Before Reminder</div>
+                <div class="wf-small">Auto · Scheduled Jul 4 · Push + SMS</div>
+                <span class="wf-tag" style="background:#EEE;color:#555;border-color:#555">Scheduled</span>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot waiting">7</div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#999">Day-of Navigation Support</div>
+                <div class="wf-small" style="color:#AAA">Auto · Jul 5</div>
+              </div>
+            </div>
+            <div class="wf-task-node">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="wf-task-dot waiting">8</div>
+              </div>
+              <div style="flex:1;padding-left:8px">
+                <div style="font-weight:600;font-size:13px;color:#999">Transfer Results Back</div>
+                <div class="wf-small" style="color:#AAA">Coordinator · After appointment</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Activity Timeline -->
+        <div class="wf-panel">
+          <div class="wf-panel-header">Activity Timeline</div>
+          <div class="wf-panel-body" style="display:flex;flex-direction:column;gap:8px">
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-dot" style="background:#333;border-color:#333;color:#FFF">✓</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:12px">Booking confirmed: Jul 5, 10:30 AM</div>
+                <div class="wf-small">Coordinator · Dr. Liu Fang · Bldg 3, Floor 5</div>
+              </div>
+              <div class="wf-small">Just now</div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-dot" style="background:#333;border-color:#333;color:#FFF">✓</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:12px">Patient notified via app</div>
+                <div class="wf-small">Auto · Push notification sent</div>
+              </div>
+              <div class="wf-small">Just now</div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-dot" style="background:#333;border-color:#333;color:#FFF">✓</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:12px">Anomaly resolved</div>
+                <div class="wf-small">Auto · Booking confirmed → anomaly cleared</div>
+              </div>
+              <div class="wf-small">Just now</div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-dot" style="background:#333;border-color:#333;color:#FFF">✓</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:12px">Phone call completed</div>
+                <div class="wf-small">Coordinator · 2:34 duration · Confirmed slot</div>
+              </div>
+              <div class="wf-small">5 min ago</div>
+            </div>
+            <div class="wf-small" style="text-align:center;margin-top:8px;color:#AAA">... earlier entries</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SCREEN 17: Patient App — Mobile Today View
+     ============================================ -->
+<div class="screen mobile" id="screen-17" data-name="17-patient-app-mobile">
+  <div class="screen-label">Screen 17 — Patient App · Mobile Today</div>
+  
+  <!-- App Header -->
+  <div class="wf-mobile-header" style="background:#F5F5F5">
+    <span style="font-weight:700;font-size:14px">BridgeCare</span>
+    <div style="display:flex;gap:6px;align-items:center">
+      <div class="wf-icon" style="width:22px;height:22px;font-size:10px;background:#FFF">🔔</div>
+    </div>
+  </div>
+  
+  <!-- Content -->
+  <div style="padding:16px;display:flex;flex-direction:column;gap:10px;flex:1">
+    <!-- Today banner -->
+    <div class="wf-mobile-card-dark">
+      <div style="font-weight:700;font-size:14px;margin-bottom:4px">Next Appointment</div>
+      <div style="font-size:13px;margin-bottom:6px">Fetal Cardiac Echo · Anzhen Hospital</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <span style="font-size:12px">📅 Jul 5 · 10:30 AM</span>
+        <span style="font-size:12px">👨‍⚕️ Dr. Liu Fang</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.2);padding:8px 14px;border-radius:3px;font-weight:600;font-size:12px;text-align:center;border:1px solid rgba(255,255,255,0.3)">
+        View Navigation Map →
+      </div>
+    </div>
+    
+    <!-- Checklist -->
+    <div class="wf-mobile-card">
+      <div style="font-weight:700;font-size:13px;margin-bottom:6px">What to Bring</div>
+      <div style="display:flex;flex-direction:column;gap:4px;font-size:12px">
+        <div style="display:flex;align-items:center;gap:6px"><div class="wf-checkbox checked"></div> Passport</div>
+        <div style="display:flex;align-items:center;gap:6px"><div class="wf-checkbox checked"></div> Insurance card</div>
+        <div style="display:flex;align-items:center;gap:6px"><div class="wf-checkbox"></div> Referral letter</div>
+        <div style="display:flex;align-items:center;gap:6px"><div class="wf-checkbox"></div> Previous scan report</div>
+      </div>
+    </div>
+    
+    <!-- Upcoming -->
+    <div class="wf-mobile-card">
+      <div style="font-weight:700;font-size:13px;margin-bottom:6px">Upcoming</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+          <div class="wf-icon" style="width:28px;height:28px;font-size:10px;background:#EEE;border-color:#DDD">🔔</div>
+          <div style="flex:1">
+            <div style="font-weight:600">Day-before reminder</div>
+            <div class="wf-small">Jul 4 · Push + SMS</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+          <div class="wf-icon" style="width:28px;height:28px;font-size:10px;background:#EEE;border-color:#DDD">📍</div>
+          <div style="flex:1">
+            <div style="font-weight:600">Navigation to Anzhen</div>
+            <div class="wf-small">Jul 5 · In-app guide</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Contact coordinator -->
+    <div class="wf-card" style="border-radius:6px;padding:10px;text-align:center;font-size:12px;border:1px solid #DDD">
+      📞 Contact your coordinator · Available 24/7
+    </div>
+  </div>
+  
+  <!-- Tab Bar -->
+  <div class="wf-mobile-tab-bar">
+    <div class="wf-tab-item active">
+      <div style="font-size:16px">🏠</div>
+      <span>Today</span>
+    </div>
+    <div class="wf-tab-item">
+      <div style="font-size:16px">📋</div>
+      <span>Timeline</span>
+    </div>
+    <div class="wf-tab-item">
+      <div style="font-size:16px">❓</div>
+      <span>Help</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

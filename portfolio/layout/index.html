@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BridgeCare — Portfolio Layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --indigo: #6366F1;
+  --violet: #7C3AED;
+  --blue: #3B82F6;
+  --indigo-light: #EEF2FF;
+  --violet-light: #F5F3FF;
+  --blue-light: #EFF6FF;
+
+  --text-1: #1A1A2E;
+  --text-2: #4A4A5E;
+  --text-3: #8A8A9A;
+  --text-white: #FFFFFF;
+
+  --bg-page: #FAFAFC;
+  --bg-surface: #FFFFFF;
+  --bg-tint: #F5F5F8;
+
+  --border: #E5E7EB;
+  --border-light: #F0F0F4;
+
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  --page-w: 1400px;
+  --page-h: 990px;
+  --page-pad: 48px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: #E8E8EC;
+  color: var(--text-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 20px;
+}
+
+/* ==================== PAGE FRAME ==================== */
+.portfolio-page {
+  width: var(--page-w);
+  height: var(--page-h);
+  background: var(--bg-page);
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Page header bar */
+.page-bar {
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--page-pad);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-bar .bar-left { display: flex; align-items: center; gap: 12px; }
+.page-bar .bar-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--indigo); }
+.page-bar .bar-right { display: flex; align-items: center; gap: 16px; }
+
+/* Page body */
+.page-body {
+  flex: 1;
+  padding: var(--page-pad);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Image placeholder */
+.img-ph {
+  border: 2px dashed #C5C5D0;
+  border-radius: 12px;
+  background: repeating-linear-gradient(
+    135deg,
+    #F8F8FB,
+    #F8F8FB 10px,
+    #F2F2F6 10px,
+    #F2F2F6 20px
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text-3);
+  text-align: center;
+  position: relative;
+}
+
+.img-ph .ph-icon {
+  font-size: 1.5rem;
+  opacity: 0.5;
+}
+
+.img-ph .ph-label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  padding: 0 12px;
+  line-height: 1.5;
+}
+
+.img-ph .ph-desc {
+  font-size: 0.625rem;
+  color: #B0B0BC;
+  padding: 0 12px;
+  line-height: 1.5;
+  max-width: 90%;
+}
+
+/* Accent tag */
+.accent-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.accent-tag.indigo { background: var(--indigo-light); color: var(--indigo); }
+.accent-tag.violet { background: var(--violet-light); color: var(--violet); }
+.accent-tag.blue { background: var(--blue-light); color: var(--blue); }
+.accent-tag.green { background: #ECFDF5; color: var(--success); }
+.accent-tag.amber { background: #FFFBEB; color: var(--warning); }
+.accent-tag.red { background: #FEF2F2; color: var(--danger); }
+
+/* Section label */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-label::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--text-3);
+}
+
+/* ==================== PAGE 1 ==================== */
+.p1-body {
+  display: grid;
+  grid-template-columns: 38% 1fr;
+  gap: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.p1-left {
+  padding: 44px 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(160deg, #1A1A2E 0%, #2D2D5C 60%, #4C3A8E 100%);
+  color: white;
+}
+
+.p1-left .p1-brand {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+.p1-left .p1-title {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+
+.p1-left .p1-subtitle {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 28px;
+}
+
+.p1-left .p1-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.p1-meta .meta-chip {
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.8);
+}
+
+.p1-left .p1-role {
+  font-size: 0.6875rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.6;
+}
+
+.p1-right {
+  padding: 44px 44px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.p1-story {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 24px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.p1-story .story-tag {
+  margin-bottom: 10px;
+}
+
+.p1-story .story-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.p1-story .story-text {
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+
+.p1-story .story-text strong {
+  color: var(--indigo);
+  font-weight: 600;
+}
+
+.p1-story .story-highlight {
+  background: linear-gradient(180deg, transparent 60%, var(--indigo-light) 60%);
+  padding: 0 2px;
+}
+
+.p1-problems {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.p1-problem-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.p1-problem-card .pc-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.875rem;
+  margin-bottom: 2px;
+}
+
+.p1-problem-card .pc-icon.i1 { background: var(--indigo-light); }
+.p1-problem-card .pc-icon.i2 { background: var(--violet-light); }
+.p1-problem-card .pc-icon.i3 { background: var(--blue-light); }
+.p1-problem-card .pc-icon.i4 { background: #FEF2F2; }
+
+.p1-problem-card .pc-title {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1.3;
+}
+
+.p1-problem-card .pc-desc {
+  font-size: 0.625rem;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+/* ==================== PAGE 2 ==================== */
+.p2-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1;
+}
+
+.p2-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.p2-header .p2-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+.p2-header .p2-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  max-width: 360px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+.p2-methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.p2-method-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.p2-method-card .mc-num {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--indigo);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.p2-method-card .mc-body .mc-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 2px;
+}
+
+.p2-method-card .mc-body .mc-desc {
+  font-size: 0.625rem;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.p2-main {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+.p2-journey {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.p2-journey .j-label {
+  margin-bottom: 10px;
+}
+
+.p2-journey .img-ph {
+  flex: 1;
+  border-radius: 10px;
+}
+
+.p2-insights {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.p2-insight-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.p2-insight-card .ic-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--violet), var(--indigo));
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.p2-insight-card .ic-body .ic-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 3px;
+}
+
+.p2-insight-card .ic-body .ic-desc {
+  font-size: 0.625rem;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+.p2-bottom {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 14px;
+}
+
+.p2-hmw {
+  background: linear-gradient(135deg, var(--indigo), var(--violet));
+  border-radius: 14px;
+  padding: 16px 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.p2-hmw .hmw-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.p2-hmw .hmw-text {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.p2-principles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.p2-principle {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.p2-principle .pr-icon {
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  background: var(--indigo-light);
+  color: var(--indigo);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.625rem;
+  flex-shrink: 0;
+}
+
+.p2-principle .pr-text {
+  font-size: 0.625rem;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.p2-principle .pr-text strong {
+  color: var(--text-1);
+  font-weight: 700;
+}
+
+/* ==================== PAGE 3 ==================== */
+.p3-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.p3-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.p3-header .p3-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+.p3-header .p3-def {
+  font-size: 0.75rem;
+  color: var(--text-2);
+  max-width: 480px;
+  text-align: right;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.p3-main {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+.p3-arch {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.p3-arch .a-label {
+  margin-bottom: 10px;
+}
+
+.p3-arch .img-ph {
+  flex: 1;
+  border-radius: 10px;
+}
+
+.p3-taskchain {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.p3-taskchain .tc-label {
+  margin-bottom: 10px;
+}
+
+.p3-taskchain .img-ph {
+  flex: 1;
+  border-radius: 10px;
+}
+
+.p3-layers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.p3-layer-card {
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.p3-layer-card.l1 { background: linear-gradient(135deg, #EEF2FF, #E0E7FF); border: 1px solid #C7D2FE; }
+.p3-layer-card.l2 { background: linear-gradient(135deg, #F5F3FF, #EDE9FE); border: 1px solid #DDD6FE; }
+.p3-layer-card.l3 { background: linear-gradient(135deg, #EFF6FF, #DBEAFE); border: 1px solid #BFDBFE; }
+
+.p3-layer-card .lc-tag {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+
+.p3-layer-card.l1 .lc-tag { color: var(--indigo); }
+.p3-layer-card.l2 .lc-tag { color: var(--violet); }
+.p3-layer-card.l3 .lc-tag { color: var(--blue); }
+
+.p3-layer-card .lc-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.p3-layer-card .lc-desc {
+  font-size: 0.5625rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.p3-decisions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.p3-decision-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.p3-decision-card .dc-q {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--indigo);
+  margin-bottom: 4px;
+}
+
+.p3-decision-card .dc-a {
+  font-size: 0.625rem;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+/* ==================== PAGE 4 ==================== */
+.p4-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.p4-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.p4-header .p4-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+.p4-highlights {
+  display: flex;
+  gap: 8px;
+}
+
+.p4-flow-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.p4-flow {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.p4-flow .f-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.p4-flow .f-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--violet), var(--indigo));
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.p4-flow .f-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1.3;
+}
+
+.p4-flow .f-desc {
+  font-size: 0.5625rem;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.p4-flow .f-steps {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.p4-flow .f-step-chip {
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: var(--bg-tint);
+  font-size: 0.5rem;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.p4-flow .f-step-arrow {
+  color: var(--text-3);
+  font-size: 0.5rem;
+}
+
+.p4-flow .img-ph {
+  flex: 1;
+  border-radius: 10px;
+  min-height: 0;
+}
+
+.p4-flow .f-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--indigo-light);
+  border-radius: 8px;
+}
+
+.p4-flow .f-callout .fc-icon {
+  font-size: 0.625rem;
+  flex-shrink: 0;
+}
+
+.p4-flow .f-callout .fc-text {
+  font-size: 0.5625rem;
+  color: var(--indigo);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.p4-bottom {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+}
+
+.p4-beforeafter {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.p4-ba-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.p4-ba-side .ba-label {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.p4-ba-side.before .ba-label { color: var(--danger); }
+.p4-ba-side.after .ba-label { color: var(--success); }
+
+.p4-ba-side .ba-content {
+  font-size: 0.625rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.p4-ba-side .ba-content strong {
+  color: var(--text-1);
+}
+
+.p4-ba-arrow {
+  font-size: 1.2rem;
+  color: var(--indigo);
+  flex-shrink: 0;
+}
+
+.p4-patientapp {
+  background: linear-gradient(135deg, var(--indigo), var(--violet));
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.p4-patientapp .pa-text {
+  flex: 1;
+}
+
+.p4-patientapp .pa-title {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.p4-patientapp .pa-desc {
+  font-size: 0.5625rem;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+/* ==================== PAGE 5 ==================== */
+.p5-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+}
+
+.p5-header {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.p5-header .p5-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+.p5-header .p5-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  max-width: 380px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+.p5-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.p5-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+
+.p5-card .card-label {
+  margin-bottom: 10px;
+}
+
+.p5-validation .v-method {
+  font-size: 0.6875rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.p5-quote {
+  background: var(--bg-tint);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border-left: 3px solid var(--indigo);
+}
+
+.p5-quote .q-text {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-1);
+  line-height: 1.4;
+  margin-bottom: 3px;
+}
+
+.p5-quote .q-desc {
+  font-size: 0.5625rem;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+.p5-metric {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.p5-metric:last-child { border-bottom: none; }
+
+.p5-metric .m-value {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--indigo);
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 60px;
+}
+
+.p5-metric .m-body .m-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--text-1);
+  line-height: 1.3;
+}
+
+.p5-metric .m-body .m-desc {
+  font-size: 0.5625rem;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+.p5-reflection {
+  background: linear-gradient(135deg, #1A1A2E, #4C3A8E);
+  border-radius: 14px;
+  padding: 16px 18px;
+  color: white;
+}
+
+.p5-reflection .r-item {
+  margin-bottom: 12px;
+}
+
+.p5-reflection .r-item:last-child { margin-bottom: 0; }
+
+.p5-reflection .r-title {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+  color: #C4B5FD;
+}
+
+.p5-reflection .r-text {
+  font-size: 0.5625rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+}
+
+.p5-future {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.p5-future-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+}
+
+.p5-future-item .fi-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.p5-future-item .fi-text {
+  font-size: 0.5625rem;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.p5-role {
+  background: var(--bg-tint);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.p5-role .rl-label {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: 3px;
+}
+
+.p5-role .rl-text {
+  font-size: 0.625rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* ==================== PAGE 1 TAGLINE ==================== */
+.p1-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+  border-left: 2px solid rgba(255,255,255,0.25);
+  padding-left: 10px;
+  margin-bottom: 18px;
+}
+
+/* ==================== PAGE 4: HARD TURNS ==================== */
+.p4ht-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.p4ht-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.p4ht-header .p4ht-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+.p4ht-header .p4ht-sub {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  max-width: 420px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+.p4ht-interstitial {
+  background: linear-gradient(135deg, #1A1A2E 0%, #2D2D5C 55%, #4C3A8E 100%);
+  border-radius: 14px;
+  padding: 14px 22px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.p4ht-interstitial .ht-quote-mark {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #C4B5FD;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.p4ht-interstitial .ht-text {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.92);
+}
+
+.p4ht-interstitial .ht-text strong { color: #C4B5FD; font-weight: 700; }
+
+.p4ht-interstitial .ht-tag {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+
+.p4ht-main {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+.p4ht-triangle {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.p4ht-triangle .t-label {
+  margin-bottom: 8px;
+}
+
+.p4ht-triangle .svg-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.p4ht-beats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.p4ht-beat {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.p4ht-beat .b-num {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--violet), var(--indigo));
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.p4ht-beat .b-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.p4ht-beat .b-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.p4ht-beat .b-row {
+  display: flex;
+  gap: 8px;
+  font-size: 0.5625rem;
+  line-height: 1.45;
+}
+
+.p4ht-beat .b-row .b-k {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  width: 40px;
+  padding-top: 1px;
+}
+
+.p4ht-beat .b-row.wall .b-k { color: var(--danger); }
+.p4ht-beat .b-row.trade .b-k { color: var(--warning); }
+.p4ht-beat .b-row.result .b-k { color: var(--success); }
+.p4ht-beat .b-row .b-v { color: var(--text-2); }
+.p4ht-beat .b-row .b-v strong { color: var(--text-1); font-weight: 600; }
+
+.p4ht-glance {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.p4ht-glance .g-card {
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.p4ht-glance .g-card.give { background: #FEF2F2; border: 1px solid #FECACA; }
+.p4ht-glance .g-card.gain { background: #ECFDF5; border: 1px solid #A7F3D0; }
+.p4ht-glance .g-card.net { background: linear-gradient(135deg, var(--indigo-light), var(--violet-light)); border: 1px solid #C7D2FE; }
+
+.p4ht-glance .g-label {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.p4ht-glance .g-card.give .g-label { color: var(--danger); }
+.p4ht-glance .g-card.gain .g-label { color: var(--success); }
+.p4ht-glance .g-card.net .g-label { color: var(--violet); }
+
+.p4ht-glance .g-text {
+  font-size: 0.625rem;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+.p4ht-glance .g-text strong { color: var(--text-1); font-weight: 700; }
+
+/* Navigation dots */
+.nav-dots {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+.nav-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #C5C5D0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-dot:hover { background: var(--indigo); transform: scale(1.3); }
+.nav-dot.active { background: var(--indigo); transform: scale(1.4); }
+
+/* Page number badge */
+.page-num {
+  position: absolute;
+  bottom: 16px;
+  right: 24px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PAGE 1: COVER + PROBLEM -->
+<!-- ============================================================ -->
+<div class="portfolio-page" id="page-1">
+  <div class="page-bar">
+    <div class="bar-left">
+      <div class="bar-dot"></div>
+      <span>BridgeCare</span>
+      <span>·</span>
+      <span>Cover & Problem</span>
+    </div>
+    <div class="bar-right">
+      <span>Individual Work</span>
+      <span>UX Design</span>
+      <span>5 Weeks</span>
+    </div>
+  </div>
+
+  <div class="p1-body">
+    <!-- Left: Cover -->
+    <div class="p1-left">
+      <div>
+        <div class="p1-brand">Portfolio · Project 01</div>
+        <div style="height: 28px;"></div>
+        <div class="p1-title">Bridge<br>Care.</div>
+        <div class="p1-subtitle">
+          Redesigning cross-hospital care navigation for international patients in China.
+        </div>
+        <div class="p1-meta">
+          <span class="meta-chip">Individual Work</span>
+          <span class="meta-chip">UX / Product Design</span>
+          <span class="meta-chip">B2B SaaS + Patient App</span>
+          <span class="meta-chip">5 Weeks</span>
+          <span class="meta-chip">Figma · FigJam · Protopie</span>
+        </div>
+        <div class="p1-tagline">Design thesis — turning the coordinator's human patchwork into a system that keeps the human in the loop.</div>
+      </div>
+      <div class="p1-role">
+        Role: UX Designer / Product Designer<br>
+        Research · IA · Interaction · Prototyping · Testing
+      </div>
+    </div>
+
+    <!-- Right: Story + Problems -->
+    <div class="p1-right">
+      <div class="p1-story">
+        <div class="story-tag">
+          <span class="accent-tag red">⚠ Real Story</span>
+          <span class="accent-tag indigo" style="margin-left:6px;">Cross-Hospital Referral</span>
+        </div>
+        <div class="story-title">A German couple, pregnant after multiple miscarriages, needed a fetal cardiac echo at a public hospital our clinic couldn't provide.</div>
+        <div class="story-text">
+          In China's healthcare system, public hospitals offer specialized diagnostics that international private hospitals cannot. For foreign patients, transferring between hospitals means navigating a maze of <span class="story-highlight">Chinese-only interfaces, scattered departments, and unclear next steps</span> — all during moments of high medical anxiety.
+          <br><br>
+          As a former patient service coordinator, I saw this firsthand. I had to <strong>translate, coordinate, and guide</strong> them through every step — because the system itself was not designed for them.
+        </div>
+      </div>
+
+      <div class="p1-problems">
+        <div class="p1-problem-card">
+          <div class="pc-icon i1">🏥</div>
+          <div class="pc-title">Hospital-Centric Design</div>
+          <div class="pc-desc">Systems organized by hospital departments, not by patient tasks.</div>
+        </div>
+        <div class="p1-problem-card">
+          <div class="pc-icon i2">🔗</div>
+          <div class="pc-title">No Cross-Hospital Continuity</div>
+          <div class="pc-desc">Each hospital operates as a silo with no shared patient journey record.</div>
+        </div>
+        <div class="p1-problem-card">
+          <div class="pc-icon i3">🌐</div>
+          <div class="pc-title">Language + Structure Barrier</div>
+          <div class="pc-desc">Foreign patients face both language gaps and unfamiliar information architecture.</div>
+        </div>
+        <div class="p1-problem-card">
+          <div class="pc-icon i4">💓</div>
+          <div class="pc-title">High-Stakes Confusion</div>
+          <div class="pc-desc">Anxiety amplifies every friction, making unclear instructions dangerous.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">01 / 06</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2: RESEARCH + INSIGHTS -->
+<!-- ============================================================ -->
+<div class="portfolio-page" id="page-2">
+  <div class="page-bar">
+    <div class="bar-left">
+      <div class="bar-dot"></div>
+      <span>BridgeCare</span>
+      <span>·</span>
+      <span>Research & Insights</span>
+    </div>
+    <div class="bar-right">
+      <span>Page 02</span>
+    </div>
+  </div>
+
+  <div class="page-body p2-body">
+    <!-- Header -->
+    <div class="p2-header">
+      <div>
+        <div class="section-label" style="margin-bottom: 6px;">02 — Research</div>
+        <div class="p2-title">Understanding the Invisible System</div>
+      </div>
+      <div class="p2-subtitle">
+        The coordinator is the system — but the system doesn't exist. I studied how they actually work to find out why.
+      </div>
+    </div>
+
+    <!-- Research Methods -->
+    <div class="p2-methods">
+      <div class="p2-method-card">
+        <div class="mc-num">5</div>
+        <div class="mc-body">
+          <div class="mc-title">Coordinator Interviews</div>
+          <div class="mc-desc">International hospital referral & patient service staff. Uncovered real workflows, pain points, and workarounds.</div>
+        </div>
+      </div>
+      <div class="p2-method-card">
+        <div class="mc-num">3</div>
+        <div class="mc-body">
+          <div class="mc-title">Patient Interviews</div>
+          <div class="mc-desc">Foreign patients with cross-hospital care experience. Mapped emotional journey and information gaps.</div>
+        </div>
+      </div>
+      <div class="p2-method-card">
+        <div class="mc-num">3d</div>
+        <div class="mc-body">
+          <div class="mc-title">On-Site Observation</div>
+          <div class="mc-desc">Shadowed coordinators through real referrals. Timed tasks, recorded communication breakdowns.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main: Journey + Insights -->
+    <div class="p2-main">
+      <div class="p2-journey">
+        <div class="j-label section-label">Patient Emotion Journey Map</div>
+        <div class="img-ph">
+          <div class="ph-icon">📊</div>
+          <div class="ph-label">Emotion Journey Map</div>
+          <div class="ph-desc">Horizontal axis: Discovery → Referral → Booking → Visit → Results → Follow-up. Vertical axis: emotion curve. Annotate lowest points: "Can't find department at public hospital" / "Don't know when results come". Red dashed lines = information breakdowns.</div>
+        </div>
+      </div>
+
+      <div class="p2-insights">
+        <div class="p2-insight-card">
+          <div class="ic-num">1</div>
+          <div class="ic-body">
+            <div class="ic-title">The coordinator is the system.</div>
+            <div class="ic-desc">Patients rely entirely on coordinators to translate, route, and remember every step. If the coordinator is unavailable, the journey stalls.</div>
+          </div>
+        </div>
+        <div class="p2-insight-card">
+          <div class="ic-num">2</div>
+          <div class="ic-body">
+            <div class="ic-title">Knowledge lives in people, not tools.</div>
+            <div class="ic-desc">Every coordinator has their own WeChat notes, phone contacts, and mental checklists. When they leave, the knowledge leaves with them.</div>
+          </div>
+        </div>
+        <div class="p2-insight-card">
+          <div class="ic-num">3</div>
+          <div class="ic-body">
+            <div class="ic-title">Patients need the right next step, not more info.</div>
+            <div class="ic-desc">Under stress, long instructions become noise. A single, clear action at the right time beats a full manual.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: HMW + Principles -->
+    <div class="p2-bottom">
+      <div class="p2-hmw">
+        <div class="hmw-label">↪ How Might We</div>
+        <div class="hmw-text">Help care coordinators manage complex cross-hospital journeys with a structured, reusable system — while still giving patients clear, calm, human-centered guidance?</div>
+      </div>
+      <div class="p2-principles">
+        <div class="p2-principle">
+          <div class="pr-icon">①</div>
+          <div class="pr-text"><strong>Task-first</strong>, not hospital-first. Organize by patient task path, not departments.</div>
+        </div>
+        <div class="p2-principle">
+          <div class="pr-icon">②</div>
+          <div class="pr-text"><strong>Continuity</strong> across hospitals. Every step has context, status, and a next action.</div>
+        </div>
+        <div class="p2-principle">
+          <div class="pr-icon">③</div>
+          <div class="pr-text"><strong>Human-in-the-loop</strong> automation. Reduce friction, keep human judgment.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">02 / 06</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3: SOLUTION ARCHITECTURE -->
+<!-- ============================================================ -->
+<div class="portfolio-page" id="page-3">
+  <div class="page-bar">
+    <div class="bar-left">
+      <div class="bar-dot"></div>
+      <span>BridgeCare</span>
+      <span>·</span>
+      <span>Solution Architecture</span>
+    </div>
+    <div class="bar-right">
+      <span>Page 03</span>
+    </div>
+  </div>
+
+  <div class="page-body p3-body">
+    <!-- Header -->
+    <div class="p3-header">
+      <div>
+        <div class="section-label" style="margin-bottom: 6px;">03 — Solution</div>
+        <div class="p3-title">Designing the Bridge</div>
+      </div>
+      <div class="p3-def">
+        BridgeCare replaces the coordinator's memory with a structured task-chain engine, while keeping the coordinator in control of every critical decision.
+      </div>
+    </div>
+
+    <!-- Three Layer Cards -->
+    <div class="p3-layers">
+      <div class="p3-layer-card l1">
+        <div class="lc-tag">Layer 1 · B2B</div>
+        <div class="lc-title">Desktop Care Platform</div>
+        <div class="lc-desc">Kanban dashboard, task-chain management, template library, anomaly alerts, and guided booking — everything a coordinator needs.</div>
+      </div>
+      <div class="p3-layer-card l2">
+        <div class="lc-tag">Layer 2 · Engine</div>
+        <div class="lc-title">Task-Chain Engine</div>
+        <div class="lc-desc">A rule-based engine that breaks each referral into dependent tasks with owners, SLAs, escalation rules, and fallback paths.</div>
+      </div>
+      <div class="p3-layer-card l3">
+        <div class="lc-tag">Layer 3 · B2C</div>
+        <div class="lc-title">Patient Mobile App</div>
+        <div class="lc-desc">A minimal companion showing only the next action: today's appointment, documents to bring, route, and how to contact the coordinator.</div>
+      </div>
+    </div>
+
+    <!-- Main: Architecture + Task Chain -->
+    <div class="p3-main">
+      <div class="p3-arch">
+        <div class="a-label section-label">System Architecture Diagram</div>
+        <div class="img-ph">
+          <div class="ph-icon">🏗️</div>
+          <div class="ph-label">Three-Layer Architecture</div>
+          <div class="ph-desc">Top: Desktop Care Platform (Kanban, Templates, Alerts, Booking). Middle: Task Chain Engine + Knowledge Base + Notification Engine + Integration Layer. Bottom: Patient App (Today, Timeline, Help). Draw data flow arrows between layers. Show integration types: API / Guided Manual / Structured Manual.</div>
+        </div>
+      </div>
+
+      <div class="p3-taskchain">
+        <div class="tc-label section-label">Task Chain Concept</div>
+        <div class="img-ph">
+          <div class="ph-icon">🔗</div>
+          <div class="ph-label">Task Chain Visualization</div>
+          <div class="ph-desc">Horizontal chain of 7-8 nodes: Translate Records → Book Appt → Send Prep → Day-Before Reminder → Check-in Nav → Collect Results → Trigger MDT. Color by owner: Purple=System, Blue=Coordinator, Green=Patient. Show dependency arrows + conditional branch (abnormal → MDT).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Design Decisions -->
+    <div class="p3-decisions">
+      <div class="p3-decision-card">
+        <div class="dc-q">Why Kanban, not a list?</div>
+        <div class="dc-a">Kanban lets coordinators see workload distribution, bottlenecks, and anomalies at a glance across 40+ active patients.</div>
+      </div>
+      <div class="p3-decision-card">
+        <div class="dc-q">Why templates, not free-form?</div>
+        <div class="dc-a">80% of referrals are predictable. Templates turn personal experience into institutional memory — new coordinators ramp up faster.</div>
+      </div>
+      <div class="p3-decision-card">
+        <div class="dc-q">Why not full patient self-service?</div>
+        <div class="dc-a">Medical appointments require clinical judgment. The coordinator configures; the patient executes simple, trusted actions.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">03 / 06</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4: HARD TURNS / DESIGN TENSIONS -->
+<!-- ============================================================ -->
+<div class="portfolio-page" id="page-4">
+  <div class="page-bar">
+    <div class="bar-left">
+      <div class="bar-dot"></div>
+      <span>BridgeCare</span>
+      <span>·</span>
+      <span>Hard Turns</span>
+    </div>
+    <div class="bar-right">
+      <span>Page 04</span>
+    </div>
+  </div>
+
+  <div class="page-body p4ht-body">
+    <!-- Header -->
+    <div class="p4ht-header">
+      <div>
+        <div class="section-label" style="margin-bottom: 6px;">04 — Hard Turns</div>
+        <div class="p4ht-title">Designing Through Constraints</div>
+      </div>
+      <div class="p4ht-sub">
+        A good design isn't the one without tradeoffs — it's the one where the tradeoffs were made on purpose. Here's where I had to play defense.
+      </div>
+    </div>
+
+    <!-- First-person interstitial -->
+    <div class="p4ht-interstitial">
+      <div class="ht-quote-mark">"</div>
+      <div class="ht-text">
+        When I first saw the data, my instinct was to build <strong>full automation</strong> — auto-booking, smart routing, the impressive demo. But Emma's rare-disease case and three hospitals with no open APIs changed my mind. I chose to <strong>give up the sexy direction</strong> to protect what actually matters: a system patients can trust.
+      </div>
+      <div class="ht-tag">Designer's Dilemma</div>
+    </div>
+
+    <!-- Main: triangle + beats -->
+    <div class="p4ht-main">
+      <!-- Impossible triangle -->
+      <div class="p4ht-triangle">
+        <div class="t-label section-label">The Impossible Triangle</div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 340 280" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <line x1="170" y1="46" x2="52" y2="232" stroke="#C5C5D0" stroke-width="2" stroke-dasharray="5 4"/>
+            <line x1="170" y1="46" x2="288" y2="232" stroke="#C7D2FE" stroke-width="2.5"/>
+            <line x1="52" y1="232" x2="288" y2="232" stroke="#FECACA" stroke-width="2" stroke-dasharray="5 4"/>
+            <text x="170" y="148" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="#8A8A9A" letter-spacing="0.4">CANNOT MAX ALL THREE</text>
+
+            <circle cx="170" cy="46" r="32" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+            <text x="170" y="42" text-anchor="middle" font-family="Outfit, sans-serif" font-size="11" font-weight="700" fill="#065F46">个性化</text>
+            <text x="170" y="57" text-anchor="middle" font-family="Outfit, sans-serif" font-size="9" font-weight="600" fill="#10B981">适配 ↑</text>
+
+            <circle cx="288" cy="232" r="32" fill="#EEF2FF" stroke="#6366F1" stroke-width="2.5"/>
+            <text x="288" y="228" text-anchor="middle" font-family="Outfit, sans-serif" font-size="11" font-weight="700" fill="#3730A3">高风险</text>
+            <text x="288" y="243" text-anchor="middle" font-family="Outfit, sans-serif" font-size="9" font-weight="600" fill="#6366F1">零容错 ↑</text>
+
+            <circle cx="52" cy="232" r="24" fill="#F3F4F6" stroke="#C5C5D0" stroke-width="2"/>
+            <line x1="40" y1="220" x2="64" y2="244" stroke="#EF4444" stroke-width="2"/>
+            <text x="52" y="212" text-anchor="middle" font-family="Outfit, sans-serif" font-size="9" font-weight="600" fill="#EF4444">traded down</text>
+            <text x="52" y="268" text-anchor="middle" font-family="Outfit, sans-serif" font-size="11" font-weight="700" fill="#9CA3AF">自动化 ↓</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Beats -->
+      <div class="p4ht-beats">
+        <div class="p4ht-beat">
+          <div class="b-num">1</div>
+          <div>
+            <div class="b-title">The Automation Temptation</div>
+            <div class="b-rows">
+              <div class="b-row wall"><span class="b-k">撞墙</span><span class="b-v">Target hospitals expose <strong>no booking APIs</strong>; one missed step means a stranded, anxious patient.</span></div>
+              <div class="b-row trade"><span class="b-k">取舍</span><span class="b-v">Killed the "auto" demo. Chose <strong>guided human-in-the-loop</strong>: the system feeds the script, the human makes the call.</span></div>
+              <div class="b-row result"><span class="b-k">结果</span><span class="b-v">Guided Booking became the product's <strong>signature interaction</strong> — and earned coordinator trust.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p4ht-beat">
+          <div class="b-num">2</div>
+          <div>
+            <div class="b-title">The Template Trap</div>
+            <div class="b-rows">
+              <div class="b-row wall"><span class="b-k">撞墙</span><span class="b-v">Emma (rare disease) <strong>broke every standard template</strong>; forcing her in dropped critical steps.</span></div>
+              <div class="b-row trade"><span class="b-k">取舍</span><span class="b-v">Refused "standardize vs. flex" as either/or. Added a <strong>mandatory Customize layer</strong> after every template.</span></div>
+              <div class="b-row result"><span class="b-k">结果</span><span class="b-v">Templates became a <strong>starting point, not a cage</strong> — outliers stay safe.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p4ht-beat">
+          <div class="b-num">3</div>
+          <div>
+            <div class="b-title">The Scope Cut</div>
+            <div class="b-rows">
+              <div class="b-row wall"><span class="b-k">撞墙</span><span class="b-v">Coordinators were already at capacity; a <strong>feature-rich patient app</strong> would only generate more incoming questions.</span></div>
+              <div class="b-row trade"><span class="b-k">取舍</span><span class="b-v">Deliberately scoped the C-end down to <strong>one clear next step</strong> (Today / Timeline / Help).</span></div>
+              <div class="b-row result"><span class="b-k">结果</span><span class="b-v">Clean dual-role split: <strong>B-end thinks, C-end executes</strong> — a mature prioritization call.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tradeoff at a glance -->
+    <div class="p4ht-glance">
+      <div class="g-card give">
+        <div class="g-label">✕ Gave Up</div>
+        <div class="g-text">Full automation — the <strong>sexier</strong> direction, but untrustworthy in high-stakes care.</div>
+      </div>
+      <div class="g-card gain">
+        <div class="g-label">✓ Gained</div>
+        <div class="g-text"><strong>Safety</strong> (zero dropped steps) + <strong>Personalization</strong> (fits every patient).</div>
+      </div>
+      <div class="g-card net">
+        <div class="g-label">◆ Net</div>
+        <div class="g-text">A system that <strong>keeps the human in the loop</strong> — and earns trust.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">04 / 06</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 5: KEY DESIGN & FLOWS -->
+<!-- ============================================================ -->
+<div class="portfolio-page" id="page-5">
+  <div class="page-bar">
+    <div class="bar-left">
+      <div class="bar-dot"></div>
+      <span>BridgeCare</span>
+      <span>·</span>
+      <span>Key Design & Flows</span>
+    </div>
+    <div class="bar-right">
+      <span>Page 04</span>
+    </div>
+  </div>
+
+  <div class="page-body p4-body">
+    <!-- Header -->
+    <div class="p4-header">
+      <div>
+        <div class="section-label" style="margin-bottom: 6px;">05 — Key Design</div>
+        <div class="p4-title">From Concept to Interface</div>
+      </div>
+      <div class="p4-highlights">
+        <span class="accent-tag indigo">Structured Task Chains</span>
+        <span class="accent-tag violet">Anomaly-Driven Dashboard</span>
+        <span class="accent-tag blue">Guided Patient Actions</span>
+        <span class="accent-tag red">Deliberately Not Full Automation</span>
+      </div>
+    </div>
+
+    <!-- Three Flows -->
+    <div class="p4-flow-row">
+      <!-- Flow 1 -->
+      <div class="p4-flow">
+        <div class="f-header">
+          <div class="f-num">1</div>
+          <div class="f-title">New Patient Onboarding</div>
+        </div>
+        <div class="f-desc">Coordinator enters patient info, referral context, selects a template, customizes the task chain, and launches — under 5 minutes.</div>
+        <div class="f-steps">
+          <span class="f-step-chip">Select Template</span>
+          <span class="f-step-arrow">→</span>
+          <span class="f-step-chip">Patient Info</span>
+          <span class="f-step-arrow">→</span>
+          <span class="f-step-chip">Customize</span>
+          <span class="f-step-arrow">→</span>
+          <span class="f-step-chip">Review & Launch</span>
+        </div>
+        <div class="img-ph">
+          <div class="ph-icon">📋</div>
+          <div class="ph-label">5-Step Wizard Screens</div>
+          <div class="ph-desc">Show 3-4 key screens: Template selection grid → Patient info form → Task chain customization with optional toggles → Review summary. Use prototype screenshots.</div>
+        </div>
+        <div class="f-callout">
+          <div class="fc-icon">💡</div>
+          <div class="fc-text">Optional task toggles let coordinators add translation / MDT based on clinical judgment.</div>
+        </div>
+      </div>
+
+      <!-- Flow 2 -->
+      <div class="p4-flow">
+        <div class="f-header">
+          <div class="f-num">2</div>
+          <div class="f-title">Dashboard & Anomaly Handling</div>
+        </div>
+        <div class="f-desc">Kanban organizes all active patients by status. Anomalies rise to the top so coordinators know where to act first.</div>
+        <div class="f-steps">
+          <span class="f-step-chip">Scan Board</span>
+          <span class="f-step-arrow">→</span>
+          <span class="f-step-chip">Identify Anomaly</span>
+          <span class="f-step-arrow">→</span>
+          <span class="f-step-chip">Open Context</span>
+          <span class="f-step-arrow">→</span>
+          <span class="f-step-chip">Resolve</span>
+        </div>
+        <div class="img-ph">
+          <div class="ph-icon">📊</div>
+          <div class="ph-label">Dashboard Kanban View</div>
+          <div class="ph-desc">Full Dashboard screenshot: 4 stat cards + 4-column Kanban (To Do / In Progress / Waiting / Done) + anomaly alert panel at bottom. Highlight one red anomaly card with arrow pointing to patient detail view.</div>
+        </div>
+        <div class="f-callout">
+          <div class="fc-icon">💡</div>
+          <div class="fc-text">Anomaly panel turns "felt stress" into "visible bottlenecks" — coordinators see what needs attention first.</div>
+        </div>
+      </div>
+
+      <!-- Flow 3 -->
+      <div class="p4-flow">
+        <div class="f-header">
+          <div class="f-num">3</div>
+          <div class="f-title">Guided Cross-Hospital Booking</div>
+        </div>
+        <div class="f-desc">Public hospitals still require phone booking. BridgeCare provides a structured script, records results, and auto-updates the patient app.</div>
+        <div class="f-steps">
+          <span class="f-step-chip">Open Task</span>
+          <span class="f-step-arrow">→</span>
+          <span class="f-step-chip">Dial + Script</span>
+          <span class="f-step-arrow">→</span>
+          <span class="f-step-chip">Log Result</span>
+          <span class="f-step-arrow">→</span>
+          <span class="f-step-chip">App Syncs</span>
+        </div>
+        <div class="img-ph">
+          <div class="ph-icon">📞</div>
+          <div class="ph-label">Guided Booking Interface</div>
+          <div class="ph-desc">Left: phone script with highlighted placeholders (patient name, department, date). Right: appointment result form. Below: patient app auto-updating with confirmed appointment.</div>
+        </div>
+        <div class="f-callout">
+          <div class="fc-icon">💡</div>
+          <div class="fc-text"><strong>Signature interaction:</strong> we chose human-in-the-loop over auto-booking. The system feeds the script; the coordinator makes the call — so trust stays human, not delegated to a fragile API.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: Before/After + Patient App -->
+    <div class="p4-bottom">
+      <div class="p4-beforeafter">
+        <div class="p4-ba-side before">
+          <div class="ba-label">✕ Before</div>
+          <div class="ba-content">
+            <strong>WeChat chats</strong> · handwritten notes · Excel trackers · mental checklists · phone contacts in personal phones
+          </div>
+        </div>
+        <div class="p4-ba-arrow">→</div>
+        <div class="p4-ba-side after">
+          <div class="ba-label">✓ After</div>
+          <div class="ba-content">
+            <strong>Unified task chains</strong> · reusable templates · anomaly alerts · auto patient sync · shared knowledge base
+          </div>
+        </div>
+      </div>
+
+      <div class="p4-patientapp">
+        <div style="font-size: 1.2rem;">📱</div>
+        <div class="pa-text">
+          <div class="pa-title">Patient App</div>
+          <div class="pa-desc">One clear next step, not a hospital manual.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">05 / 06</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 5: IMPACT & REFLECTION -->
+<!-- ============================================================ -->
+<div class="portfolio-page" id="page-6">
+  <div class="page-bar">
+    <div class="bar-left">
+      <div class="bar-dot"></div>
+      <span>BridgeCare</span>
+      <span>·</span>
+      <span>Impact & Reflection</span>
+    </div>
+    <div class="bar-right">
+      <span>Page 05</span>
+    </div>
+  </div>
+
+  <div class="page-body p5-body">
+    <!-- Header -->
+    <div class="p5-header">
+      <div>
+        <div class="section-label" style="margin-bottom: 6px;">06 — Validation</div>
+        <div class="p5-title">What Changed, and What I Learned</div>
+      </div>
+      <div class="p5-subtitle">
+        5 usability tests with current and former coordinators. Three scenarios: new patient, anomaly handling, cross-hospital booking.
+      </div>
+    </div>
+
+    <!-- Column 1: Validation -->
+    <div class="p5-col">
+      <div class="p5-card p5-validation">
+        <div class="card-label section-label">Usability Testing</div>
+        <div class="v-method">
+          5 coordinators tested a clickable Figma prototype. Sessions focused on three core scenarios, each timed and followed by a semi-structured interview.
+        </div>
+        <div class="p5-quote">
+          <div class="q-text">"I finally see what my day looks like."</div>
+          <div class="q-desc">Kanban helped coordinators identify bottlenecks they previously only felt as stress.</div>
+        </div>
+        <div class="p5-quote">
+          <div class="q-text">"The template saves me 15 minutes every time."</div>
+          <div class="q-desc">Standardizing task chains reduced repetitive setup work.</div>
+        </div>
+        <div class="p5-quote">
+          <div class="q-text">"I still want to be the one who calls."</div>
+          <div class="q-desc">Coordinators valued automation for reminders, but insisted on human control for clinical judgments.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2: Impact Metrics -->
+    <div class="p5-col">
+      <div class="p5-card">
+        <div class="card-label section-label">Key Impact Metrics</div>
+        <div class="p5-metric">
+          <div class="m-value">20→5</div>
+          <div class="m-body">
+            <div class="m-label">New Patient Setup Time (min)</div>
+            <div class="m-desc">From ~20 min manual to ~5 min with templated task chains.</div>
+          </div>
+        </div>
+        <div class="p5-metric">
+          <div class="m-value">60%</div>
+          <div class="m-body">
+            <div class="m-label">Overdue Tasks Reduction</div>
+            <div class="m-desc">Tasks overdue >24h reduced by 60% with anomaly alerts.</div>
+          </div>
+        </div>
+        <div class="p5-metric">
+          <div class="m-value">45%</div>
+          <div class="m-body">
+            <div class="m-label">Patient "What now?" Messages</div>
+            <div class="m-desc">Reduced by 45% with app-based guidance and next-step prompts.</div>
+          </div>
+        </div>
+        <div class="p5-metric">
+          <div class="m-value">30%</div>
+          <div class="m-body">
+            <div class="m-label">New Coordinator Onboarding</div>
+            <div class="m-desc">Estimated 30% faster with reusable templates and knowledge base.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p5-role">
+        <div class="rl-label">My Role</div>
+        <div class="rl-text">User research · stakeholder interviews · information architecture · interaction design · prototyping · usability testing</div>
+      </div>
+    </div>
+
+    <!-- Column 3: Reflection + Future -->
+    <div class="p5-col">
+      <div class="p5-reflection">
+        <div class="card-label section-label" style="color: rgba(255,255,255,0.5); margin-bottom: 12px;">Reflections</div>
+        <div class="r-item">
+          <div class="r-title">1. Automation is a teammate, not a replacement.</div>
+          <div class="r-text">In healthcare, trust is everything. The best automation handles reminders, routing, and status updates — and escalates to humans when ambiguity is high.</div>
+        </div>
+        <div class="r-item">
+          <div class="r-title">2. Design for the worst day.</div>
+          <div class="r-text">A patient opening the app on the morning of a scary exam is not in a browsing mood. Every screen must reduce cognitive load, not add to it.</div>
+        </div>
+        <div class="r-item">
+          <div class="r-title">3. B2B tools have a B2C soul.</div>
+          <div class="r-text">Even though the dashboard is for coordinators, every design decision ultimately affects a patient. The interface must feel calm, respectful, and human.</div>
+        </div>
+      </div>
+
+      <div class="p5-card">
+        <div class="card-label section-label">Next Steps</div>
+        <div class="p5-future">
+          <div class="p5-future-item">
+            <div class="fi-dot" style="background: var(--indigo);"></div>
+            <div class="fi-text">Pilot with one international + one partner public hospital</div>
+          </div>
+          <div class="p5-future-item">
+            <div class="fi-dot" style="background: var(--violet);"></div>
+            <div class="fi-text">Integrate hospital appointment systems (API + guided manual fallback)</div>
+          </div>
+          <div class="p5-future-item">
+            <div class="fi-dot" style="background: var(--blue);"></div>
+            <div class="fi-text">Expand template library to more departments and regions</div>
+          </div>
+          <div class="p5-future-item">
+            <div class="fi-dot" style="background: var(--success);"></div>
+            <div class="fi-text">Explore AI-assisted translation for medical records</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">06 / 06</div>
+</div>
+
+<!-- Navigation dots -->
+<div class="nav-dots">
+  <button class="nav-dot active" onclick="scrollToPage(1)" title="Cover & Problem"></button>
+  <button class="nav-dot" onclick="scrollToPage(2)" title="Research & Insights"></button>
+  <button class="nav-dot" onclick="scrollToPage(3)" title="Solution Architecture"></button>
+  <button class="nav-dot" onclick="scrollToPage(4)" title="Hard Turns"></button>
+  <button class="nav-dot" onclick="scrollToPage(5)" title="Key Design & Flows"></button>
+  <button class="nav-dot" onclick="scrollToPage(6)" title="Impact & Reflection"></button>
+</div>
+
+<script>
+function scrollToPage(n) {
+  document.getElementById('page-' + n).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === n - 1);
+  });
+}
+
+// Update active dot on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      const num = parseInt(id.split('-')[1]);
+      document.querySelectorAll('.nav-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === num - 1);
+      });
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.portfolio-page').forEach(p => observer.observe(p));
+</script>
+
+</body>
+</html>
